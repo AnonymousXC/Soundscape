@@ -1,0 +1,14 @@
+
+
+#fullApp {
+  background-color: aqua;
+  backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
+}
+
+#main {
+  filter: blur(91px);
+  background-repeat: no-repeat;
+  background-size: 94% 84%;
+  background-position: center;
+}
