@@ -14,7 +14,7 @@ const SideBar : NextComponentType = () => {
         backgroundColor={"#10141F"}
         flexDirection="column">
             <Image 
-            src="images/final icon.png"></Image>
+            src="images/final icon.png" />
         </Flex>
     )
 }
