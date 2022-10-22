@@ -1,4 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 
+body {
+  font-family: 'Montserrat', sans-serif !important;
+  overflow: hidden !important;
+}
 
 #fullApp {
   background-color: aqua;
@@ -11,4 +16,31 @@
   background-repeat: no-repeat;
   background-size: 94% 84%;
   background-position: center;
+}
+
+/* Sidebar CSS */
+.playlist-btn {
+  color: #909090;
+  background-color: transparent !important;
+  width: 100%;
+  text-align:start;
+  font-weight: bold !important;
+  justify-content: flex-start !important;
+  font-size: 0.9rem !important;
+}
+
+.playlist-btn:hover {
+  color: #e2e2e2;
+}
+
+/* Audio File CSS */
+.rhap_container {
+  background-color: #10141F !important;
+}
+
+/* Player CSS */
+.player-btn:hover {
+  background-color: #909090;
+  color: #10141F;
+  transition: all 200ms;
 }
