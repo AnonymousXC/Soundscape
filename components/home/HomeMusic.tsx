@@ -13,7 +13,7 @@ const HomeTab : NextComponentType = () => {
         w={"calc(100vw - 23%)"}
         h={"100%"}
         backgroundImage="https://wallpapercave.com/wp/wp4129396.jpg">
-
+            
         </Flex>
     )
 }
