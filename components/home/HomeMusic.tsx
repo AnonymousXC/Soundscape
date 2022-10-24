@@ -1,17 +1,13 @@
 import type { NextComponentType } from "next";
 import {
     Flex,
-    Input,
     Image,
-    Avatar
 } from "@chakra-ui/react"
-import { useState } from "react";
+import SearchBar from "./Search";
 
 
 
 const HomeTab : NextComponentType = () => {
-
-    let [ searchQuery, setSearchQuery] = useState("")
 
     return (
         <Flex
@@ -36,37 +32,13 @@ const HomeTab : NextComponentType = () => {
             h={"100%"}
             zIndex={2}
             justifyContent="center"> 
-                <Flex w={"100%"} justifyContent="space-around" h={"min-content"} align="center">
-                    <Input
-                    w={"80%"}
-                    borderWidth="1px"
-                    rounded={32}
-                    mt={2}
-                    placeholder="Search..."
-
-                    onChange={(e) => {
-                      setSearchQuery(e.currentTarget.value)
-                    }}
-
-                    onKeyUp= {(e) => {
-                        if(e.key === "Enter")
-                            searchSongApi(searchQuery)
-                            
-                    }}
-
-                    />
-                    <Avatar name="Hello World" bg={"#737373"} mt={1} size="sm"/>
-                </Flex>
+                <SearchBar />
             </Flex>
         </Flex>
     )
 }
 
-async function searchSongApi(queryStr : String)  {
-    let queryed = await fetch("api/searchSong")
-    let data = await queryed.json();
-    console.log(data);
-}
+
 
 
 export default HomeTab
