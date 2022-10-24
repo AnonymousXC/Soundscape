@@ -10,6 +10,7 @@ import {
 
 
 const Player : NextComponentType = () => {
+
     return (
         <Flex
         id="player"
@@ -57,16 +58,7 @@ const Player : NextComponentType = () => {
                     volumeMute: <Image src="images/icons/Volume Mute Icon.svg"></Image>,
                 }
             }
-            src="https://hanzluo.s3-us-west-1.amazonaws.com/music/wuyuwuqing.mp3"
-            // customControlsSection={
-            //     [
-            //         RHAP_UI.MAIN_CONTROLS,
-            //         <Button variant={"unstyled"}><Image src="images/icons/Shuffle Music Icon.svg"></Image></Button>,
-            //         RHAP_UI.ADDITIONAL_CONTROLS,
-            //         RHAP_UI.VOLUME_CONTROLS,
-                    
-            //     ]
-            // }
+            src="https://talkglitz.media/wp-content/uploads/2018/11/Imagine_Dragons_-_Bad_Liar_talkglitz.tv.mp3"
             />
         </Flex>
     )

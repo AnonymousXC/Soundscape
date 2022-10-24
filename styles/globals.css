@@ -11,11 +11,16 @@ body {
   -webkit-backdrop-filter: blur(50px);
 }
 
-#main {
+/* #main {
   filter: blur(91px);
   background-repeat: no-repeat;
   background-size: 94% 84%;
   background-position: center;
+} */
+
+.full-bg-image-cl {
+  filter: blur(91px);
+  user-select: none !important;
 }
 
 /* Sidebar CSS */
