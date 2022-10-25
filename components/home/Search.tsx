@@ -16,7 +16,7 @@ const SearchBar : NextComponentType = () => {
 
     let [ searchQuery, setSearchQuery ] = useState("")
     let [ searchHeight, setSearchHeight ] = useState("0px")
-    let [ bgColor, setBgColor ] = useState("transparent")
+    // let [ bgColor, setBgColor ] = useState("transparent")
     let [ searchResultNext, setSearchResultNext] = useState([])
     let router = useRouter()
 
@@ -83,7 +83,7 @@ const SearchBar : NextComponentType = () => {
         alignItems={"end"}
         h={"min-content"} 
         direction={"column"}
-        backgroundColor={bgColor}
+        backgroundColor={"transparent"}
         transition="all 200ms">
 
             <Flex className="Bar-Wrapper" w={"100%"} align="center" justifyContent="space-around" h={"48px"}>
@@ -91,7 +91,7 @@ const SearchBar : NextComponentType = () => {
                 variant={"unstyled"}
                 mt={2}
                 onClick={() => {
-                    setBgColor("transparent")
+                    // setBgColor("transparent")
                     setSearchHeight("0px")
                 }}> <Image src="images/icons/Back Button.svg" alt="Back" w={"40px"} /> </Button>
                 <Input
@@ -111,7 +111,7 @@ const SearchBar : NextComponentType = () => {
                 }}
 
                 onFocus={() => {
-                    setBgColor("#1A101F")
+                    // setBgColor("transparent")
                     setSearchHeight("calc(100vh - (90px + 48px))")
                 }}
 
