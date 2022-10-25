@@ -16,7 +16,6 @@ const SearchBar : NextComponentType = () => {
 
     let [ searchQuery, setSearchQuery ] = useState("")
     let [ searchHeight, setSearchHeight ] = useState("0px")
-    // let [ bgColor, setBgColor ] = useState("transparent")
     let [ searchResultNext, setSearchResultNext] = useState([])
     let router = useRouter()
 
