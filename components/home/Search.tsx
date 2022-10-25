@@ -41,10 +41,10 @@ const SearchBar : NextComponentType = () => {
         if(!data) return;
         
         searchResultNext = []
-        data.results.map(async(element : object, key: number) => {
+        data.results.map(async(element : any, key: number) => {
             let currSongRes = await fetch("api/songInfo", {
                 body: JSON.stringify({
-                    song_url : element.api_url.song
+                    song_url : element.api_url!.song
                 }),
                 headers: {
                     "Content-Type" : "application/json"
