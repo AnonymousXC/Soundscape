@@ -4,6 +4,8 @@ import {
   ChakraProvider,
   ColorModeScript
 } from "@chakra-ui/react"
+import { useState } from 'react'
+
 
 function MyApp({ Component, pageProps }: AppProps) {
   return ( 
