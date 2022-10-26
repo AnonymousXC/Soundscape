@@ -5,6 +5,7 @@ import {
     Image,
     Button
 } from "@chakra-ui/react"
+import { useEffect, useState } from "react";
 
 interface songProps {
     songImage: string,
@@ -17,6 +18,27 @@ interface songProps {
 
 
 const SongInfoBar : NextComponentType<any> = (props : any)  => {
+
+    let [isPlaying, setIsPlaying] = useState(false)
+
+    useEffect(() => {
+        let audio = document.getElementsByTagName("audio")[0]
+        if(audio.paused === false && audio.src === props.songPlayURL)
+            setIsPlaying(true)
+        audio.addEventListener("play", (e) => {
+            if(audio.src === props.songPlayURL)
+                setIsPlaying(true)
+        })
+    }, [])
+
+    setInterval(() => {
+        let audio = document.getElementsByTagName("audio")[0]
+        if(audio.src !== props.songPlayURL)
+            setIsPlaying(false)
+        if(audio.paused === true)
+            setIsPlaying(false)
+    }, 1000)
+
     return (
         <Flex
         w={"98%"}
@@ -37,19 +59,44 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
             </Flex>
             <Button variant={"unstyled"}
             onClick={() => {
+                
                 let audio = document.getElementsByTagName("audio")[0]
+
+                if(audio.paused === false && audio.src === props.songPlayURL)
+                {
+                    setIsPlaying(false)
+                    audio.pause()
+                    return
+                }
+
+                if(audio.src === props.songPlayURL && audio.paused === true)
+                {
+                    audio.play()
+                    setIsPlaying(true)
+                    return;
+                }
+                
+
                 let imageSong = document.getElementById("song-image")
                 let songName = document.getElementById("song-name")
                 let artistNameEl = document.getElementById("artist-name")
-                let titleElement = document.getElementsByTagName("title")[0]
                 audio.src = props.songPlayURL
-                audio.play()
+                audio.play().catch((error) => {}) 
                 imageSong.src! = props.songImage
-                songName!.innerText = props.songTitle
-                artistNameEl!.innerText = props.artistName
-                titleElement.innerText = props.songTitle
+                songName!.innerHTML = props.songTitle
+                artistNameEl!.innerHTML = props.artistName
+                setIsPlaying(true)
+
+                localStorage.setItem("last-played", JSON.stringify({
+                    "songImgUrl" : props.songImage,
+                    "songTitle" : props.songTitle,
+                    "songDuration" : props.songDuration,
+                    "songArtist" : props.artistName,
+                    "playURL" : props.songPlayURL
+                }))
+
             }}>
-                <Image src="images/icons/Pause Music Icon.svg" w={"40px"} className="player-btn" rounded={29.5} />
+                <Image src={isPlaying ? "images/icons/Play Music Icon.svg" : "images/icons/Pause Music Icon.svg"} w={"40px"} className="player-btn" rounded={29.5} />
             </Button>
         </Flex>
     )

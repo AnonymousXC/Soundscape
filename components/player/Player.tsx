@@ -7,9 +7,17 @@ import {
     Image,
     Text,
 } from "@chakra-ui/react"
+import { useEffect } from "react";
 
 
 const Player : NextComponentType = () => {
+
+    useEffect(() => {
+        let lastSessionSong : any = JSON.parse(localStorage.getItem("last-played") || '{}')
+        document.getElementsByTagName("audio")[0].src = lastSessionSong.playURL    
+        document.getElementById("song-name")!.innerHTML = lastSessionSong.songTitle
+        document.getElementById("artist-name")!.innerHTML = lastSessionSong.songArtist 
+    }, [])
 
     return (
         <Flex
@@ -58,7 +66,7 @@ const Player : NextComponentType = () => {
                     volumeMute: <Image src="images/icons/Volume Mute Icon.svg"></Image>,
                 }
             }
-            src="https://talkglitz.media/wp-content/uploads/2018/11/Imagine_Dragons_-_Bad_Liar_talkglitz.tv.mp3"
+            src={""}
             />
         </Flex>
     )

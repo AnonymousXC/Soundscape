@@ -1,5 +1,5 @@
 import type { NextComponentType } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Flex,
     Image,
@@ -17,6 +17,11 @@ import {
 const SideBar : NextComponentType = () => {
 
     const [ isPlaylistDropDown, setPlaylistDropDown ] = useState(true)
+    let [ songImgUrl, setSongImgURL] = useState("")
+
+    useEffect(() => {
+        setSongImgURL(JSON.parse(localStorage.getItem("last-played") || "{}").songImgUrl)
+    }, [])
 
     return (
         <Flex
@@ -69,7 +74,7 @@ const SideBar : NextComponentType = () => {
             >
                 <Image 
                 id="song-image"
-                src="https://upload.wikimedia.org/wikipedia/en/6/66/Imagine_Dragons_Bad_Liar.jpg"
+                src={songImgUrl}
                 width={"80%"}
                 rounded={12} />
             </Flex>

@@ -89,8 +89,9 @@ const SearchBar : NextComponentType = () => {
                 <Button 
                 variant={"unstyled"}
                 mt={2}
+                className="player-btn"
+                rounded={29.5}
                 onClick={() => {
-                    // setBgColor("transparent")
                     setSearchHeight("0px")
                 }}> <Image src="images/icons/Back Button.svg" alt="Back" w={"40px"} /> </Button>
                 <Input
