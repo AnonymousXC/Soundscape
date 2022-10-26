@@ -4,7 +4,7 @@ import {
 } from "@chakra-ui/react"
 import Head from 'next/head'
 import SideBar from '../components/sidebar/SideBar'
-import HomeTab from '../components/home/HomeMusic'
+import HomeTabMain from '../components/home/HomeMusic'
 import Player from '../components/player/Player'
 
 
@@ -19,7 +19,7 @@ const Home: NextPage = () => {
           <title>Soundscape : Music</title>
         </Head>
         <SideBar />
-        <HomeTab />
+        <HomeTabMain />
       </Flex>
       <Player />
     </>

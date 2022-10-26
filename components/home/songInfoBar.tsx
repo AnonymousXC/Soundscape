@@ -23,26 +23,33 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
 
     useEffect(() => {
         let audio = document.getElementsByTagName("audio")[0]
-        if(audio.paused === false && audio.src === props.songPlayURL)
-            setIsPlaying(true)
+        if(audio.src === props.songPlayURL && audio.paused !== true) setIsPlaying(true)
         audio.addEventListener("play", (e) => {
             if(audio.src === props.songPlayURL)
                 setIsPlaying(true)
+                
         })
+
+        audio.addEventListener("pause", () => {
+            setIsPlaying(false)
+        })
+
     }, [])
 
     setInterval(() => {
         let audio = document.getElementsByTagName("audio")[0]
-        if(audio.src !== props.songPlayURL)
+ 
+        if(audio.src != props.songPlayURL || audio.paused === true)
             setIsPlaying(false)
-        if(audio.paused === true)
-            setIsPlaying(false)
-    }, 1000)
+
+    }, 1500)
 
     return (
         <Flex
-        w={"98%"}
-        h={"50px"}
+        w={props.card === true ? "20%" : "98%"}
+        h={props.card === true ? "100%"  :"50px"}
+        maxW={props.card === true ? "205px" : ""}
+        maxH={props.card === true ? "270px" : ""}
         rounded={8}
         justifyContent="space-between"
         mt={2}
@@ -50,12 +57,14 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
         py={3}
         alignItems="center"
         backgroundColor={"rgba(0,0,0,0.2)"}
-        color="rgba(255,255,255,0.8)">
-            <Image src={props.songImage} alt="songicon" width={"40px"} height="40px" rounded={6} mx={4} my="auto" loading="lazy" />
-            <Flex justifyContent={"space-between"} h={"100%"} w={"70%"} alignItems="center">
-                <Text w={"50%"}>{props.songTitle}</Text>
-                <Text>{props.artistName}</Text>
-                <Text>{props.songDuration}</Text>
+        color="rgba(255,255,255,0.8)"
+        direction={props.card === true ? "column" : "row"}>
+            <Image src={props.songImage} alt="songicon" width={props.card === true ? "90%" : "40px"} height={props.card === true ? "auto" : "40px"} rounded={6} mx={4} my="auto" loading="lazy" />
+            <Flex justifyContent={"space-between"} h={"100%"} w={props.card === true ? "100%" : "70%"} alignItems={props.card === true ? "center" : "center"}
+            direction={props.card === true ? "column" : "row"}>
+                <Text w={props.card === true ? "100%" : "50%"} textAlign={props.card === true ? "center" : ""}>{props.songTitle}</Text>
+                <Text fontSize={props.card === true ? "0.8rem" : ""} color={props.card === true ? "#747474" : ""}>{props.artistName}</Text>
+                <Text>{props.card === true ? "" :  props.songDuration}</Text>
             </Flex>
             <Button variant={"unstyled"}
             onClick={() => {

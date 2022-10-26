@@ -4,10 +4,10 @@ import {
     Image,
 } from "@chakra-ui/react"
 import SearchBar from "./Search";
+import HomeTab from "./HomeTab";
 
 
-
-const HomeTab : NextComponentType = () => {
+const HomeTabMain : NextComponentType = () => {
 
     return (
         <Flex
@@ -31,8 +31,10 @@ const HomeTab : NextComponentType = () => {
             w={"100%"}
             h={"100%"}
             zIndex={2}
-            justifyContent="center"> 
+            justifyContent="flex-start"
+            direction={"column"}> 
                 <SearchBar />
+                <HomeTab />
             </Flex>
         </Flex>
     )
@@ -41,4 +43,4 @@ const HomeTab : NextComponentType = () => {
 
 
 
-export default HomeTab
+export default HomeTabMain

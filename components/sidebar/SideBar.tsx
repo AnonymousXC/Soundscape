@@ -1,5 +1,7 @@
 import type { NextComponentType } from "next";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+
 import {
     Flex,
     Image,
@@ -14,10 +16,12 @@ import {
     ChevronDownIcon
 } from "@chakra-ui/icons"
 
+
 const SideBar : NextComponentType = () => {
 
     const [ isPlaylistDropDown, setPlaylistDropDown ] = useState(true)
     let [ songImgUrl, setSongImgURL] = useState("")
+    const router = useRouter()
 
     useEffect(() => {
         setSongImgURL(JSON.parse(localStorage.getItem("last-played") || "{}").songImgUrl)
@@ -41,7 +45,10 @@ const SideBar : NextComponentType = () => {
                 <Box>
                     <Tabs orientation="vertical" variant={"unstyled"}>
                         <TabList w={"100%"} alignItems="flex-start" ml={"10"} mt={2} gap={0}>
-                            <Tab fontWeight={"bold"} fontSize="0.9rem" _hover={{color: "#909090"}}> <Image src="images/icons/Home Icon.svg" pr={"5"} w="38px" /> Home </Tab>
+                            <Tab fontWeight={"bold"} fontSize="0.9rem" _hover={{color: "#909090"}}
+                            onClick={() => {
+                                router.push("/?tab=Home", undefined, {shallow: true})
+                            }}> <Image src="images/icons/Home Icon.svg" pr={"5"} w="38px" /> Home </Tab>
                             <Tab fontWeight={"bold"} fontSize="0.9rem" _hover={{color: "#909090"}}><Image src="images/icons/Liked Icon.svg" pr={"5"} w="38px" /> Liked Songs</Tab>
                         </TabList>
                     </Tabs>
