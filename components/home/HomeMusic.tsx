@@ -20,8 +20,8 @@ const HomeTabMain : NextComponentType = () => {
             id="full-bg-image"
             className="full-bg-image-cl"
             src="https://wallpapercave.com/wp/wp4129396.jpg" 
-            w={"57%"}
-            h={"57%"}
+            w={"60%"} // 57%
+            h={"60%"} // 57%
             position="absolute"
             left="60%"
             top={"40%"}

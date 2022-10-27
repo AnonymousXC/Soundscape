@@ -14,7 +14,8 @@ const Home: NextPage = () => {
       <Flex
       id="sm-wrapper"
       className="sm-wrapper-cl"
-      h={"calc(100vh - 90px)"}>
+      h={"calc(100vh - 90px)"}
+      backgroundColor={"rgba(16, 20, 31, 0.5)"}>
         <Head>
           <title>Soundscape : Music</title>
         </Head>

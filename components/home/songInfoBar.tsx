@@ -46,7 +46,7 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
 
     return (
         <Flex
-        w={props.card === true ? "20%" : "98%"}
+        w={props.card === true ? ["18%", "18%", "22%", "18%"] : "98%"}
         h={props.card === true ? "100%"  :"50px"}
         maxW={props.card === true ? "205px" : ""}
         maxH={props.card === true ? "270px" : ""}
@@ -55,14 +55,16 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
         mt={2}
         px={2}
         py={3}
+        ml={props.card === true ? 4 : 0}
+        mb={props.card === true ? 8 : 0}
         alignItems="center"
         backgroundColor={"rgba(0,0,0,0.2)"}
         color="rgba(255,255,255,0.8)"
         direction={props.card === true ? "column" : "row"}>
-            <Image src={props.songImage} alt="songicon" width={props.card === true ? "90%" : "40px"} height={props.card === true ? "auto" : "40px"} rounded={6} mx={4} my="auto" loading="lazy" />
+            <Image src={props.songImage} alt="songicon" width={props.card === true ? "90%" : "40px"} height={props.card === true ? "auto" : "40px"} rounded={6} mx={4} loading="lazy" />
             <Flex justifyContent={"space-between"} h={"100%"} w={props.card === true ? "100%" : "70%"} alignItems={props.card === true ? "center" : "center"}
             direction={props.card === true ? "column" : "row"}>
-                <Text w={props.card === true ? "100%" : "50%"} textAlign={props.card === true ? "center" : ""}>{props.songTitle}</Text>
+                <Text w={props.card === true ? "100%" : "50%"} textAlign={props.card === true ? "center" : "initial"}>{props.songTitle}</Text>
                 <Text fontSize={props.card === true ? "0.8rem" : ""} color={props.card === true ? "#747474" : ""}>{props.artistName}</Text>
                 <Text>{props.card === true ? "" :  props.songDuration}</Text>
             </Flex>
@@ -96,14 +98,29 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
                 artistNameEl!.innerHTML = props.artistName
                 setIsPlaying(true)
 
-                localStorage.setItem("last-played", JSON.stringify({
+                let musicDataToSave = {
                     "songImgUrl" : props.songImage,
                     "songTitle" : props.songTitle,
                     "songDuration" : props.songDuration,
                     "songArtist" : props.artistName,
                     "playURL" : props.songPlayURL
-                }))
+                }
 
+                localStorage.setItem("last-played", JSON.stringify(musicDataToSave))
+
+                let recentPlayedArray : any = JSON.parse(localStorage.getItem("recent-played") || '[]')
+
+                recentPlayedArray.forEach((ele : any, idx : number) => {
+                    if(JSON.stringify(ele) === JSON.stringify(musicDataToSave))
+                        {
+                            recentPlayedArray.splice(idx, 1)
+                            return
+                        }
+                })
+
+                recentPlayedArray.push(musicDataToSave)
+                localStorage.setItem("recent-played", JSON.stringify(recentPlayedArray))
+    
             }}>
                 <Image src={isPlaying ? "images/icons/Play Music Icon.svg" : "images/icons/Pause Music Icon.svg"} w={"40px"} className="player-btn" rounded={29.5} />
             </Button>

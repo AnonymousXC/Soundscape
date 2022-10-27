@@ -14,6 +14,12 @@ const Player : NextComponentType = () => {
 
     useEffect(() => {
         let lastSessionSong : any = JSON.parse(localStorage.getItem("last-played") || '{}')
+        if(!lastSessionSong.songTitle || !lastSessionSong.songTitle || !lastSessionSong.songTitle)
+        {
+            document.getElementById("song-name")!.innerHTML = "CV"
+            document.getElementById("artist-name")!.innerHTML = "Welcome"     
+            return
+        }
         document.getElementsByTagName("audio")[0].src = lastSessionSong.playURL    
         document.getElementById("song-name")!.innerHTML = lastSessionSong.songTitle
         document.getElementById("artist-name")!.innerHTML = lastSessionSong.songArtist 

@@ -54,7 +54,6 @@ const SearchBar : NextComponentType = () => {
 
             if(!currSongData) return;
 
-            console.log(currSongData);
             componentArray.push(
                 <SongInfoBar 
                 key={key}
@@ -87,7 +86,7 @@ const SearchBar : NextComponentType = () => {
         backgroundColor={"transparent"}
         transition="all 200ms">
 
-            <Flex className="Bar-Wrapper" w={"100%"} align="center" justifyContent="space-around" h={"48px"}>
+            <Flex className="Bar-Wrapper" w={"100%"} align="center" justifyContent="space-around" h={"48px"} pb={1}>
                 <Button 
                 variant={"unstyled"}
                 mt={2}
