@@ -6,9 +6,12 @@ import Head from 'next/head'
 import SideBar from '../components/sidebar/SideBar'
 import HomeTabMain from '../components/home/HomeMusic'
 import Player from '../components/player/Player'
+import ContextMenu from '../components/context/contextMenu'
 
 
 const Home: NextPage = () => {
+
+
   return (
     <>
       <Flex
@@ -17,10 +20,12 @@ const Home: NextPage = () => {
       h={"calc(100vh - 90px)"}
       backgroundColor={"rgba(16, 20, 31, 0.5)"}>
         <Head>
-          <title>Soundscape : Music</title>
+          <title id='win-title'>Soundscape</title>
+          <link rel="shortcut icon" href="" type="image/x-icon" id='site-icon' />
         </Head>
-        <SideBar />
-        <HomeTabMain />
+          <SideBar />
+          <HomeTabMain />
+          <ContextMenu />
       </Flex>
       <Player />
     </>

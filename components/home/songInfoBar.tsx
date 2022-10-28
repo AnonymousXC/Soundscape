@@ -94,9 +94,11 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
                 audio.src = props.songPlayURL
                 audio.play().catch((error) => {}) 
                 imageSong.src! = props.songImage
-                songName!.innerHTML = props.songTitle
-                artistNameEl!.innerHTML = props.artistName
+                songName!.innerText = props.songTitle
+                artistNameEl!.innerText = props.artistName
                 setIsPlaying(true)
+                document.getElementById("win-title")!.innerText = "Soundscape : " + props.songTitle
+                // document.getElementById("site-icon")!.href = props.songImage
 
                 let musicDataToSave = {
                     "songImgUrl" : props.songImage,

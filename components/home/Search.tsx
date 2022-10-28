@@ -38,6 +38,7 @@ const SearchBar : NextComponentType = () => {
         let data = await queryed.json();
 
         if(!data) return;
+        console.log(data);
         
         searchResultNext = []
         data.results.map(async(element : any, key: number) => {

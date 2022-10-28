@@ -16,13 +16,15 @@ const Player : NextComponentType = () => {
         let lastSessionSong : any = JSON.parse(localStorage.getItem("last-played") || '{}')
         if(!lastSessionSong.songTitle || !lastSessionSong.songTitle || !lastSessionSong.songTitle)
         {
-            document.getElementById("song-name")!.innerHTML = "CV"
-            document.getElementById("artist-name")!.innerHTML = "Welcome"     
+            document.getElementById("song-name")!.innerText = "CV"
+            document.getElementById("artist-name")!.innerText = "Welcome"
+            document.getElementById("win-title")!.innerText = "Soundscape : Welcome"
             return
         }
         document.getElementsByTagName("audio")[0].src = lastSessionSong.playURL    
-        document.getElementById("song-name")!.innerHTML = lastSessionSong.songTitle
-        document.getElementById("artist-name")!.innerHTML = lastSessionSong.songArtist 
+        document.getElementById("song-name")!.innerText = lastSessionSong.songTitle
+        document.getElementById("artist-name")!.innerText = lastSessionSong.songArtist 
+        document.getElementById("win-title")!.innerText = "Soundscape : " + lastSessionSong.songTitle
     }, [])
 
     return (
