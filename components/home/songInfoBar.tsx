@@ -91,15 +91,18 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
                     return;
                 }
                 
-
+                
                 let imageSong = document.getElementById("song-image")
                 let songName = document.getElementById("song-name")
                 let artistNameEl = document.getElementById("artist-name")
                 audio.src = props.songPlayURL
                 audio.play().catch((error) => {}) 
-                imageSong.src! = props.songImage
-                songName!.innerText = props.songTitle
-                artistNameEl!.innerText = props.artistName
+                if(imageSong && songName && artistNameEl)
+                {
+                    imageSong.src! = props.songImage
+                    songName!.innerText = props.songTitle
+                    artistNameEl!.innerText = props.artistName
+                }
                 setIsPlaying(true)
                 document.getElementById("win-title")!.innerText = "Soundscape : " + props.songTitle
                 // document.getElementById("site-icon")!.href = props.songImage

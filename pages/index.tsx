@@ -46,7 +46,7 @@ const Home: NextPage = () => {
           }
       </Flex>
       <Player />
-      <MobileBar />
+      { isMobile === true && <MobileBar /> }
     </>
   )
 }

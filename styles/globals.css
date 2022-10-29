@@ -5,6 +5,17 @@ body {
   overflow: hidden !important;
 }
 
+
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: transparent !important;
+  outline: none;
+}
+
+
 #fullApp {
   background-color: aqua;
   backdrop-filter: blur(50px);
@@ -50,4 +61,17 @@ body {
   background-color: #909090;
   color: #10141F;
   transition: all 200ms;
+}
+
+.mobile-song-image {
+  animation: rotateSongImg infinite 2.5s linear;
+}
+
+@keyframes rotateSongImg {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
