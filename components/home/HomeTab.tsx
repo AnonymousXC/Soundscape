@@ -1,7 +1,8 @@
 import type { NextComponentType } from "next";
 import { 
     Flex,
-    Text
+    Text,
+    useBreakpoint
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import SongInfoBar from "./songInfoBar";
@@ -10,6 +11,9 @@ import { useEffect, useState } from "react";
 
 
 const HomeTab : NextComponentType = () => {
+
+    const currBR = useBreakpoint()
+    const isMobile = currBR === "sm" || currBR === "base" ? true : false  
 
     const [ cardsMetaArray, setCardsMetaArray ] = useState([])
     const router = useRouter()

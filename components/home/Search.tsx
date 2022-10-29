@@ -7,12 +7,16 @@ import  {
     Input,
     Avatar,
     Button,
-    Image
+    Image,
+    useBreakpoint
 } from "@chakra-ui/react"
 
 
 
 const SearchBar : NextComponentType = () => {
+
+    const currBR = useBreakpoint()
+    const isMobile = currBR === "sm" || currBR === "base" ? true : false  
 
     let [ searchQuery, setSearchQuery ] = useState("")
     let [ searchHeight, setSearchHeight ] = useState("0px")
@@ -38,7 +42,6 @@ const SearchBar : NextComponentType = () => {
         let data = await queryed.json();
 
         if(!data) return;
-        console.log(data);
         
         searchResultNext = []
         data.results.map(async(element : any, key: number) => {
@@ -68,6 +71,7 @@ const SearchBar : NextComponentType = () => {
         })
         setSearchResultNext(componentArray)
         setTimeout(() => {
+            
             if(router.query.tab === "Search")
                 router.push("/?tab=Search", undefined, {shallow: true})
         } , 1500)
@@ -91,6 +95,7 @@ const SearchBar : NextComponentType = () => {
                 <Button 
                 variant={"unstyled"}
                 mt={2}
+                display={isMobile === true ? "none" : "block"}
                 className="player-btn"
                 rounded={29.5}
                 onClick={() => {
@@ -98,7 +103,7 @@ const SearchBar : NextComponentType = () => {
                     router.push("/?tab=Home", undefined, {shallow: true})
                 }}> <Image src="images/icons/Back Button.svg" alt="Back" w={"40px"} /> </Button>
                 <Input
-                w={"85%"}
+                w={isMobile === true ? "95%" : "85%"}
                 borderWidth="1px"
                 rounded={32}
                 mt={2}
@@ -119,7 +124,9 @@ const SearchBar : NextComponentType = () => {
                 }}
 
                 />
-                <Avatar name="Hello World" bg={"#737373"} mt={2} size="sm"/>
+                { isMobile === false &&
+                    <Avatar name="Hello World" bg={"#737373"} mt={2} size="sm"/>
+                }
             </Flex>
             <Flex
             display={router.query.tab === "Search" ? "flex" : "none"}

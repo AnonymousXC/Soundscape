@@ -2,6 +2,7 @@ import type { NextComponentType } from "next";
 import {
     Flex,
     Image,
+    useBreakpoint,
 } from "@chakra-ui/react"
 import SearchBar from "./Search";
 import HomeTab from "./HomeTab";
@@ -9,12 +10,16 @@ import HomeTab from "./HomeTab";
 
 const HomeTabMain : NextComponentType = () => {
 
+    const currBR = useBreakpoint()
+    const isMobile = currBR === "sm" || currBR === "base" ? true : false
+
+
     return (
         <Flex
         id="main"
         className="main-cl"
-        w={"calc(100vw - 23%)"}
-        h={"100%"}
+        w={isMobile === true ? "100%" : "calc(100vw - 23%)"}
+        h={isMobile === true ? "80%" : "100%"}
         direction={"column"}>
             <Image 
             id="full-bg-image"

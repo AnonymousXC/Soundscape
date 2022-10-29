@@ -3,7 +3,8 @@ import {
     Flex,
     Text,
     Image,
-    Button
+    Button,
+    useBreakpoint
 } from "@chakra-ui/react"
 import { useEffect, useState } from "react";
 
@@ -18,6 +19,9 @@ interface songProps {
 
 
 const SongInfoBar : NextComponentType<any> = (props : any)  => {
+
+    const currBR = useBreakpoint()
+    const isMobile = currBR === "sm" || currBR === "base" ? true : false
 
     let [isPlaying, setIsPlaying] = useState(false)
 
@@ -46,7 +50,7 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
 
     return (
         <Flex
-        w={props.card === true ? ["18%", "18%", "22%", "18%"] : "98%"}
+        w={isMobile === false ? props.card === true ? ["18%", "18%", "22%", "18%"] : "98%" :  props.card === true ? "40%" : "95%"}
         h={props.card === true ? "100%"  :"50px"}
         maxW={props.card === true ? "205px" : ""}
         maxH={props.card === true ? "270px" : ""}
@@ -64,9 +68,9 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
             <Image src={props.songImage} alt="songicon" width={props.card === true ? "90%" : "40px"} height={props.card === true ? "auto" : "40px"} rounded={6} mx={4} loading="lazy" />
             <Flex justifyContent={"space-between"} h={"100%"} w={props.card === true ? "100%" : "70%"} alignItems={props.card === true ? "center" : "center"}
             direction={props.card === true ? "column" : "row"}>
-                <Text w={props.card === true ? "100%" : "50%"} textAlign={props.card === true ? "center" : "initial"}>{props.songTitle}</Text>
-                <Text fontSize={props.card === true ? "0.8rem" : ""} color={props.card === true ? "#747474" : ""}>{props.artistName}</Text>
-                <Text>{props.card === true ? "" :  props.songDuration}</Text>
+                <Text w={isMobile === false ? props.card === true ? "100%" : "50%" : "95%"} textAlign={props.card === true ? "center" : "initial"}>{props.songTitle}</Text>
+                <Text fontSize={props.card === true ? "0.8rem" : ""} color={props.card === true ? "#747474" : ""}>{isMobile === false && props.artistName}</Text>
+                <Text>{props.card === true || isMobile === true ? "" :  props.songDuration}</Text>
             </Flex>
             <Button variant={"unstyled"}
             onClick={() => {
