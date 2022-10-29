@@ -38,8 +38,8 @@ const Player : NextComponentType = () => {
         className="music-player"
         w={isMobile === true ? "100%" : "100vw"}
         h={"90px"}
-        position={isMobile === true ? "absolute" : "initial"}
-        bottom={isMobile === true ? "0" : "initial"}
+        position={isMobile === true ? "fixed" : "initial"}
+        bottom={isMobile === true ? "0%" : "initial"}
         backgroundColor="#10141F">
             <Flex 
             id="song-details"
