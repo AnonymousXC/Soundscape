@@ -8,6 +8,7 @@ import SideBar from '../components/sidebar/SideBar'
 import HomeTabMain from '../components/home/HomeMusic'
 import Player from '../components/player/Player'
 import ContextMenu from '../components/context/contextMenu'
+import MobileBar from '../components/sidebar/mobileBottomBar'
 
 
 const Home: NextPage = () => {
@@ -45,6 +46,7 @@ const Home: NextPage = () => {
           }
       </Flex>
       <Player />
+      <MobileBar />
     </>
   )
 }

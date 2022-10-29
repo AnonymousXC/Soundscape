@@ -1,5 +1,5 @@
 import type { NextComponentType } from "next";
-import AudioPlayer, {RHAP_UI} from 'react-h5-audio-player';
+import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import {
     Button,
@@ -39,7 +39,7 @@ const Player : NextComponentType = () => {
         w={isMobile === true ? "100%" : "100vw"}
         h={"90px"}
         position={isMobile === true ? "fixed" : "initial"}
-        bottom={isMobile === true ? "0%" : "initial"}
+        bottom={isMobile === true ? "calc(0% + 50px)" : "initial"}
         backgroundColor="#10141F"
         zIndex={5}>
             <Flex 
@@ -66,7 +66,7 @@ const Player : NextComponentType = () => {
             defaultCurrentTime="00:00"
             defaultDuration="00:00"
             layout="stacked-reverse"
-            showSkipControls={true}
+            showSkipControls={!isMobile}
             showFilledVolume={true}
             autoPlayAfterSrcChange={true}
             customIcons={
