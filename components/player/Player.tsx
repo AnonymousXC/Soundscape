@@ -40,7 +40,8 @@ const Player : NextComponentType = () => {
         h={"90px"}
         position={isMobile === true ? "fixed" : "initial"}
         bottom={isMobile === true ? "0%" : "initial"}
-        backgroundColor="#10141F">
+        backgroundColor="#10141F"
+        zIndex={5}>
             <Flex 
             id="song-details"
             w={"30%"} 

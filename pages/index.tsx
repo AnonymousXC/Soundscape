@@ -22,7 +22,7 @@ const Home: NextPage = () => {
       <Flex
       id="sm-wrapper"
       className="sm-wrapper-cl"
-      h={isMobile === true ? "calc(100vh - 90px)" : "calc(100vh - 90px)"}
+      h={isMobile === true ? "calc(100vh - calc(100vh - 100%))" : "calc(100vh - 90px)"}
       w={isMobile === true ? "100vw" : ""}
       backgroundColor={"rgba(16, 20, 31, 0.5)"}
       direction={isMobile === true ? "column" : "initial"}>
