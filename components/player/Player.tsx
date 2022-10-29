@@ -6,11 +6,16 @@ import {
     Flex,
     Image,
     Text,
+    useBreakpoint
 } from "@chakra-ui/react"
 import { useEffect } from "react";
 
 
 const Player : NextComponentType = () => {
+
+    const currBR = useBreakpoint()
+    const isMobile = currBR === "sm" || currBR === "base" ? true : false
+    
 
     useEffect(() => {
         let lastSessionSong : any = JSON.parse(localStorage.getItem("last-played") || '{}')
@@ -31,12 +36,15 @@ const Player : NextComponentType = () => {
         <Flex
         id="player"
         className="music-player"
-        w={"100vw"}
+        w={isMobile === true ? "100%" : "100vw"}
         h={"90px"}
+        position={isMobile === true ? "absolute" : "initial"}
+        bottom={isMobile === true ? "0" : "initial"}
         backgroundColor="#10141F">
             <Flex 
             id="song-details"
             w={"30%"} 
+            display={isMobile === true ? "none" : "flex"}
             flexDirection="column"
             px={8} fontSize="0.9rem"
             pt={4}>
