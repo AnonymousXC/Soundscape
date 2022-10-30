@@ -21,6 +21,7 @@ const SearchBar : NextComponentType = () => {
     let [ searchQuery, setSearchQuery ] = useState("")
     let [ searchHeight, setSearchHeight ] = useState("0px")
     let [ searchResultNext, setSearchResultNext] = useState([])
+    let [ reRenderer, setRerenderer ] = useState(false)
     let router = useRouter()
 
     async function searchSongApi(queryStr : String)  {
@@ -71,9 +72,7 @@ const SearchBar : NextComponentType = () => {
         })
         setSearchResultNext(componentArray)
         setTimeout(() => {
-            
-            if(router.query.tab === "Search")
-                router.push("/?tab=Search", undefined, {shallow: true})
+            setRerenderer(!reRenderer)
         } , 1500)
     }
     
@@ -120,7 +119,10 @@ const SearchBar : NextComponentType = () => {
 
                 onFocus={() => {
                     router.push("/?tab=Search", undefined, {shallow: true})
-                    setSearchHeight("calc(100vh - (90px + 48px + 8px))")
+                    if(isMobile === false)
+                        setSearchHeight("calc(100vh - (90px + 48px + 8px))")
+                    else
+                    setSearchHeight("calc(100vh - (90px + 48px + 8px + 50px))")
                 }}
 
                 />
@@ -133,10 +135,12 @@ const SearchBar : NextComponentType = () => {
             h={searchHeight}
             width={"100%"}
             mt={2}
+            pb={isMobile === true ? "8px" : "0px"}
             zIndex={5}
             overflowY="auto"
             alignItems="center"
-            direction="column">
+            direction="column"
+            key={reRenderer === true ? "re" : "reee"}>
                 {searchResultNext}
             </Flex>
             

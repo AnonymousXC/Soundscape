@@ -4,12 +4,18 @@ import {
     Image
 } from "@chakra-ui/react"
 import { useRouter } from "next/router"
+import { useState, useEffect } from "react"
 
 
 
 const MobileBar = () => {
 
     const router = useRouter()
+    let [ songImgUrl, setSongImgURL] = useState("")
+
+    useEffect(() => {
+        setSongImgURL(JSON.parse(localStorage.getItem("last-played") || "{}").songImgUrl)
+    }, [])
 
     return (
         <Flex 
@@ -29,7 +35,7 @@ const MobileBar = () => {
             onClick={() => {
                 router.push("/?tab=Search", undefined, {shallow : true})
             }}> <Image src="images/icons/Search Icon.svg" m={"0 auto"} /> </Button>
-            <Button variant={"unstyled"} p={0} className="mobile-song-image" rounded={"full"}> <Image id="song-image" src="" m={"0 auto"} w={"40px"} h={"40px"} rounded={"full"} /> </Button>
+            <Button variant={"unstyled"} p={0} className="mobile-song-image" rounded={"full"}> <Image id="song-image" src={songImgUrl ? songImgUrl : "https://media.istockphoto.com/vectors/flag-ribbon-welcome-old-school-flag-banner-vector-id1223088904?k=20&m=1223088904&s=612x612&w=0&h=b_ilJpFTSQbZeCrZusHRLEskmfiONWH0hFASAJbgz9g="} m={"0 auto"} w={"40px"} h={"40px"} rounded={"full"} /> </Button>
             <Button variant={"unstyled"} p={0}> <Image src="images/icons/Non Fav Music Icon.svg" m={"0 auto"} /> </Button>
             <Button variant={"unstyled"} p={0}> <Image src="images/icons/Setting Mob Icon.svg" m={"0 auto"} /> </Button>
         </Flex>

@@ -41,7 +41,7 @@ const HomeTab : NextComponentType = () => {
 
     return (
         <Flex 
-        h={isMobile === true ? "calc(100vh - (90px + 48px))" : "100%"}
+        h={isMobile === true ? "calc(100vh - (90px + 48px + 50px))" : "100%"}
         px={3}
         py={3}
         display={router.query.tab === "Home" || router.query.tab === undefined ? "flex" : "none"}
