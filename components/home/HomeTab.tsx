@@ -36,6 +36,7 @@ const HomeTab : NextComponentType = () => {
             )
         })
         setCardsMetaArray(nextJSCardsComp)
+
     }, [])
 
 
@@ -48,7 +49,7 @@ const HomeTab : NextComponentType = () => {
         direction={"column"}
         overflowY="auto">
             <Text fontSize={"1.2rem"} fontWeight="500">Recently Played</Text>
-            <Flex wrap={"wrap"}>
+            <Flex wrap={"wrap"} height="100%">
                 {cardsMetaArray}
             </Flex>
         </Flex>

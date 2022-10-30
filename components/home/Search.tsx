@@ -27,8 +27,8 @@ const SearchBar : NextComponentType = () => {
     async function searchSongApi(queryStr : String)  {
         if(queryStr === "" || queryStr === " " || queryStr === undefined || queryStr === null) return;
         let componentArray : any = []
-        queryStr = queryStr.replace(' ', "%20")    
-        let queryed = await fetch("api/searchSong", {
+        queryStr = queryStr.replace(' ', "+")    
+        let queryed = await fetch("api/searchSongNew", {
             body: JSON.stringify({
                 searchQuery : queryStr,
             }),
@@ -39,41 +39,31 @@ const SearchBar : NextComponentType = () => {
         })
 
         if(!queryed) return
-
         let data = await queryed.json();
-
         if(!data) return;
         
         searchResultNext = []
         data.results.map(async(element : any, key: number) => {
-            let currSongRes = await fetch("api/songInfo", {
-                body: JSON.stringify({
-                    song_url : element.api_url!.song
-                }),
-                headers: {
-                    "Content-Type" : "application/json"
-                },
-                method: "POST"
-            })    
-            let currSongData = await currSongRes.json()
-
-            if(!currSongData) return;
-
+            const dateObj = new Date(element.duration *1000)
+            let durationStr = dateObj.getUTCMinutes() + ":" + dateObj.getSeconds()
+            if(element.downloadUrl[4] === undefined)
+                return
+            
             componentArray.push(
                 <SongInfoBar 
                 key={key}
-                songImage={currSongData.image}
-                songTitle={currSongData.song}
-                songDuration={currSongData.duration}
-                artistName={currSongData.singers ? currSongData.singers : "Unknown"}
-                songPlayURL={currSongData.media_url}
+                songImage={element.image[2].link}
+                songTitle={element.name}
+                songDuration={durationStr}
+                artistName={element.artist ? element.artist : "Unknown"}
+                songPlayURL={element.downloadUrl[4].link || ""}
                 card={false} />
             )
         })
         setSearchResultNext(componentArray)
         setTimeout(() => {
             setRerenderer(!reRenderer)
-        } , 1500)
+        } , 2500)
     }
     
     
@@ -135,7 +125,7 @@ const SearchBar : NextComponentType = () => {
             h={searchHeight}
             width={"100%"}
             mt={2}
-            pb={isMobile === true ? "8px" : "0px"}
+            pb={"8px"}
             zIndex={5}
             overflowY="auto"
             alignItems="center"
