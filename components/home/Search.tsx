@@ -21,7 +21,6 @@ const SearchBar : NextComponentType = () => {
     let [ searchQuery, setSearchQuery ] = useState("")
     let [ searchHeight, setSearchHeight ] = useState("0px")
     let [ searchResultNext, setSearchResultNext] = useState([])
-    let [ reRenderer, setRerenderer ] = useState(false)
     let router = useRouter()
 
     async function searchSongApi(queryStr : String)  {
@@ -61,9 +60,6 @@ const SearchBar : NextComponentType = () => {
             )
         })
         setSearchResultNext(componentArray)
-        setTimeout(() => {
-            setRerenderer(!reRenderer)
-        } , 2500)
     }
     
     
@@ -129,8 +125,7 @@ const SearchBar : NextComponentType = () => {
             zIndex={5}
             overflowY="auto"
             alignItems="center"
-            direction="column"
-            key={reRenderer === true ? "re" : "reee"}>
+            direction="column">
                 {searchResultNext}
             </Flex>
             
