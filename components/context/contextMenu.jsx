@@ -20,6 +20,7 @@ const ContextMenu = () => {
     const [ display, setDisplay ] = useState("none")
     const [ menuPos, setMenuPos ] = useState({ x : 0, y : 0})
     const { isOpen, onOpen, onClose} = useDisclosure()
+    let [ musicQuality, setMusicQuality ] = useState(4)
     const router = useRouter()
     
   useEffect(() => {
@@ -28,6 +29,9 @@ const ContextMenu = () => {
       e.preventDefault()
       setDisplay("flex")
       setMenuPos({x : e.clientX, y : e.clientY })
+
+      let musicQuality = localStorage.getItem("song-quality") || "4"
+      setMusicQuality(musicQuality)
       
     })
 
@@ -70,12 +74,12 @@ const ContextMenu = () => {
           onClick={() => {
             router.back()
           }}>Back</Button>
-          <OpenAudioQualityModal op={isOpen} cl={onClose}/>
+          <OpenAudioQualityModal op={isOpen} cl={onClose} defVal={musicQuality}/>
         </Flex>
     )
 }
 
-const  OpenAudioQualityModal = ({op, cl}) => {
+const  OpenAudioQualityModal = ({op, cl, defVal}) => {
   return (
     <Modal isOpen={op} onClose={cl}>
       <ModalOverlay />
@@ -83,10 +87,15 @@ const  OpenAudioQualityModal = ({op, cl}) => {
         <ModalHeader>Audio Quality</ModalHeader>
         <ModalBody>
           Select Audio Quality : 
-          <RadioGroup pt={2}>
-            <Radio value={"1"} py={2}>Low (96 KBPS)</Radio> <br />
-            <Radio value={"2"} py={2}>High (160 KBPS)</Radio> <br />
-            <Radio value={"3"} py={2}>Extreme (320 KBPS)</Radio>
+          <RadioGroup pt={2} defaultValue={defVal}
+          onChange={(e) => {
+            localStorage.setItem("song-quality", e)
+          }}>
+            <Radio value={"0"} py={2}>Very Low (12 KBPS)</Radio> <br />
+            <Radio value={"1"} py={2}>Low (48 KBPS)</Radio> <br />
+            <Radio value={"2"} py={2}>Medium (96 KBPS)</Radio> <br />
+            <Radio value={"3"} py={2}>High (160 KBPS)</Radio> <br />
+            <Radio value={"4"} py={2}>Extreme (320 KBPS)</Radio>
           </RadioGroup>
         </ModalBody>
       <ModalFooter>

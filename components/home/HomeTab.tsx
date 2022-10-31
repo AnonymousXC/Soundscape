@@ -36,6 +36,24 @@ const HomeTab : NextComponentType = () => {
             )
         })
         setCardsMetaArray(nextJSCardsComp)
+        
+        /* document.getElementsByTagName("audio")[0].addEventListener("play", (e) => {
+             let recentPlayedArray = JSON.parse(localStorage.getItem("recent-played") || '[]')
+             let nextJSCardsComp : any = []
+             recentPlayedArray.reverse().forEach((ele : any, idx : number) => {
+                 nextJSCardsComp.push(
+                     <SongInfoBar 
+                     key={idx}
+                     songImage={ele.songImgUrl}
+                     songTitle={ele.songTitle}
+                     songPlayURL={ele.playURL}
+                     artistName={ele.songArtist}
+                     songDuration={ele.songDuration}
+                     card={true} />
+                 )
+             })
+             setCardsMetaArray(nextJSCardsComp)
+         }) */
 
     }, [])
 

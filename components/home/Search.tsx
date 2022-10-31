@@ -1,5 +1,5 @@
 import { NextComponentType } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SongInfoBar from "./songInfoBar";
 import { useRouter } from "next/router";
 import  {
@@ -21,7 +21,14 @@ const SearchBar : NextComponentType = () => {
     let [ searchQuery, setSearchQuery ] = useState("")
     let [ searchHeight, setSearchHeight ] = useState("0px")
     let [ searchResultNext, setSearchResultNext] = useState([])
+    let [ musicQuality, setMusicQuality ] = useState(4)
     let router = useRouter()
+
+
+    useEffect(() => {
+        let musicQuality = parseInt(localStorage.getItem("song-quality") || "4")
+        setMusicQuality(musicQuality)
+    }, [])
 
     async function searchSongApi(queryStr : String)  {
         if(queryStr === "" || queryStr === " " || queryStr === undefined || queryStr === null) return;
@@ -47,15 +54,17 @@ const SearchBar : NextComponentType = () => {
             let durationStr = dateObj.getUTCMinutes() + ":" + dateObj.getSeconds()
             if(element.downloadUrl[4] === undefined)
                 return
+            if(element.artist === "" || element.artist === null)
+                element.artist = "Unknown"                
             
             componentArray.push(
                 <SongInfoBar 
                 key={key}
                 songImage={element.image[2].link}
-                songTitle={element.name}
+                songTitle={element.name.length > 50 ? element.artist.substring(0,50) : element.name}
                 songDuration={durationStr}
-                artistName={element.artist ? element.artist : "Unknown"}
-                songPlayURL={element.downloadUrl[4].link || ""}
+                artistName={element.artist.length >= 30 ? element.artist.substring(0,30) + "..." : element.artist}
+                songPlayURL={element.downloadUrl[musicQuality].link || ""}
                 card={false} />
             )
         })

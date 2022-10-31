@@ -8,17 +8,21 @@ import {
     Text,
     useBreakpoint
 } from "@chakra-ui/react"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 
 const Player : NextComponentType = () => {
 
     const currBR = useBreakpoint()
     const isMobile = currBR === "sm" || currBR === "base" ? true : false
+    const [ loopState, setLoopState ] = useState(true)
     
 
     useEffect(() => {
         let lastSessionSong : any = JSON.parse(localStorage.getItem("last-played") || '{}')
+        let isLoop : any = localStorage.getItem("loop-check") === "true"
+        setLoopState(isLoop)
+        
         if(!lastSessionSong.songTitle || !lastSessionSong.songTitle || !lastSessionSong.songTitle)
         {
             document.getElementById("song-name")!.innerText = "CV"
@@ -30,6 +34,12 @@ const Player : NextComponentType = () => {
         document.getElementById("song-name")!.innerText = lastSessionSong.songTitle
         document.getElementById("artist-name")!.innerText = lastSessionSong.songArtist 
         document.getElementById("win-title")!.innerText = "Soundscape : " + lastSessionSong.songTitle
+
+        let loopBtn = document.getElementsByClassName("rhap_repeat-button")[0]
+        loopBtn.addEventListener("click", (e) => {
+            localStorage.setItem("loop-check", loopBtn.getAttribute("aria-label") === "Enable loop" ? "true" : "false")
+        })
+
     }, [])
 
     return (
@@ -84,6 +94,7 @@ const Player : NextComponentType = () => {
                 }
             }
             src={""}
+            loop={loopState}
             />
         </Flex>
     )
