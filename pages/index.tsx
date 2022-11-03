@@ -15,7 +15,6 @@ const Home: NextPage = () => {
 
   const currBR = useBreakpoint()
   const isMobile = currBR === "sm" || currBR === "base" ? true : false
-  
 
 
   return (

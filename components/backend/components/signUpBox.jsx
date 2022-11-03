@@ -1,30 +1,31 @@
 import {
-Flex,
-Box,
-FormControl,
-FormLabel,
-Input,
-InputGroup,
-HStack,
-InputRightElement,
-Stack,
-Button,
-Heading,
-Text,
-useColorModeValue,
-Link,
+    Flex,
+    Box,
+    FormControl,
+    FormLabel,
+    Input,
+    InputGroup,
+    HStack,
+    InputRightElement,
+    Stack,
+    Button,
+    Heading,
+    Text,
+    useColorModeValue,
+    Link,
 } from '@chakra-ui/react';
 import {
     createUserWithEmailAndPassword
 } from "firebase/auth"
 import {
-    collection,
-    addDoc
+    setDoc,
+    doc
 } from "firebase/firestore"
 
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { AuthInstance, Database } from '../../../.firebase/firebaseMain';
+import Router from 'next/router';
 
 function SignupCard() {
     const [showPassword, setShowPassword] = useState(false);
@@ -100,13 +101,13 @@ function SignupCard() {
                     Sign up
                 </Button>
                 </Stack>
-                <Stack pt={6}>
+                <Stack pt={4}>
                 <Text align={'center'}>
                     Already a user? <Link color={'blue.400'}>Login</Link>
                 </Text>
                 </Stack>
             </Stack>
-                <Text id='signup-status'></Text>
+                <Text id='signup-status' textAlign={"center"} pt={4} textTransform="capitalize"></Text>
             </Box>
         </Stack>
         </Flex>
@@ -117,21 +118,25 @@ function SignupCard() {
 function signUpUser(em, pass) {
     createUserWithEmailAndPassword(AuthInstance, em, pass)
     .then(e => {
-        console.log(e.user.uid);
+        makeUserDatabaseID(e.user.uid)
         document.getElementById("signup-status").innerText = "Account Made Successfully."
+        setTimeout(() => {
+            Router.push("/login")
+        }, 1500)
     })
     .catch(err => {
-        document.getElementById("signup-status").innerText = err.toString().replace(/.* /, /\(.*\)/)
-        // makeUserDatabaseID()
+        try {
+        let formattedErrMsg = err.toString().replace(/.* /, /\(.*\)/).replace(/\/\\\(.*\\\)\//, "").replace("(", "").replace(")", "").replace("/", "").replace("auth", "").replaceAll("-", " ")
+        document.getElementById("signup-status").innerText = formattedErrMsg
+        } catch {}
     })
 }
 
-async function makeUserDatabaseID() {
-    const docRef = await addDoc(collection(Database, "userData"), {
-        first : "asdasd"
+async function makeUserDatabaseID(userId) {
+    const docRef = await setDoc(doc(Database, `userData`, userId), {
+        recentPlays : [],
+        favSongs : [],
     })
-    console.log(docRef.id);
-
 }
 
 export default SignupCard

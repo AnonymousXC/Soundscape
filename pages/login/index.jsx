@@ -7,7 +7,7 @@ const SignInPage = () => {
     return (
         <>
             <Head>
-                <title>Soundscape : Sign in</title>
+                <title>Soundscape : Log in</title>
             </Head>
             <LoginBox />
         </>

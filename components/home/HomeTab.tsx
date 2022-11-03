@@ -6,7 +6,15 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import SongInfoBar from "./songInfoBar";
-import { useEffect, useState } from "react";
+import { 
+    useEffect, 
+    useState 
+} from "react";
+import {
+    doc,
+    getDoc,
+} from "firebase/firestore"
+import { Database } from "../../.firebase/firebaseMain"
 
 
 
@@ -16,14 +24,14 @@ const HomeTab : NextComponentType = () => {
     const isMobile = currBR === "sm" || currBR === "base" ? true : false  
 
     const [ cardsMetaArray, setCardsMetaArray ] = useState([])
+    const [ dbData, setDBData ] = useState()
     const router = useRouter()
 
 
-    useEffect(() => {
-        let recentPlayedArray = JSON.parse(localStorage.getItem("recent-played") || '[]')
-        
+    function addCards(recentPlayedArray : any) {
         let nextJSCardsComp : any = []
         recentPlayedArray.reverse().forEach((ele : any, idx : number) => {
+            if(!ele.songID) return;
             nextJSCardsComp.push(
                 <SongInfoBar 
                 key={idx}
@@ -32,29 +40,28 @@ const HomeTab : NextComponentType = () => {
                 songPlayURL={ele.playURL}
                 artistName={ele.songArtist}
                 songDuration={ele.songDuration}
+                songID={ele.songID}
                 card={true} />
             )
         })
         setCardsMetaArray(nextJSCardsComp)
-        
-        /* document.getElementsByTagName("audio")[0].addEventListener("play", (e) => {
-             let recentPlayedArray = JSON.parse(localStorage.getItem("recent-played") || '[]')
-             let nextJSCardsComp : any = []
-             recentPlayedArray.reverse().forEach((ele : any, idx : number) => {
-                 nextJSCardsComp.push(
-                     <SongInfoBar 
-                     key={idx}
-                     songImage={ele.songImgUrl}
-                     songTitle={ele.songTitle}
-                     songPlayURL={ele.playURL}
-                     artistName={ele.songArtist}
-                     songDuration={ele.songDuration}
-                     card={true} />
-                 )
-             })
-             setCardsMetaArray(nextJSCardsComp)
-         }) */
 
+    }
+
+    useEffect(() => {
+
+        if(localStorage.getItem("userID"))
+        {
+            addRecentPlayFromDatabase().then(data => {
+                addCards(data!.recentPlays);
+                localStorage.setItem("recent-played", JSON.stringify(data?.recentPlays))
+            })
+            
+            return
+        }
+
+        let recentPlayedArray = JSON.parse(localStorage.getItem("recent-played") || '[]')       
+        addCards(recentPlayedArray)
     }, [])
 
 
@@ -74,4 +81,15 @@ const HomeTab : NextComponentType = () => {
     )
 }
 
+
+async function addRecentPlayFromDatabase() {
+    let userID = localStorage.getItem("userID") || ""
+    let docSnap = await getDoc(doc(Database, "userData", userID))
+    if(docSnap.exists())
+        return docSnap.data()
+}
+
+
+
 export default HomeTab
+export { addRecentPlayFromDatabase }

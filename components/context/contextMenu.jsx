@@ -13,6 +13,7 @@ import {
     Radio
 } from "@chakra-ui/react"
 import { useRouter } from "next/router"
+import { pushRecentPlayedToDB } from '../../.firebase/miscellaneous'
 
 
 const ContextMenu = () => {
@@ -81,7 +82,27 @@ const ContextMenu = () => {
 
 const  OpenAudioQualityModal = ({op, cl, defVal}) => {
   return (
-    <Modal isOpen={op} onClose={cl}>
+    <Modal isOpen={op} onClose={cl} 
+    onCloseComplete={() => {
+      let quality = parseInt(localStorage.getItem("song-quality"))
+      console.log(typeof quality);
+      let recentPlays = JSON.parse(localStorage.getItem("recent-played"))
+      recentPlays.forEach((elem, idx) => {
+        if(quality === 0)
+          elem.playURL = elem.playURL.replace(/\_.*/, "_12.mp4")
+        else if(quality === 1)
+          elem.playURL = elem.playURL.replace(/\_.*/, "_48.mp4")
+        else if(quality === 2)
+          elem.playURL = elem.playURL.replace(/\_.*/, "_96.mp4")
+        else if(quality === 3)
+          elem.playURL = elem.playURL.replace(/\_.*/, "_160.mp4")
+        else if(quality === 4)
+          elem.playURL = elem.playURL.replace(/\_.*/, "_320.mp4")
+
+      })
+      localStorage.setItem("recent-played", JSON.stringify(recentPlays))
+      pushRecentPlayedToDB()
+    }}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Audio Quality</ModalHeader>

@@ -65,6 +65,7 @@ const SearchBar : NextComponentType = () => {
                 songDuration={durationStr}
                 artistName={element.artist.length >= 30 ? element.artist.substring(0,30) + "..." : element.artist}
                 songPlayURL={element.downloadUrl[musicQuality].link || ""}
+                songID={element.id}
                 card={false} />
             )
         })

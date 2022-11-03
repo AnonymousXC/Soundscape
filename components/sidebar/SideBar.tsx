@@ -24,7 +24,9 @@ const SideBar : NextComponentType = () => {
     const router = useRouter()
 
     useEffect(() => {
-        setSongImgURL(JSON.parse(localStorage.getItem("last-played") || "{}").songImgUrl)
+        let lastSession : any = JSON.parse(localStorage.getItem("recent-played") || '{}')
+        if(!lastSession[lastSession.length - 1]) return;
+        setSongImgURL(lastSession[lastSession.length - 1].songImgUrl)
     }, [])
 
     return (

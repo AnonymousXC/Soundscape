@@ -9,6 +9,7 @@ import {
     useBreakpoint
 } from "@chakra-ui/react"
 import { useEffect, useState } from "react";
+import { addRecentPlayFromDatabase } from "../home/HomeTab";
 
 
 const Player : NextComponentType = () => {
@@ -17,11 +18,13 @@ const Player : NextComponentType = () => {
     const isMobile = currBR === "sm" || currBR === "base" ? true : false
     const [ loopState, setLoopState ] = useState(true)
     
-
-    useEffect(() => {
-        let lastSessionSong : any = JSON.parse(localStorage.getItem("last-played") || '{}')
+    function configurePlayer(lastSession : any) {
+        let lastSessionSong : any = lastSession[lastSession.length - 1]
+        
         let isLoop : any = localStorage.getItem("loop-check") === "true"
         setLoopState(isLoop)
+
+        if(!lastSessionSong) return;
         
         if(!lastSessionSong.songTitle || !lastSessionSong.songTitle || !lastSessionSong.songTitle)
         {
@@ -34,12 +37,27 @@ const Player : NextComponentType = () => {
         document.getElementById("song-name")!.innerText = lastSessionSong.songTitle
         document.getElementById("artist-name")!.innerText = lastSessionSong.songArtist 
         document.getElementById("win-title")!.innerText = "Soundscape : " + lastSessionSong.songTitle
+        document.getElementById("song-image")!.src = lastSessionSong.songImgUrl
 
         let loopBtn = document.getElementsByClassName("rhap_repeat-button")[0]
         loopBtn.addEventListener("click", (e) => {
             localStorage.setItem("loop-check", loopBtn.getAttribute("aria-label") === "Enable loop" ? "true" : "false")
         })
 
+    }
+
+    useEffect(() => {
+
+        if(localStorage.getItem("userID"))
+        {
+            addRecentPlayFromDatabase().then(data => {
+                configurePlayer(data?.recentPlays)
+                return;
+            })
+        }
+
+        let lastSession : any = JSON.parse(localStorage.getItem("recent-played") || '{}')
+        configurePlayer(lastSession)
     }, [])
 
     return (

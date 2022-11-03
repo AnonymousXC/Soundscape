@@ -7,16 +7,7 @@ import {
     useBreakpoint
 } from "@chakra-ui/react"
 import { useEffect, useState } from "react";
-
-interface songProps {
-    songImage: string,
-    songTitle: string,
-    songDuration: string,
-    artistName: string,
-    songPlayURL: string,
-}
-
-
+import { pushRecentPlayedToDB } from "../../.firebase/miscellaneous"
 
 const SongInfoBar : NextComponentType<any> = (props : any)  => {
 
@@ -112,15 +103,14 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
                     "songTitle" : props.songTitle,
                     "songDuration" : props.songDuration,
                     "songArtist" : props.artistName,
-                    "playURL" : props.songPlayURL
+                    "playURL" : props.songPlayURL,
+                    "songID" : props.songID
                 }
-
-                localStorage.setItem("last-played", JSON.stringify(musicDataToSave))
 
                 let recentPlayedArray : any = JSON.parse(localStorage.getItem("recent-played") || '[]')
 
                 recentPlayedArray.forEach((ele : any, idx : number) => {
-                    if(JSON.stringify(ele) === JSON.stringify(musicDataToSave))
+                    if(ele.songID === musicDataToSave.songID)
                         {
                             recentPlayedArray.splice(idx, 1)
                             return
@@ -129,7 +119,7 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
 
                 recentPlayedArray.push(musicDataToSave)
                 localStorage.setItem("recent-played", JSON.stringify(recentPlayedArray))
-    
+                pushRecentPlayedToDB()
             }}>
                 <Image src={isPlaying ? "images/icons/Play Music Icon.svg" : "images/icons/Pause Music Icon.svg"} w={"40px"} className="player-btn" rounded={29.5} />
             </Button>
