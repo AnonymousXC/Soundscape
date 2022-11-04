@@ -86,7 +86,6 @@ function loginUser(email, password) {
   .then(e => {
     localStorage.setItem("userID", e.user.uid)
     document.getElementById("login-status").innerText = "Logged In Successfully."
-    console.log(e.user.uid);
   })
   .catch(err => {
     document.getElementById("login-status").innerText = err

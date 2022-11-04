@@ -46,7 +46,7 @@ const ContextMenu = () => {
         <Flex 
         id="context-menu"
         w={"250px"}
-        h={"280px"}
+        h={"320px"}
         position="absolute"
         backgroundColor={"rgba(16, 20, 31, 1)"}
         display={display}
@@ -71,10 +71,14 @@ const ContextMenu = () => {
           onClick={() => {
             router.reload()
           }}>Reload</Button>
-          <Button variant={"ghost"} roundedTop={0} justifyContent="flex-start" px={6}
+          <Button variant={"ghost"} rounded={0} justifyContent="flex-start" px={6}
           onClick={() => {
             router.back()
           }}>Back</Button>
+          <Button variant={"ghost"} roundedTop={0} justifyContent="flex-start" px={6}
+          onClick={() => {
+            localStorage.removeItem("userID")
+          }}>Logout</Button>
           <OpenAudioQualityModal op={isOpen} cl={onClose} defVal={musicQuality}/>
         </Flex>
     )
@@ -82,7 +86,7 @@ const ContextMenu = () => {
 
 const  OpenAudioQualityModal = ({op, cl, defVal}) => {
   return (
-    <Modal isOpen={op} onClose={cl} 
+    <Modal isOpen={op} onClose={cl}
     onCloseComplete={() => {
       let quality = parseInt(localStorage.getItem("song-quality"))
       console.log(typeof quality);
@@ -104,7 +108,7 @@ const  OpenAudioQualityModal = ({op, cl, defVal}) => {
       pushRecentPlayedToDB()
     }}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent mx={2}>
         <ModalHeader>Audio Quality</ModalHeader>
         <ModalBody>
           Select Audio Quality : 
@@ -130,3 +134,4 @@ const  OpenAudioQualityModal = ({op, cl, defVal}) => {
 
 
 export default ContextMenu
+export { OpenAudioQualityModal }
