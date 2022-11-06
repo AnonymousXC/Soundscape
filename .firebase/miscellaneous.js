@@ -7,7 +7,6 @@ import {
 
 
 function pushRecentPlayedToDB() {
-    console.log(localStorage.getItem("userID"));
     let userID = localStorage.getItem("userID")
     if(!userID) return;
     const docRef = doc(Database, "userData", userID)
@@ -16,4 +15,13 @@ function pushRecentPlayedToDB() {
     })
 }
 
-export { pushRecentPlayedToDB }
+function pushFavSongToDB() {
+  let userID = localStorage.getItem("userID")
+  if(!userID) return;
+  const docRef = doc(Database, "userData", userID)
+  updateDoc(docRef, {
+      favSongs : JSON.parse(localStorage.getItem("Fav-Arr") || '[]')
+  })
+}
+
+export { pushRecentPlayedToDB, pushFavSongToDB }

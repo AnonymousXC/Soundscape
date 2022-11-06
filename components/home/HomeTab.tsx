@@ -24,7 +24,7 @@ const HomeTab : NextComponentType = () => {
     const isMobile = currBR === "sm" || currBR === "base" ? true : false  
 
     const [ cardsMetaArray, setCardsMetaArray ] = useState([])
-    const [ dbData, setDBData ] = useState()
+    // const [ dbData, setDBData ] = useState()
     const router = useRouter()
 
 

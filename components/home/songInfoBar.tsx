@@ -117,6 +117,7 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
                         }
                 })
 
+                audio.setAttribute("data-curr-song", JSON.stringify(musicDataToSave))
                 recentPlayedArray.push(musicDataToSave)
                 localStorage.setItem("recent-played", JSON.stringify(recentPlayedArray))
                 pushRecentPlayedToDB()

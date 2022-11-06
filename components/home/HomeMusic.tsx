@@ -6,12 +6,15 @@ import {
 } from "@chakra-ui/react"
 import SearchBar from "./Search";
 import HomeTab from "./HomeTab";
+import LikedTab from "../home/FavTab"
+import { useRouter } from "next/router";
 
 
 const HomeTabMain : NextComponentType = () => {
 
     const currBR = useBreakpoint()
     const isMobile = currBR === "sm" || currBR === "base" ? true : false
+    const router = useRouter()
 
 
     return (
@@ -39,7 +42,14 @@ const HomeTabMain : NextComponentType = () => {
             justifyContent="flex-start"
             direction={"column"}> 
                 <SearchBar />
-                <HomeTab />
+                {
+                    (router.query.tab === "Home" || router.query.tab === undefined) &&
+                    <HomeTab />
+                }
+                {
+                    router.query.tab === "LikedSong" &&
+                    <LikedTab />
+                }
             </Flex>
         </Flex>
     )

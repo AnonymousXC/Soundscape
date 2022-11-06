@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react"
 import { useEffect, useState } from "react";
 import { addRecentPlayFromDatabase } from "../home/HomeTab";
+import { pushFavSongToDB } from "../../.firebase/miscellaneous";
 
 
 const Player : NextComponentType = () => {
@@ -83,7 +84,10 @@ const Player : NextComponentType = () => {
                     variant={"unstyled"}
                     pt={2}
                     w={"min-content"}
-                    h={"min-content"} ><Image src="images/icons/Non Fav Music Icon.svg" w={"4"} /></Button>
+                    h={"min-content"}
+                    onClick={() => {
+                        addCurrentSongToFav()
+                    }} ><Image src="images/icons/Non Fav Music Icon.svg" w={"4"} /></Button>
                 </Flex>
                 <Flex w={"100%"}>
                     <Text id="artist-name" className="artist-name-cl" fontSize={"0.8rem"} color="#979797">Imagine Dragons</Text>
@@ -117,6 +121,24 @@ const Player : NextComponentType = () => {
         </Flex>
     )
 }
+
+
+function addCurrentSongToFav() {
+    let preFavArr = JSON.parse(localStorage.getItem("Fav-Arr") || '[]')
+    let currFavToAdd = JSON.parse(document.getElementsByTagName("audio")[0].getAttribute("data-curr-song") || '[]')
+    // preFavArr.forEach(elem  => {
+    //     if(elem.songID == currFavToAdd.songID)
+    //         return  
+    // });
+    for(let i = 0; i < preFavArr.length; i++)
+        if(preFavArr[i].songID === currFavToAdd.songID)
+            return
+            
+    preFavArr.push(currFavToAdd)
+    localStorage.setItem("Fav-Arr", JSON.stringify(preFavArr))
+    pushFavSongToDB()
+}
+
 
 
 export default Player;

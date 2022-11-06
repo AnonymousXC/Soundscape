@@ -26,7 +26,8 @@ const SideBar : NextComponentType = () => {
     useEffect(() => {
         let lastSession : any = JSON.parse(localStorage.getItem("recent-played") || '{}')
         if(!lastSession[lastSession.length - 1]) return;
-        setSongImgURL(lastSession[lastSession.length - 1].songImgUrl)
+        setSongImgURL(lastSession[0].songImgUrl)
+        document.getElementsByTagName("audio")[0].setAttribute("data-curr-song", JSON.stringify(lastSession[0]))
     }, [])
 
     return (
@@ -51,7 +52,10 @@ const SideBar : NextComponentType = () => {
                             onClick={() => {
                                 router.push("/?tab=Home", undefined, {shallow: true})
                             }}> <Image src="images/icons/Home Icon.svg" pr={"5"} w="38px" /> Home </Tab>
-                            <Tab fontWeight={"bold"} fontSize="0.9rem" _hover={{color: "#909090"}}><Image src="images/icons/Liked Icon.svg" pr={"5"} w="38px" /> Liked Songs</Tab>
+                            <Tab fontWeight={"bold"} fontSize="0.9rem" _hover={{color: "#909090"}}
+                            onClick={() => {
+                                router.push("/?tab=LikedSong", undefined, {shallow: true})
+                            }}><Image src="images/icons/Liked Icon.svg" pr={"5"} w="38px" /> Liked Songs</Tab>
                         </TabList>
                     </Tabs>
                 </Box>
