@@ -56,7 +56,7 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
         backgroundColor={"rgba(0,0,0,0.2)"}
         color="rgba(255,255,255,0.8)"
         direction={props.card === true ? "column" : "row"}>
-            <Image src={props.songImage} alt="songicon" width={props.card === true ? "90%" : "40px"} height={props.card === true ? "auto" : "40px"} rounded={6} mx={4} loading="lazy" />
+            <Image src={props.songImage} alt="" width={props.card === true ? "90%" : "40px"} height={props.card === true ? "auto" : "40px"} rounded={6} mx={4} loading="lazy" />
             <Flex justifyContent={"space-between"} h={"100%"} w={props.card === true ? "100%" : "70%"} alignItems={props.card === true ? "center" : "center"}
             direction={props.card === true ? "column" : "row"}>
                 <Text w={isMobile === false ? props.card === true ? "100%" : "50%" : "95%"} textAlign={props.card === true ? "center" : "initial"}>{props.songTitle}</Text>
@@ -122,7 +122,7 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
                 localStorage.setItem("recent-played", JSON.stringify(recentPlayedArray))
                 pushRecentPlayedToDB()
             }}>
-                <Image src={isPlaying ? "images/icons/Play Music Icon.svg" : "images/icons/Pause Music Icon.svg"} w={"40px"} className="player-btn" rounded={29.5} />
+                <Image src={isPlaying ? "images/icons/Play Music Icon.svg" : "images/icons/Pause Music Icon.svg"} w={"40px"} className="player-btn" rounded={29.5} alt="" />
             </Button>
         </Flex>
     )

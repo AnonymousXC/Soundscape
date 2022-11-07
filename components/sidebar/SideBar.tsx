@@ -43,6 +43,7 @@ const SideBar : NextComponentType = () => {
                 <Image 
                 src="images/final icon.png"
                 w={"210px"}
+                alt=""
                 pt={2}
                 pl={2} />
                 <Box>
@@ -90,7 +91,8 @@ const SideBar : NextComponentType = () => {
                 src={songImgUrl ? songImgUrl : "https://media.istockphoto.com/vectors/flag-ribbon-welcome-old-school-flag-banner-vector-id1223088904?k=20&m=1223088904&s=612x612&w=0&h=b_ilJpFTSQbZeCrZusHRLEskmfiONWH0hFASAJbgz9g="}
                 width={"80%"}
                 rounded={12}
-                loading={"lazy"}/>
+                loading={"lazy"}
+                alt="" />
             </Flex>
 
         </Flex>

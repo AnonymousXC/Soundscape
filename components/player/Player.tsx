@@ -108,7 +108,7 @@ const Player : NextComponentType = () => {
                     RHAP_UI.LOOP,
                     <Button variant={"unstyled"} onClick={() => {
                         downloadCurrSong()
-                    }}>
+                    }} key="Desktop-Download-BTN">
                         <Image src="images/icons/Download Icon.svg" w={"31px"} fill="#fff" />
                     </Button>
                 ] : [ RHAP_UI.LOOP ]
@@ -117,7 +117,7 @@ const Player : NextComponentType = () => {
                 isMobile ? [
                     RHAP_UI.ADDITIONAL_CONTROLS,
                     RHAP_UI.MAIN_CONTROLS,
-                    <Flex width={"33%"} justifyContent="flex-end">
+                    <Flex width={"33%"} justifyContent="flex-end" key="asvhjuh-551">
                     <Button variant="unstyled" display={"flex"} justifyContent="center" alignItems={"center"}
                     onClick={() => {
                         addCurrentSongToFav()
@@ -125,7 +125,7 @@ const Player : NextComponentType = () => {
                         <Image src="images/icons/Non Fav Music Icon.svg" w={"23px"} />
                     </Button>
 
-                    <Button variant={"unstyled"}
+                    <Button variant={"unstyled"} key="Mobile-Download-BTN"
                     onClick={() => {
                         downloadCurrSong()
                     }}>
@@ -141,16 +141,16 @@ const Player : NextComponentType = () => {
             }
             customIcons={
                 {
-                    previous: <Image src="images/icons/Previous Music Icon.svg" className="player-btn" rounded={29.5}></Image>,
-                    next: <Image src="images/icons/Next Music Icon.svg" className="player-btn" rounded={29.5}></Image>,
-                    forward: <Image src="images/icons/Forward Music Icon.svg" className="player-btn" rounded={29.5}></Image>,
-                    rewind: <Image src="images/icons/Backward Music Icon.svg" className="player-btn" rounded={29.5}></Image>,
-                    play: <Image src="images/icons/Pause Music Icon.svg" className="player-btn" rounded={29.5}></Image>,
-                    pause: <Image src="images/icons/Play Music Icon.svg" className="player-btn" rounded={29.5}></Image>,
-                    loop: <Image src="images/icons/Loop Music Icon.svg"></Image>,
-                    loopOff: <Image src="images/icons/Loop Off Music Icon.svg"></Image>,
-                    volume: <Image src="images/icons/Volume Music Icon.svg" ></Image>,
-                    volumeMute: <Image src="images/icons/Volume Mute Icon.svg"></Image>,
+                    previous: <Image src="images/icons/Previous Music Icon.svg" className="player-btn" rounded={29.5} alt="" ></Image>,
+                    next: <Image src="images/icons/Next Music Icon.svg" className="player-btn" rounded={29.5} alt="" ></Image>,
+                    forward: <Image src="images/icons/Forward Music Icon.svg" className="player-btn" rounded={29.5} alt="" ></Image>,
+                    rewind: <Image src="images/icons/Backward Music Icon.svg" className="player-btn" rounded={29.5} alt=""></Image>,
+                    play: <Image src="images/icons/Pause Music Icon.svg" className="player-btn" rounded={29.5} alt="" ></Image>,
+                    pause: <Image src="images/icons/Play Music Icon.svg" className="player-btn" rounded={29.5} alt="" ></Image>,
+                    loop: <Image src="images/icons/Loop Music Icon.svg" alt="" ></Image>,
+                    loopOff: <Image src="images/icons/Loop Off Music Icon.svg" alt="" ></Image>,
+                    volume: <Image src="images/icons/Volume Music Icon.svg" alt="" ></Image>,
+                    volumeMute: <Image src="images/icons/Volume Mute Icon.svg" alt="" ></Image>,
                 }
             }
             src={""}

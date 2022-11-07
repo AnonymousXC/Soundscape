@@ -34,7 +34,8 @@ const HomeTabMain : NextComponentType = () => {
             left="60%"
             top={"40%"}
             transform="translate(-50%, -50%)"
-            zIndex={-1} />
+            zIndex={-1}
+            alt="" />
             <Flex 
             w={"100%"}
             h={"100%"}
