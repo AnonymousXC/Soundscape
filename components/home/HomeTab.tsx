@@ -2,7 +2,8 @@ import type { NextComponentType } from "next";
 import { 
     Flex,
     Text,
-    useBreakpoint
+    useBreakpoint,
+    Divider
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import SongInfoBar from "./songInfoBar";
@@ -24,11 +25,13 @@ const HomeTab : NextComponentType = () => {
     const isMobile = currBR === "sm" || currBR === "base" ? true : false  
 
     const [ cardsMetaArray, setCardsMetaArray ] = useState([])
+    const [ trendingTodayCards, setTrendingTodayCards ] = useState([])
+    const [ mobileHeight, setMobileHeight ] = useState(0)
     // const [ dbData, setDBData ] = useState()
     const router = useRouter()
 
 
-    function addCards(recentPlayedArray : any) {
+    function addCards(recentPlayedArray : any, trending : boolean) {
         let nextJSCardsComp : any = []
         recentPlayedArray.reverse().forEach((ele : any, idx : number) => {
             if(!ele.songID) return;
@@ -44,39 +47,54 @@ const HomeTab : NextComponentType = () => {
                 card={true} />
             )
         })
-        setCardsMetaArray(nextJSCardsComp)
+        if(trending === false)
+            setCardsMetaArray(nextJSCardsComp)
+        else
+            setTrendingTodayCards(nextJSCardsComp)
+    }
 
+    async function addTrendingToday() {
+        let songDataRes = await fetch("api/fetchTopSongs", {method: "GET"})
+        let songData = await songDataRes.json()
     }
 
     useEffect(() => {
 
+        setMobileHeight(window.innerHeight)
+
         if(localStorage.getItem("userID"))
         {
             addRecentPlayFromDatabase().then(data => {
-                addCards(data!.recentPlays);
+                addCards(data!.recentPlays, false);
                 localStorage.setItem("recent-played", JSON.stringify(data?.recentPlays))
             })
-            
             return
         }
 
         let recentPlayedArray = JSON.parse(localStorage.getItem("recent-played") || '[]')       
-        addCards(recentPlayedArray)
+        addCards(recentPlayedArray, false)
     }, [])
 
 
     return (
         <Flex 
-        h={isMobile === true ? "calc(100vh - (90px + 48px + 50px))" : "calc(100% - 35px)"}
+        h={isMobile === true ? `calc(${mobileHeight} - (90px + 48px + 50px))` : "calc(100% - 35px)"}
         px={3}
         py={3}
         pb={0}
         pr={0}
         display={router.query.tab === "Home" || router.query.tab === undefined ? "flex" : "none"}
-        direction={"column"}>
+        direction={"column"}
+        overflowY="auto">
             <Text fontSize={"1.2rem"} fontWeight="500">Recently Played</Text>
-            <Flex wrap={"wrap"} height="100%" overflowY="auto">
+            <Divider />
+            <Flex wrap={"wrap"} height="max-content" mb={12}>
                 {cardsMetaArray}
+            </Flex>
+            <Text fontSize={"1.2rem"} fontWeight="500">Trending Today</Text>
+            <Divider />
+            <Flex>
+                { trendingTodayCards }
             </Flex>
         </Flex>
     )

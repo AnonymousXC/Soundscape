@@ -13,6 +13,7 @@ function pushRecentPlayedToDB() {
     updateDoc(docRef, {
         recentPlays : JSON.parse(localStorage.getItem("recent-played") || '[]')
     })
+    .catch(err => {})
 }
 
 function pushFavSongToDB() {
@@ -22,6 +23,7 @@ function pushFavSongToDB() {
   updateDoc(docRef, {
       favSongs : JSON.parse(localStorage.getItem("Fav-Arr") || '[]')
   })
+  .catch(err => {})
 }
 
 export { pushRecentPlayedToDB, pushFavSongToDB }

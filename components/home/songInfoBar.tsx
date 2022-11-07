@@ -117,6 +117,19 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
                         }
                 })
 
+                let favArr = JSON.parse(localStorage.getItem("Fav-Arr") || '[]')
+                let favBtnIcon = document.getElementById("fav-icon-img")
+                for (let i = 0; i < favArr.length; i++) {
+                    const el = favArr[i];
+                    if(el.songID === props.songID)
+                    {
+                        favBtnIcon.src = "images/icons/Fav Icon.svg"
+                        break;
+                    }
+                    else
+                        favBtnIcon.src = "images/icons/Non Fav Music Icon.svg"
+                }
+
                 audio.setAttribute("data-curr-song", JSON.stringify(musicDataToSave))
                 recentPlayedArray.push(musicDataToSave)
                 localStorage.setItem("recent-played", JSON.stringify(recentPlayedArray))

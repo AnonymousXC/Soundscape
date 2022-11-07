@@ -52,11 +52,11 @@ const SideBar : NextComponentType = () => {
                             <Tab fontWeight={"bold"} fontSize="0.9rem" _hover={{color: "#909090"}}
                             onClick={() => {
                                 router.push("/?tab=Home", undefined, {shallow: true})
-                            }}> <Image src="images/icons/Home Icon.svg" pr={"5"} w="38px" /> Home </Tab>
+                            }}> <Image src="images/icons/Home Icon.svg" pr={"5"} w="38px" alt="" /> Home </Tab>
                             <Tab fontWeight={"bold"} fontSize="0.9rem" _hover={{color: "#909090"}}
                             onClick={() => {
                                 router.push("/?tab=LikedSong", undefined, {shallow: true})
-                            }}><Image src="images/icons/Liked Icon.svg" pr={"5"} w="38px" /> Liked Songs</Tab>
+                            }}><Image src="images/icons/Liked Icon.svg" pr={"5"} w="38px" alt="" /> Liked Songs</Tab>
                         </TabList>
                     </Tabs>
                 </Box>
