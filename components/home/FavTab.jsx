@@ -57,8 +57,9 @@ const LikedTab = () => {
         direction={"column"}
         h={isMobile ? "calc(100vh - (90px + 48px + 50px))" : "calc(100% - 35px)"}
         py={4}
+        pb={0}
         pl={4}>
-            <Text fontSize={"1.2rem"} fontWeight="500">Liked Songs</Text>
+            <Text fontSize={"1.2rem"} fontWeight="500" pb={2}>Liked Songs</Text>
             <Flex
             w={"100%"}
             h={"100%"}

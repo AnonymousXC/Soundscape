@@ -67,14 +67,15 @@ const HomeTab : NextComponentType = () => {
 
     return (
         <Flex 
-        h={isMobile === true ? "calc(100vh - (90px + 48px + 50px))" : "100%"}
+        h={isMobile === true ? "calc(100vh - (90px + 48px + 50px))" : "calc(100% - 35px)"}
         px={3}
         py={3}
+        pb={0}
+        pr={0}
         display={router.query.tab === "Home" || router.query.tab === undefined ? "flex" : "none"}
-        direction={"column"}
-        overflowY="auto">
+        direction={"column"}>
             <Text fontSize={"1.2rem"} fontWeight="500">Recently Played</Text>
-            <Flex wrap={"wrap"} height="100%">
+            <Flex wrap={"wrap"} height="100%" overflowY="auto">
                 {cardsMetaArray}
             </Flex>
         </Flex>

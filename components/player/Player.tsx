@@ -1,5 +1,6 @@
 import type { NextComponentType } from "next";
 import AudioPlayer from 'react-h5-audio-player';
+import { RHAP_UI } from "react-h5-audio-player";
 import 'react-h5-audio-player/lib/styles.css';
 import {
     Button,
@@ -67,7 +68,7 @@ const Player : NextComponentType = () => {
         className="music-player"
         w={isMobile === true ? "100%" : "100vw"}
         h={"90px"}
-        position={isMobile === true ? "fixed" : "initial"}
+        position={'fixed'}
         bottom={isMobile === true ? "calc(0% + 50px)" : "initial"}
         backgroundColor="#10141F"
         zIndex={5}>
@@ -101,6 +102,43 @@ const Player : NextComponentType = () => {
             showSkipControls={!isMobile}
             showFilledVolume={true}
             autoPlayAfterSrcChange={true}
+            customAdditionalControls={
+                isMobile === false ?
+                [
+                    RHAP_UI.LOOP,
+                    <Button variant={"unstyled"} onClick={() => {
+                        downloadCurrSong()
+                    }}>
+                        <Image src="images/icons/Download Icon.svg" w={"31px"} fill="#fff" />
+                    </Button>
+                ] : [ RHAP_UI.LOOP ]
+            }
+            customControlsSection={
+                isMobile ? [
+                    RHAP_UI.ADDITIONAL_CONTROLS,
+                    RHAP_UI.MAIN_CONTROLS,
+                    <Flex width={"33%"} justifyContent="flex-end">
+                    <Button variant="unstyled" display={"flex"} justifyContent="center" alignItems={"center"}
+                    onClick={() => {
+                        addCurrentSongToFav()
+                    }}>
+                        <Image src="images/icons/Non Fav Music Icon.svg" w={"23px"} />
+                    </Button>
+
+                    <Button variant={"unstyled"}
+                    onClick={() => {
+                        downloadCurrSong()
+                    }}>
+                        <Image src="images/icons/Download Icon.svg" w={"27px"} fill="#fff" />
+                    </Button>
+
+                    </Flex>
+                ] : [
+                    RHAP_UI.ADDITIONAL_CONTROLS,
+                    RHAP_UI.MAIN_CONTROLS,
+                    RHAP_UI.VOLUME_CONTROLS
+                ]
+            }
             customIcons={
                 {
                     previous: <Image src="images/icons/Previous Music Icon.svg" className="player-btn" rounded={29.5}></Image>,
@@ -139,6 +177,15 @@ function addCurrentSongToFav() {
     pushFavSongToDB()
 }
 
+function downloadCurrSong() {
+    let songURL = document.getElementsByTagName("audio")[0].src
+    const linkEl = document.createElement("a")
+    linkEl.href = songURL
+    linkEl.download = "true"
+    document.body.append(linkEl)
+    linkEl.click()
+    // document.removeChild(linkEl)
+}
 
 
 export default Player;
