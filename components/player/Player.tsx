@@ -130,7 +130,7 @@ const Player : NextComponentType = () => {
                 isMobile === false ?
                 [
                     RHAP_UI.LOOP,
-                    <Link href={downloadLink} download={true}
+                    <Link href={downloadLink} download={true} key="asdasd"
                     onClick={() => {
                         setDownloadLink(document.getElementsByTagName("audio")[0].src)
                     }}>
@@ -144,11 +144,11 @@ const Player : NextComponentType = () => {
                     RHAP_UI.ADDITIONAL_CONTROLS,
                     RHAP_UI.MAIN_CONTROLS,
                     <Flex width={"33%"} justifyContent="flex-end" key="asvhjuh-551">
-                    <Button variant="unstyled" display={"flex"} justifyContent="center" alignItems={"center"}
+                    <Button variant="unstyled" display={"flex"} justifyContent="center" alignItems={"center"} key="fdshbsdfkkams"
                     onClick={() => {
                         addCurrentSongToFav()
                     }}>
-                        <Image src="images/icons/Non Fav Music Icon.svg" w={"23px"} id="fav-icon-mob-img" alt="" />
+                        <Image src="images/icons/Non Fav Music Icon.svg" w={"23px"} id="fav-icon-mob-img" alt=""/>
                     </Button>
 
                     <Link href={downloadLink} download={true} display="flex" justifyContent={"flex-end"} alignItems="center"
