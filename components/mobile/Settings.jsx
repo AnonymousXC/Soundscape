@@ -26,11 +26,18 @@ const SettingTabMob = ({displayIt}) => {
         w={"100%"}
         backgroundColor={"#10141f"}
         direction={"column"}
-        p={4}>
+        p={4}
+        gap={3}>
             <Text fontSize={"1.2rem"} fontWeight="500" mb={4}>Settings</Text>
             <Button w={"100%"} variant={"solid"} rounded={0}
             onClick={() => onOpen()}>
                 Audio Quality
+            </Button>
+            <Button w={"100%"} variant="solid" rounded={0}
+            onClick={() => {
+                localStorage.removeItem("userID")
+            }}>
+                Logout
             </Button>
             <OpenAudioQualityModal op={isOpen} cl={onClose}/>
         </Flex>

@@ -7,7 +7,8 @@ import {
     Flex,
     Image,
     Text,
-    useBreakpoint
+    useBreakpoint, 
+    Link
 } from "@chakra-ui/react"
 import { useEffect, useState } from "react";
 import { addRecentPlayFromDatabase } from "../home/HomeTab";
@@ -19,6 +20,7 @@ const Player : NextComponentType = () => {
     const currBR = useBreakpoint()
     const isMobile = currBR === "sm" || currBR === "base" ? true : false
     const [ loopState, setLoopState ] = useState(true)
+    const [ downloadLink, setDownloadLink ] = useState("")
     
     function configurePlayer(lastSession : any) {
         let lastSessionSong : any = lastSession[lastSession.length - 1]
@@ -63,15 +65,24 @@ const Player : NextComponentType = () => {
 
         let favArr = JSON.parse(localStorage.getItem("Fav-Arr") || '[]')
         let favBtnIcon = document.getElementById("fav-icon-img")
+        let favBtnMob = document.getElementById("fav-icon-mob-img")
         for (let i = 0; i < favArr.length; i++) {
             const el = favArr[i];
             if(el.songID === lastSession[lastSession.length - 1].songID)
             {
-                favBtnIcon.src = "images/icons/Fav Icon.svg"
-                break;
+                try {
+                    favBtnIcon.src = "images/icons/Fav Icon.svg"
+                    favBtnMob.src = "images/icons/Fav Icon.svg"
+                    break;
+                } catch {}
             }
             else
-                favBtnIcon.src = "images/icons/Non Fav Music Icon.svg"
+            {
+                try {
+                    favBtnIcon.src = "images/icons/Non Fav Music Icon.svg"
+                    favBtnMob.src = "images/icons/Non Fav Music Icon.svg"
+                } catch {}
+            }
         }
     }, [])
 
@@ -93,7 +104,7 @@ const Player : NextComponentType = () => {
             px={8} fontSize="0.9rem"
             pt={4}>
                 <Flex className="wrapper" w={"100%"} justifyContent="space-between">
-                    <Text id="song-name" className="song-name-cl">Bad Liar</Text>
+                    <Text id="song-name" className="song-name-cl">Welcome</Text>
                     <Button 
                     variant={"unstyled"}
                     pt={2}
@@ -119,11 +130,13 @@ const Player : NextComponentType = () => {
                 isMobile === false ?
                 [
                     RHAP_UI.LOOP,
-                    <Button variant={"unstyled"} onClick={() => {
-                        downloadCurrSong()
-                    }} key="Desktop-Download-BTN">
+                    <Link href={downloadLink} download={true}
+                    onClick={() => {
+                        setDownloadLink(document.getElementsByTagName("audio")[0].src)
+                    }}>
                         <Image src="images/icons/Download Icon.svg" w={"31px"} fill="#fff" alt="" />
-                    </Button>
+                    </Link>
+                    
                 ] : [ RHAP_UI.LOOP ]
             }
             customControlsSection={
@@ -135,15 +148,15 @@ const Player : NextComponentType = () => {
                     onClick={() => {
                         addCurrentSongToFav()
                     }}>
-                        <Image src="images/icons/Non Fav Music Icon.svg" w={"23px"} id="fav-icon-img" key={"asdsa"} alt="" />
+                        <Image src="images/icons/Non Fav Music Icon.svg" w={"23px"} id="fav-icon-mob-img" alt="" />
                     </Button>
 
-                    <Button variant={"unstyled"} key="Mobile-Download-BTN"
+                    <Link href={downloadLink} download={true} display="flex" justifyContent={"flex-end"} alignItems="center"
                     onClick={() => {
-                        downloadCurrSong()
+                        setDownloadLink(document.getElementsByTagName("audio")[0].src)
                     }}>
                         <Image src="images/icons/Download Icon.svg" w={"27px"} fill="#fff" alt="" />
-                    </Button>
+                    </Link>
 
                     </Flex>
                 ] : [
@@ -178,18 +191,25 @@ function addCurrentSongToFav() {
     let preFavArr = JSON.parse(localStorage.getItem("Fav-Arr") || '[]')
     let currFavToAdd = JSON.parse(document.getElementsByTagName("audio")[0].getAttribute("data-curr-song") || '[]')
     let favBtnIcon = document.getElementById("fav-icon-img")
+    let favBtnMob = document.getElementById("fav-icon-mob-img")
 
     for(let i = 0; i < preFavArr.length; i++)
         if(preFavArr[i].songID === currFavToAdd.songID)
             {
                 preFavArr.splice(i, 1)
-                favBtnIcon.src = "images/icons/Non Fav Music Icon.svg"
+                if(favBtnMob)
+                    favBtnMob.src = "images/icons/Non Fav Music Icon.svg"
+                if(favBtnIcon)
+                    favBtnIcon.src = "images/icons/Non Fav Music Icon.svg"
                 localStorage.setItem("Fav-Arr", JSON.stringify(preFavArr))
                 pushFavSongToDB()
                 return;
             }
     
-    favBtnIcon.src = "images/icons/Fav Icon.svg"
+    if(favBtnIcon)
+        favBtnIcon.src = "images/icons/Fav Icon.svg"
+    if(favBtnMob)
+        favBtnMob.src = "images/icons/Fav Icon.svg"
     preFavArr.push(currFavToAdd)
     localStorage.setItem("Fav-Arr", JSON.stringify(preFavArr))
     pushFavSongToDB()

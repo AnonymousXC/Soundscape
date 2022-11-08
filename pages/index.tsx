@@ -26,10 +26,6 @@ const Home: NextPage = () => {
       w={isMobile === true ? "100vw" : ""}
       backgroundColor={"rgba(16, 20, 31, 0.5)"}
       direction={isMobile === true ? "column" : "initial"}>
-        <Head>
-          <title id='win-title'>Soundscape</title>
-          <link rel="shortcut icon" href="" type="image/x-icon" id='site-icon' />
-        </Head>
           { isMobile === false &&
           <>
             <SideBar />

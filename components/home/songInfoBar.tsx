@@ -119,15 +119,24 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
 
                 let favArr = JSON.parse(localStorage.getItem("Fav-Arr") || '[]')
                 let favBtnIcon = document.getElementById("fav-icon-img")
+                let favBtnMob = document.getElementById("fav-icon-mob-img")
                 for (let i = 0; i < favArr.length; i++) {
                     const el = favArr[i];
                     if(el.songID === props.songID)
                     {
-                        favBtnIcon.src = "images/icons/Fav Icon.svg"
+                        if(favBtnIcon)
+                            favBtnIcon.src = "images/icons/Fav Icon.svg"
+                        if(favBtnMob)
+                            favBtnMob.src = "images/icons/Fav Icon.svg"
                         break;
                     }
                     else
-                        favBtnIcon.src = "images/icons/Non Fav Music Icon.svg"
+                    {
+                        try {
+                            favBtnIcon.src = "images/icons/Non Fav Music Icon.svg"
+                            favBtnMob.src = "images/icons/Fav Icon.svg"
+                        } catch {}
+                    }
                 }
 
                 audio.setAttribute("data-curr-song", JSON.stringify(musicDataToSave))
