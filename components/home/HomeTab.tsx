@@ -27,6 +27,7 @@ const HomeTab : NextComponentType = () => {
     const [ cardsMetaArray, setCardsMetaArray ] = useState([])
     const [ trendingTodayCards, setTrendingTodayCards ] = useState([])
     const [ mobileHeight, setMobileHeight ] = useState(0)
+    const [ showRecent, setShowRecent ] = useState(false)
     // const [ dbData, setDBData ] = useState()
     const router = useRouter()
 
@@ -55,7 +56,21 @@ const HomeTab : NextComponentType = () => {
 
     async function addTrendingToday() {
         let songDataRes = await fetch("api/fetchTopSongs", {method: "GET"})
-        let songData = await songDataRes.json()
+        let songData = (await songDataRes.json()).results.songs
+        
+        let newSongArr = []
+        for (let i = 0; i < 20; i++) {
+            const el = songData[i];
+            newSongArr.push({
+                "songImgUrl" : el.image[2].link,
+                "songTitle" : el.name.replace(/\(.+\)/, ""),
+                "songDuration" : el.duration,
+                "songArtist" : el.artist,
+                "playURL" : el.downloadUrl[4].link,
+                "songID" : el.id
+            })
+        }
+        addCards(newSongArr, true)
     }
 
     useEffect(() => {
@@ -66,13 +81,19 @@ const HomeTab : NextComponentType = () => {
         {
             addRecentPlayFromDatabase().then(data => {
                 addCards(data!.recentPlays, false);
+                setShowRecent(true)
+                addTrendingToday()
                 localStorage.setItem("recent-played", JSON.stringify(data?.recentPlays))
-            })
+            });
+
             return
         }
 
         let recentPlayedArray = JSON.parse(localStorage.getItem("recent-played") || '[]')       
         addCards(recentPlayedArray, false)
+        addTrendingToday()
+        if(!recentPlayedArray || recentPlayedArray !== undefined)
+            setShowRecent(true)
     }, [])
 
 
@@ -86,14 +107,19 @@ const HomeTab : NextComponentType = () => {
         display={router.query.tab === "Home" || router.query.tab === undefined ? "flex" : "none"}
         direction={"column"}
         overflowY="auto">
-            <Text fontSize={"1.2rem"} fontWeight="500">Recently Played</Text>
-            <Divider />
-            <Flex wrap={"wrap"} height="max-content" mb={isMobile === true ? 80 : 16}>
-                {cardsMetaArray}
-            </Flex>
+            {
+                showRecent &&
+                <>
+                    <Text fontSize={"1.2rem"} fontWeight="500">Recently Played</Text>
+                    <Divider />
+                    <Flex wrap={"wrap"} height="max-content" mb={isMobile === true ? 80 : 16}>
+                        {cardsMetaArray}
+                    </Flex>
+                </>
+            }
             <Text fontSize={"1.2rem"} fontWeight="500" mt={1}>Trending Today</Text>
             <Divider />
-            <Flex>
+            <Flex wrap={"wrap"} height="max-content">
                 { trendingTodayCards }
             </Flex>
         </Flex>
