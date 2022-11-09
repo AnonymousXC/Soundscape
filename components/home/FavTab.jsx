@@ -64,7 +64,8 @@ const LikedTab = () => {
             w={"100%"}
             h={"100%"}
             flexWrap="wrap"
-            overflowY={"auto"}>
+            overflowY={"auto"}
+            id="liked-cards-el">
                 { cardsMetaArray }
             </Flex>
         </Flex>
