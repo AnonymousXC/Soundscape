@@ -99,7 +99,7 @@ const HomeTab : NextComponentType = () => {
 
     return (
         <Flex 
-        h={isMobile === true ? `calc(${mobileHeight}px - (90px + 48px + 50px))` : "calc(100% - 35px)"}
+        h={isMobile === true ? `calc(100vh - (90px + 48px + 50px))` : "calc(100% - 35px)"}
         px={3}
         py={3}
         pb={0}
@@ -112,14 +112,14 @@ const HomeTab : NextComponentType = () => {
                 <>
                     <Text fontSize={"1.2rem"} fontWeight="500">Recently Played</Text>
                     <Divider />
-                    <Flex wrap={"wrap"} height="max-content" mb={isMobile === true ? 80 : 16}>
+                    <Flex wrap={"wrap"} minHeight="max-content" mb={isMobile === true ? "80px" : 16} id="recent-played-cards-el">
                         {cardsMetaArray}
                     </Flex>
                 </>
             }
-            <Text fontSize={"1.2rem"} fontWeight="500" mt={1}>Trending Today</Text>
+            <Text fontSize={"1.2rem"} fontWeight="500" mt={isMobile ? 80 : 1}>Trending Today</Text>
             <Divider />
-            <Flex wrap={"wrap"} height="max-content">
+            <Flex wrap={"wrap"} minHeight="max-content">
                 { trendingTodayCards }
             </Flex>
         </Flex>

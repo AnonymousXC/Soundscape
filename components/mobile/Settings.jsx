@@ -35,6 +35,12 @@ const SettingTabMob = ({displayIt}) => {
             </Button>
             <Button w={"100%"} variant="solid" rounded={0}
             onClick={() => {
+                localStorage.removeItem("recent-played")
+                localStorage.removeItem("Fav-Arr")
+                localStorage.removeItem("song-quality")
+            }}>Clear All Data</Button>
+            <Button w={"100%"} variant="solid" rounded={0}
+            onClick={() => {
                 localStorage.removeItem("userID")
             }}>
                 Logout

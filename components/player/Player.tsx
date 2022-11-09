@@ -13,6 +13,7 @@ import {
 import { useEffect, useState } from "react";
 import { addRecentPlayFromDatabase } from "../home/HomeTab";
 import { pushFavSongToDB } from "../../.firebase/miscellaneous";
+import { playRandomSong } from "../../miscellaneous/playRandomSong";
 
 
 const Player : NextComponentType = () => {
@@ -120,6 +121,9 @@ const Player : NextComponentType = () => {
             </Flex>
 
             <AudioPlayer
+            onEnded={() => {
+                playRandomSong()
+            }}
             defaultCurrentTime="00:00"
             defaultDuration="00:00"
             layout="stacked-reverse"
@@ -215,15 +219,15 @@ function addCurrentSongToFav() {
     pushFavSongToDB()
 }
 
-function downloadCurrSong() {
-    let songURL = document.getElementsByTagName("audio")[0].src
-    const linkEl = document.createElement("a")
-    linkEl.href = songURL
-    linkEl.download = "true"
-    document.body.append(linkEl)
-    linkEl.click()
-    // document.removeChild(linkEl)
-}
+// function downloadCurrSong() {
+//     let songURL = document.getElementsByTagName("audio")[0].src
+//     const linkEl = document.createElement("a")
+//     linkEl.href = songURL
+//     linkEl.download = "true"
+//     document.body.append(linkEl)
+//     linkEl.click()
+//     // document.removeChild(linkEl)
+// }
 
 
 export default Player;

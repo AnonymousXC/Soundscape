@@ -134,7 +134,7 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
                     {
                         try {
                             favBtnIcon.src = "images/icons/Non Fav Music Icon.svg"
-                            favBtnMob.src = "images/icons/Fav Icon.svg"
+                            favBtnMob.src = "images/icons/Non Fav Icon.svg"
                         } catch {}
                     }
                 }
