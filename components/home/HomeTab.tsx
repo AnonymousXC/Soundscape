@@ -3,7 +3,8 @@ import {
     Flex,
     Text,
     useBreakpoint,
-    Divider
+    Divider,
+    Box
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import SongInfoBar from "./songInfoBar";
@@ -92,8 +93,8 @@ const HomeTab : NextComponentType = () => {
         let recentPlayedArray = JSON.parse(localStorage.getItem("recent-played") || '[]')       
         addCards(recentPlayedArray, false)
         addTrendingToday()
-        if(!recentPlayedArray || recentPlayedArray !== undefined)
-            setShowRecent(true)
+        if(recentPlayedArray.length > 0)
+            setShowRecent(true)        
     }, [])
 
 
@@ -109,19 +110,21 @@ const HomeTab : NextComponentType = () => {
         overflowY="auto">
             {
                 showRecent &&
-                <>
+                <Box height="max-content" pt={1}>
                     <Text fontSize={"1.2rem"} fontWeight="500">Recently Played</Text>
                     <Divider />
-                    <Flex wrap={"wrap"} minHeight="max-content" mb={isMobile === true ? "80px" : 16} id="recent-played-cards-el">
+                    <Flex wrap={"wrap"} id="recent-played-cards-el" pt={2}>
                         {cardsMetaArray}
                     </Flex>
-                </>
+                </Box>
             }
-            <Text fontSize={"1.2rem"} fontWeight="500" mt={isMobile ? 80 : 1}>Trending Today</Text>
-            <Divider />
-            <Flex wrap={"wrap"} minHeight="max-content">
-                { trendingTodayCards }
-            </Flex>
+            <Box height="max-content">
+                <Text fontSize={"1.2rem"} fontWeight="500">Trending Today</Text>
+                <Divider />
+                <Flex wrap={"wrap"} pt={2}>
+                    { trendingTodayCards }
+                </Flex>
+            </Box>
         </Flex>
     )
 }
