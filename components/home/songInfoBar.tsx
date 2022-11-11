@@ -34,7 +34,7 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
     setInterval(() => {
         let audio = document.getElementsByTagName("audio")[0]
  
-        if(audio.src != props.songPlayURL || audio.paused === true)
+        if(audio.src != props.songPlayURL)
             setIsPlaying(false)
 
     }, 1500)
@@ -134,7 +134,7 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
                     {
                         try {
                             favBtnIcon.src = "images/icons/Non Fav Music Icon.svg"
-                            favBtnMob.src = "images/icons/Non Fav Icon.svg"
+                            favBtnMob.src = "images/icons/Non Fav Music Icon.svg"
                         } catch {}
                     }
                 }

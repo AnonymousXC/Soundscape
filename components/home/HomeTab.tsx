@@ -121,7 +121,7 @@ const HomeTab : NextComponentType = () => {
             <Box height="max-content">
                 <Text fontSize={"1.2rem"} fontWeight="500">Trending Today</Text>
                 <Divider />
-                <Flex wrap={"wrap"} pt={2}>
+                <Flex wrap={"wrap"} pt={2} id="trending-today-cards">
                     { trendingTodayCards }
                 </Flex>
             </Box>

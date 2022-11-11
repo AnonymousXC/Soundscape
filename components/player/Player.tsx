@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { addRecentPlayFromDatabase } from "../home/HomeTab";
 import { pushFavSongToDB } from "../../.firebase/miscellaneous";
 import { playRandomSong } from "../../miscellaneous/playRandomSong";
+import { useRouter } from "next/router";
 
 
 const Player : NextComponentType = () => {
@@ -22,6 +23,7 @@ const Player : NextComponentType = () => {
     const isMobile = currBR === "sm" || currBR === "base" ? true : false
     const [ loopState, setLoopState ] = useState(true)
     const [ downloadLink, setDownloadLink ] = useState("")
+    const router = useRouter()
     
     function configurePlayer(lastSession : any) {
         let lastSessionSong : any = lastSession[lastSession.length - 1]
@@ -141,7 +143,15 @@ const Player : NextComponentType = () => {
                         <Image src="images/icons/Download Icon.svg" w={"31px"} fill="#fff" alt="" />
                     </Link>
                     
-                ] : [ RHAP_UI.LOOP ]
+                ] : [ 
+                    RHAP_UI.LOOP,
+                    <Button variant={"unstyled"} mx={1}
+                    onClick={() => {
+                        router.push("/?tab=Lyrics", undefined, {shallow : true})
+                    }}>
+                        <Image src="images/icons/Mic Icon Mobile.svg" w={"28px"} />
+                    </Button>
+                 ]
             }
             customControlsSection={
                 isMobile ? [
@@ -182,6 +192,17 @@ const Player : NextComponentType = () => {
                     volume: <Image src="images/icons/Volume Music Icon.svg" alt="" ></Image>,
                     volumeMute: <Image src="images/icons/Volume Mute Icon.svg" alt="" ></Image>,
                 }
+            }
+            customVolumeControls={
+                [
+                    <Button variant={"unstyled"} mx={1}
+                    onClick={() => {
+                        router.push("/?tab=Lyrics", undefined, {shallow : true})
+                    }}>
+                        <Image src="images/icons/Mic Icon.svg" w={"28px"} />
+                    </Button>,
+                    RHAP_UI.VOLUME
+                ]
             }
             src={""}
             loop={loopState}

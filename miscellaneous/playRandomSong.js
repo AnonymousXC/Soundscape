@@ -1,9 +1,9 @@
 function playRandomSong() {
     try {
-        let recentEl = document.getElementById("recent-played-cards-el")
-        let randomEl = recentEl.childNodes[Math.floor(Math.random() * recentEl.childNodes.length)]
+        let recentEl = [...document.getElementById("recent-played-cards-el").childNodes, ...document.getElementById("trending-today-cards").childNodes]
+        let randomEl = recentEl[Math.floor(Math.random() * recentEl.length)]
         randomEl.getElementsByTagName("button")[0].click()
-    } catch {}
+    } catch(err) { console.log(err);}
 
     try {
         let favEl = document.getElementById("liked-cards-el")
