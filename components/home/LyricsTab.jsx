@@ -13,7 +13,8 @@ const LyricsTab = () => {
 
     const [ songName, setSongName ] = useState("")
     const [ lyrics, setLyrics ] = useState("")
-    const isMobile = useBreakpoint() === "sm" || useBreakpoint() === "base" ? true : false  
+    const brPt = useBreakpoint()
+    const isMobile = brPt === "sm" || brPt === "base" ? true : false  
 
     useEffect(() => {
         const currSongData = JSON.parse(document.getElementsByTagName("audio")[0].getAttribute("data-curr-song") || '{}')
