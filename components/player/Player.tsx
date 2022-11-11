@@ -145,7 +145,7 @@ const Player : NextComponentType = () => {
                     
                 ] : [ 
                     RHAP_UI.LOOP,
-                    <Button variant={"unstyled"} mx={1}
+                    <Button variant={"unstyled"} mx={1} key="lyrics-asdjknddf"
                     onClick={() => {
                         router.push("/?tab=Lyrics", undefined, {shallow : true})
                     }}>
@@ -195,7 +195,7 @@ const Player : NextComponentType = () => {
             }
             customVolumeControls={
                 [
-                    <Button variant={"unstyled"} mx={1}
+                    <Button variant={"unstyled"} mx={1} key="lyrics-sadhjaasavd-asd"
                     onClick={() => {
                         router.push("/?tab=Lyrics", undefined, {shallow : true})
                     }}>

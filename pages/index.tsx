@@ -9,12 +9,17 @@ import HomeTabMain from '../components/home/HomeMusic'
 import Player from '../components/player/Player'
 import ContextMenu from '../components/context/contextMenu'
 import MobileBar from '../components/sidebar/mobileBottomBar'
+import { useEffect } from 'react'
 
 
 const Home: NextPage = () => {
 
   const currBR = useBreakpoint()
   const isMobile = currBR === "sm" || currBR === "base" ? true : false
+
+  useEffect(() => {
+    document.documentElement.style.setProperty("--mobile-height", `${window.innerHeight}px`)
+  }, [])
 
 
   return (
