@@ -28,15 +28,15 @@ const LyricsTab = () => {
                 setLyrics("Lyrics Not Found.")
         })
 
-    }, [])
+    }, [JSON.parse(document.getElementsByTagName("audio")[0].getAttribute("data-curr-song") || '{}').songID])
 
     return (
         <Flex 
         mt={2} 
         pl={2}
         flexDir="column"
-        height={isMobile ? "calc(var(--mobile-height) - (90px + 50px + 50px))" : "var(--mobile-height)"}>
-            <Text fontSize={"1.2rem"} fontWeight="500">{songName} Lyrics</Text>
+        height={isMobile ? "calc(var(--mobile-height) - (90px + 50px + 50px))" : "calc(var(--mobile-height) - 94px)"}>
+            <Text fontSize={"1.2rem"} fontWeight="500">{songName}</Text>
             <Divider />
             <Box 
             dangerouslySetInnerHTML={{__html : lyrics}}

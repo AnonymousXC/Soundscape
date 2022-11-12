@@ -95,8 +95,19 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
                     artistNameEl!.innerText = props.artistName
                 }
                 setIsPlaying(true)
-                document.getElementById("win-title")!.innerText = "Soundscape : " + props.songTitle
+                // document.getElementById("win-title")!.innerText = props.songTitle
                 // document.getElementById("site-icon")!.href = props.songImage
+
+                // Song Meta Data
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: props.songName,
+                    artist: props.artistName,
+                    artwork: [
+                        {src: props.songImage, sizes:"500x500", type: 'image/png'}
+                    ]
+                })
+
+                // Song Meta Data End
 
                 let musicDataToSave = {
                     "songImgUrl" : props.songImage,

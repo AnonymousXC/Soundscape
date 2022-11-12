@@ -20,6 +20,7 @@ import { Database } from "../../.firebase/firebaseMain"
 
 
 
+
 const HomeTab : NextComponentType = () => {
 
     const currBR = useBreakpoint()
@@ -27,7 +28,6 @@ const HomeTab : NextComponentType = () => {
 
     const [ cardsMetaArray, setCardsMetaArray ] = useState([])
     const [ trendingTodayCards, setTrendingTodayCards ] = useState([])
-    const [ mobileHeight, setMobileHeight ] = useState(0)
     const [ showRecent, setShowRecent ] = useState(false)
     // const [ dbData, setDBData ] = useState()
     const router = useRouter()
@@ -76,8 +76,6 @@ const HomeTab : NextComponentType = () => {
 
     useEffect(() => {
 
-        setMobileHeight(window.innerHeight)
-
         if(localStorage.getItem("userID"))
         {
             addRecentPlayFromDatabase().then(data => {
@@ -85,6 +83,9 @@ const HomeTab : NextComponentType = () => {
                 setShowRecent(true)
                 addTrendingToday()
                 localStorage.setItem("recent-played", JSON.stringify(data?.recentPlays))
+                // setTimeout(() => {
+                //     storeSongForRandomPlay()
+                // }, 2500)
             });
 
             return
@@ -95,6 +96,11 @@ const HomeTab : NextComponentType = () => {
         addTrendingToday()
         if(recentPlayedArray.length > 0)
             setShowRecent(true)        
+        
+        //     setTimeout(() => {
+        //     storeSongForRandomPlay()
+        // }, 2500)
+
     }, [])
 
 
@@ -127,6 +133,7 @@ const HomeTab : NextComponentType = () => {
             </Box>
         </Flex>
     )
+    
 }
 
 
@@ -137,6 +144,10 @@ async function addRecentPlayFromDatabase() {
         return docSnap.data()
 }
 
+function storeSongForRandomPlay() {
+    let songsArray : any = [...document.getElementById("recent-played-cards-el")!.childNodes,...document.getElementById("trending-today-cards")!.childNodes ]
+    sessionStorage.setItem("song-dom-el", JSON.stringify(songsArray))
+}
 
 
 export default HomeTab

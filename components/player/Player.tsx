@@ -43,8 +43,16 @@ const Player : NextComponentType = () => {
         document.getElementsByTagName("audio")[0].src = lastSessionSong.playURL    
         document.getElementById("song-name")!.innerText = lastSessionSong.songTitle
         document.getElementById("artist-name")!.innerText = lastSessionSong.songArtist 
-        document.getElementById("win-title")!.innerText = "Soundscape : " + lastSessionSong.songTitle
         document.getElementById("song-image")!.src = lastSessionSong.songImgUrl
+
+        // Song Meta Data
+        // navigator.mediaSession.metadata = new MediaMetadata({
+        //     title: lastSessionSong.songTitle,
+        //     artist: lastSessionSong.songArtist,
+        //     artwork: [
+        //         {src: lastSessionSong.songImgUrl, sizes:"500x500", type: 'image/png'}
+        //     ]
+        // })
 
         let loopBtn = document.getElementsByClassName("rhap_repeat-button")[0]
         loopBtn.addEventListener("click", (e) => {
@@ -54,6 +62,10 @@ const Player : NextComponentType = () => {
     }
 
     useEffect(() => {
+
+        navigator.mediaSession.setActionHandler("nexttrack", (e) => {
+            playRandomSong()
+        })
 
         if(localStorage.getItem("userID"))
         {
@@ -206,6 +218,9 @@ const Player : NextComponentType = () => {
             }
             src={""}
             loop={loopState}
+            onClickNext={() => {
+                playRandomSong()
+            }}
             />
         </Flex>
     )
@@ -239,16 +254,6 @@ function addCurrentSongToFav() {
     localStorage.setItem("Fav-Arr", JSON.stringify(preFavArr))
     pushFavSongToDB()
 }
-
-// function downloadCurrSong() {
-//     let songURL = document.getElementsByTagName("audio")[0].src
-//     const linkEl = document.createElement("a")
-//     linkEl.href = songURL
-//     linkEl.download = "true"
-//     document.body.append(linkEl)
-//     linkEl.click()
-//     // document.removeChild(linkEl)
-// }
 
 
 export default Player;
