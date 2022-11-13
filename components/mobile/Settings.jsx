@@ -6,6 +6,7 @@ import {
 } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import { OpenAudioQualityModal } from "../context/contextMenu"
+import toogleCurrTheme from "../../miscellaneous/toggleTheme"
 
 
 const SettingTabMob = ({displayIt}) => {
@@ -39,6 +40,12 @@ const SettingTabMob = ({displayIt}) => {
                 localStorage.removeItem("Fav-Arr")
                 localStorage.removeItem("song-quality")
             }}>Clear All Data</Button>
+            <Button w={"100%"} variant="solid" rounded={0}
+            onClick={() => {
+                toogleCurrTheme()
+            }}>
+                Toggle Theme
+            </Button>
             <Button w={"100%"} variant="solid" rounded={0}
             onClick={() => {
                 localStorage.removeItem("userID")

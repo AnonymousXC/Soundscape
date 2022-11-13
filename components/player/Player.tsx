@@ -41,7 +41,7 @@ const Player : NextComponentType = () => {
             return
         }
         document.getElementsByTagName("audio")[0].src = lastSessionSong.playURL    
-        document.getElementById("song-name")!.innerText = lastSessionSong.songTitle
+        // document.getElementById("song-name")!.innerText = lastSessionSong.songTitle
         document.getElementById("artist-name")!.innerText = lastSessionSong.songArtist 
         document.getElementById("song-image")!.src = lastSessionSong.songImgUrl
 

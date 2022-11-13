@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { pushRecentPlayedToDB } from '../../.firebase/miscellaneous'
-
+import toogleCurrTheme from "../../miscellaneous/toggleTheme"
 
 const ContextMenu = () => {
 
@@ -75,6 +75,10 @@ const ContextMenu = () => {
           onClick={() => {
             router.back()
           }}>Back</Button>
+          <Button variant={"ghost"} rounded={0} justifyContent="flex-start" px={6}
+          onClick={() => {
+            toogleCurrTheme()            
+          }}>Toggle Theme</Button>
           <Button variant={"ghost"} roundedTop={0} justifyContent="flex-start" px={6}
           onClick={() => {
             localStorage.removeItem("userID")

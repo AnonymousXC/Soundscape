@@ -17,11 +17,6 @@ const MobileBar = () => {
 
     useEffect(() => {
         setSongImgURL(JSON.parse(localStorage.getItem("last-played") || "{}").songImgUrl)
-
-        document.body.addEventListener("contextmenu", (e) => {
-            console.log(e.target);
-        })
-
     }, [])
 
     return (

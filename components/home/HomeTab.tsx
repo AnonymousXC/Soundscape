@@ -29,7 +29,6 @@ const HomeTab : NextComponentType = () => {
     const [ cardsMetaArray, setCardsMetaArray ] = useState([])
     const [ trendingTodayCards, setTrendingTodayCards ] = useState([])
     const [ showRecent, setShowRecent ] = useState(false)
-    // const [ dbData, setDBData ] = useState()
     const router = useRouter()
 
 
@@ -83,9 +82,6 @@ const HomeTab : NextComponentType = () => {
                 setShowRecent(true)
                 addTrendingToday()
                 localStorage.setItem("recent-played", JSON.stringify(data?.recentPlays))
-                // setTimeout(() => {
-                //     storeSongForRandomPlay()
-                // }, 2500)
             });
 
             return
@@ -96,10 +92,6 @@ const HomeTab : NextComponentType = () => {
         addTrendingToday()
         if(recentPlayedArray.length > 0)
             setShowRecent(true)        
-        
-        //     setTimeout(() => {
-        //     storeSongForRandomPlay()
-        // }, 2500)
 
     }, [])
 
@@ -145,8 +137,13 @@ async function addRecentPlayFromDatabase() {
 }
 
 function storeSongForRandomPlay() {
-    let songsArray : any = [...document.getElementById("recent-played-cards-el")!.childNodes,...document.getElementById("trending-today-cards")!.childNodes ]
-    sessionStorage.setItem("song-dom-el", JSON.stringify(songsArray))
+    let songsArray : any = {
+        recent: [],
+        trending: []
+    }
+    songsArray.recent.push(document.getElementById("recent-played-cards-el")!.childNodes)
+    songsArray.trending.push(document.getElementById("trending-today-cards")!.childNodes)
+    localStorage.setItem("song-dom-el", JSON.stringify(songsArray))
 }
 
 

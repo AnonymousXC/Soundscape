@@ -6,6 +6,15 @@ body {
 }
 
 
+/* body {
+  filter: invert(1);
+} */
+
+.songBarImage {
+  filter: invert(0) !important;
+}
+
+
 textarea,
 button,
 select,

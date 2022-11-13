@@ -92,7 +92,8 @@ const SideBar : NextComponentType = () => {
                 width={"80%"}
                 rounded={12}
                 loading={"lazy"}
-                alt="" />
+                alt=""
+                className="songBarImage" />
             </Flex>
 
         </Flex>

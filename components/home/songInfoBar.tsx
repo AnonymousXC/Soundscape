@@ -56,7 +56,7 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
         backgroundColor={"rgba(0,0,0,0.2)"}
         color="rgba(255,255,255,0.8)"
         direction={props.card === true ? "column" : "row"}>
-            <Image src={props.songImage} alt="" width={props.card === true ? "90%" : "40px"} height={props.card === true ? "auto" : "40px"} rounded={6} mx={4} loading="lazy" />
+            <Image src={props.songImage} alt="" width={props.card === true ? "90%" : "40px"} height={props.card === true ? "auto" : "40px"} rounded={6} mx={4} loading="lazy" className="songBarImage" />
             <Flex justifyContent={"space-between"} h={"100%"} w={props.card === true ? "100%" : "70%"} alignItems={props.card === true ? "center" : "center"}
             direction={props.card === true ? "column" : "row"} minH={isMobile ? "40px" : "65px"} textOverflow="ellipsis">
                 <Text w={isMobile === false ? props.card === true ? "100%" : "50%" : "95%"} textAlign={props.card === true ? "center" : "initial"}  height={props.card ? "25px" : "initial"} overflow={props.card ? "hidden" : "auto"} >{props.songTitle}</Text>
@@ -95,12 +95,10 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
                     artistNameEl!.innerText = props.artistName
                 }
                 setIsPlaying(true)
-                // document.getElementById("win-title")!.innerText = props.songTitle
-                // document.getElementById("site-icon")!.href = props.songImage
 
                 // Song Meta Data
                 navigator.mediaSession.metadata = new MediaMetadata({
-                    title: props.songName,
+                    title: props.songTitle,
                     artist: props.artistName,
                     artwork: [
                         {src: props.songImage, sizes:"500x500", type: 'image/png'}
