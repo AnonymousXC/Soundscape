@@ -48,6 +48,18 @@ const SettingTabMob = ({displayIt}) => {
             </Button>
             <Button w={"100%"} variant="solid" rounded={0}
             onClick={() => {
+                router.push("/signup", undefined, {shallow: true})
+            }}>
+                Sign Up
+            </Button>
+            <Button w={"100%"} variant="solid" rounded={0}
+            onClick={() => {
+                router.push("/login", undefined, { shallow : true })
+            }}>
+                Login
+            </Button>
+            <Button w={"100%"} variant="solid" rounded={0}
+            onClick={() => {
                 localStorage.removeItem("userID")
             }}>
                 Logout

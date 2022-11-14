@@ -8,7 +8,12 @@ import  {
     Avatar,
     Button,
     Image,
-    useBreakpoint
+    useBreakpoint,
+    Menu,
+    MenuButton,
+    MenuList,
+    MenuItem,
+    Divider
 } from "@chakra-ui/react"
 
 
@@ -28,6 +33,10 @@ const SearchBar : NextComponentType = () => {
     useEffect(() => {
         let musicQuality = parseInt(localStorage.getItem("song-quality") || "4")
         setMusicQuality(musicQuality)
+        if(isMobile === false)
+            setSearchHeight("calc(100vh - (90px + 48px + 4px))")
+        else
+            setSearchHeight("calc(100vh - (90px + 48px + 8px + 50px))")
     }, [])
 
     async function searchSongApi(queryStr : String)  {
@@ -115,15 +124,30 @@ const SearchBar : NextComponentType = () => {
 
                 onFocus={() => {
                     router.push("/?tab=Search", undefined, {shallow: true})
-                    if(isMobile === false)
-                        setSearchHeight("calc(100vh - (90px + 48px + 8px))")
-                    else
-                    setSearchHeight("calc(100vh - (90px + 48px + 8px + 50px))")
                 }}
 
                 />
                 { isMobile === false &&
-                    <Avatar name="Hello World" bg={"#737373"} mt={2} size="sm"/>
+                    <Menu>
+                        <MenuButton>
+                            <Avatar name="Hello World" bg={"#737373"} mt={2} size="sm" />
+                        </MenuButton>
+                        <MenuList backgroundColor={"#10141f"}>
+                            <MenuItem 
+                            onClick={() => {
+                                router.push("/signup", undefined, {shallow: true})
+                            }}>Sign Up</MenuItem>
+                            <MenuItem 
+                            onClick={() => {
+                                router.push("/login", undefined, { shallow : true })
+                            }}>Login</MenuItem>
+                            <Divider />
+                            <MenuItem 
+                            onClick={() => {
+                                localStorage.removeItem("userID")
+                            }}>Logout</MenuItem>
+                        </MenuList>
+                    </Menu>
                 }
             </Flex>
             <Flex
@@ -138,7 +162,6 @@ const SearchBar : NextComponentType = () => {
             direction="column">
                 {searchResultNext}
             </Flex>
-            
         </Flex>
     )
 }

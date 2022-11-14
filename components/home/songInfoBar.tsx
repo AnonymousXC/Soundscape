@@ -33,7 +33,7 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
 
     setInterval(() => {
         let audio = document.getElementsByTagName("audio")[0]
- 
+        if(!audio) return
         if(audio.src != props.songPlayURL)
             setIsPlaying(false)
 
@@ -64,7 +64,7 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
                 <Text>{props.card === true || isMobile === true ? "" :  props.songDuration}</Text>
             </Flex>
             <Button variant={"unstyled"}
-            onClick={() => {
+            onClick={(e) => {
                 
                 let audio = document.getElementsByTagName("audio")[0]
 
@@ -150,7 +150,9 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
 
                 audio.setAttribute("data-curr-song", JSON.stringify(musicDataToSave))
                 recentPlayedArray.push(musicDataToSave)
-                localStorage.setItem("recent-played", JSON.stringify(recentPlayedArray))
+                localStorage.setItem("recent-played", JSON.stringify(recentPlayedArray))            
+                
+                
                 pushRecentPlayedToDB()
             }}>
                 <Image src={isPlaying ? "images/icons/Play Music Icon.svg" : "images/icons/Pause Music Icon.svg"} w={"40px"} className="player-btn" rounded={29.5} alt="" />
@@ -158,6 +160,20 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
         </Flex>
     )
 }
+
+
+// const getCircularReplacer = () => {
+//     const seen = new WeakSet();
+//     return (key : any, value : any) => {
+//       if (typeof value === "object" && value !== null) {
+//         if (seen.has(value)) {
+//           return;
+//         }
+//         seen.add(value);
+//       }
+//       return value;
+//     };
+//   };
 
 
 export default SongInfoBar

@@ -2,7 +2,6 @@
 
 function toogleCurrTheme() {
     let currTheme = window.getComputedStyle(document.body).filter
-    console.log(currTheme);
     if(currTheme === "none" || currTheme === "invert(0)")
     {
         document.body.style.filter = "invert(1)"

@@ -75,14 +75,10 @@ const ContextMenu = () => {
           onClick={() => {
             router.back()
           }}>Back</Button>
-          <Button variant={"ghost"} rounded={0} justifyContent="flex-start" px={6}
+          <Button variant={"ghost"} roundedTop={0} justifyContent="flex-start" px={6}
           onClick={() => {
             toogleCurrTheme()            
           }}>Toggle Theme</Button>
-          <Button variant={"ghost"} roundedTop={0} justifyContent="flex-start" px={6}
-          onClick={() => {
-            localStorage.removeItem("userID")
-          }}>Logout</Button>
           <OpenAudioQualityModal op={isOpen} cl={onClose} defVal={musicQuality}/>
         </Flex>
     )

@@ -10,6 +10,7 @@ function playRandomSong() {
         let randomEl = favEl.childNodes[Math.floor(Math.random() * favEl.childNodes.length)]
         randomEl.getElementsByTagName("button")[0].click()
     } catch {}
+    
 }
 
 export { playRandomSong }
