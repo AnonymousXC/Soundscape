@@ -54,10 +54,12 @@ const Player : NextComponentType = () => {
         //     ]
         // })
 
-        let loopBtn = document.getElementsByClassName("rhap_repeat-button")[0]
-        loopBtn.addEventListener("click", (e) => {
-            localStorage.setItem("loop-check", loopBtn.getAttribute("aria-label") === "Enable loop" ? "true" : "false")
-        })
+        try {
+            let loopBtn = document.getElementsByClassName("rhap_repeat-button")[0]
+            loopBtn.addEventListener("click", (e) => {
+                localStorage.setItem("loop-check", loopBtn.getAttribute("aria-label") === "Enable loop" ? "true" : "false")
+            })
+        } catch(err) {}
 
     }
 
@@ -129,8 +131,14 @@ const Player : NextComponentType = () => {
                         addCurrentSongToFav()
                     }} ><Image src="images/icons/Non Fav Music Icon.svg" w={"4"} id="fav-icon-img" alt="" /></Button>
                 </Flex>
-                <Flex w={"100%"}>
+                <Flex w={"100%"} justifyContent="space-between" pr={1}>
                     <Text id="artist-name" className="artist-name-cl" fontSize={"0.8rem"} color="#979797">Imagine Dragons</Text>
+                    <Button variant={"unstyled"} key="share-desktop"
+                    onClick={() => {
+                        shareCurrentSong()
+                    }}>
+                        <Image src="images/icons/Share Icon.svg" w={"20px"} />
+                    </Button>
                 </Flex>
             </Flex>
 
@@ -156,12 +164,17 @@ const Player : NextComponentType = () => {
                     </Link>
                     
                 ] : [ 
-                    RHAP_UI.LOOP,
                     <Button variant={"unstyled"} mx={1} key="lyrics-asdjknddf"
                     onClick={() => {
                         router.push("/?tab=Lyrics", undefined, {shallow : true})
                     }}>
-                        <Image src="images/icons/Mic Icon Mobile.svg" w={"28px"} />
+                        <Image src="images/icons/Mic Icon Mobile.svg" w={"24px"} />
+                    </Button>,
+                    <Button variant={"unstyled"} key="share-desktop"
+                    onClick={() => {
+                        shareCurrentSong()
+                    }}>
+                        <Image src="images/icons/Share Icon.svg" w={"24px"} />
                     </Button>
                  ]
             }
@@ -253,6 +266,23 @@ function addCurrentSongToFav() {
     preFavArr.push(currFavToAdd)
     localStorage.setItem("Fav-Arr", JSON.stringify(preFavArr))
     pushFavSongToDB()
+}
+
+
+function shareCurrentSong() {
+        
+    const currSongData = JSON.parse(document.getElementsByTagName("audio")[0].getAttribute("data-curr-song") || '{}')    
+    try {
+        navigator.share({
+            title: currSongData.songTitle,
+            text: "Listen it.",
+            url: `${window.location.origin}/share/${currSongData.songID}`
+        })
+        return;
+    } catch(err) {
+        navigator.clipboard.writeText(`${window.location.origin}/share/${currSongData.songID}`)
+        alert("Link Copied to Clipboard.")
+    }
 }
 
 

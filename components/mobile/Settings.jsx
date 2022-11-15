@@ -48,13 +48,13 @@ const SettingTabMob = ({displayIt}) => {
             </Button>
             <Button w={"100%"} variant="solid" rounded={0}
             onClick={() => {
-                router.push("/signup", undefined, {shallow: true})
+                router.push("/signup")
             }}>
                 Sign Up
             </Button>
             <Button w={"100%"} variant="solid" rounded={0}
             onClick={() => {
-                router.push("/login", undefined, { shallow : true })
+                router.push("/login")
             }}>
                 Login
             </Button>

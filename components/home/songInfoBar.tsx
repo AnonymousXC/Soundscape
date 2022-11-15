@@ -18,6 +18,7 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
 
     useEffect(() => {
         let audio = document.getElementsByTagName("audio")[0]
+        if(!audio) return;
         if(audio.src === props.songPlayURL && audio.paused !== true) setIsPlaying(true)
         audio.addEventListener("play", (e) => {
             if(audio.src === props.songPlayURL)
