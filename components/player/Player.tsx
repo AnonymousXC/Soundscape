@@ -23,6 +23,7 @@ const Player : NextComponentType = () => {
     const isMobile = currBR === "sm" || currBR === "base" ? true : false
     const [ loopState, setLoopState ] = useState(true)
     const [ downloadLink, setDownloadLink ] = useState("")
+    const [ autoplay, setAutoPlay ] = useState(false)
     const router = useRouter()
     
     function configurePlayer(lastSession : any) {
@@ -40,19 +41,19 @@ const Player : NextComponentType = () => {
             document.getElementById("win-title")!.innerText = "Soundscape : Welcome"
             return
         }
-        document.getElementsByTagName("audio")[0].src = lastSessionSong.playURL    
-        // document.getElementById("song-name")!.innerText = lastSessionSong.songTitle
-        document.getElementById("artist-name")!.innerText = lastSessionSong.songArtist 
-        document.getElementById("song-image")!.src = lastSessionSong.songImgUrl
+        (document.getElementsByTagName("audio")[0] as HTMLAudioElement).src = lastSessionSong.playURL;
+        (document.getElementById("artist-name") as HTMLParagraphElement).innerText = lastSessionSong.songArtist; 
+        (document.getElementById("song-image") as HTMLImageElement).src = lastSessionSong.songImgUrl;
+        (document.getElementById("song-name") as HTMLParagraphElement).innerText = lastSessionSong.songTitle;
 
         // Song Meta Data
-        // navigator.mediaSession.metadata = new MediaMetadata({
-        //     title: lastSessionSong.songTitle,
-        //     artist: lastSessionSong.songArtist,
-        //     artwork: [
-        //         {src: lastSessionSong.songImgUrl, sizes:"500x500", type: 'image/png'}
-        //     ]
-        // })
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: lastSessionSong.songTitle,
+            artist: lastSessionSong.songArtist,
+            artwork: [
+                {src: lastSessionSong.songImgUrl, sizes:"500x500", type: 'image/png'}
+            ]
+        })
 
         try {
             let loopBtn = document.getElementsByClassName("rhap_repeat-button")[0]
@@ -69,6 +70,14 @@ const Player : NextComponentType = () => {
             playRandomSong()
         })
 
+        let isAutoPlay = localStorage.getItem("auto-play")
+        if(isAutoPlay === "true") {
+            // document.getElementsByTagName("audio")[0].play()
+            setAutoPlay(true)            
+            localStorage.removeItem("auto-play")
+        }
+        
+
         if(localStorage.getItem("userID"))
         {
             addRecentPlayFromDatabase().then(data => {
@@ -81,8 +90,8 @@ const Player : NextComponentType = () => {
         configurePlayer(lastSession)
 
         let favArr = JSON.parse(localStorage.getItem("Fav-Arr") || '[]')
-        let favBtnIcon = document.getElementById("fav-icon-img")
-        let favBtnMob = document.getElementById("fav-icon-mob-img")
+        let favBtnIcon = document.getElementById("fav-icon-img") as HTMLImageElement
+        let favBtnMob = document.getElementById("fav-icon-mob-img") as HTMLImageElement
         for (let i = 0; i < favArr.length; i++) {
             const el = favArr[i];
             if(el.songID === lastSession[lastSession.length - 1].songID)
@@ -146,6 +155,7 @@ const Player : NextComponentType = () => {
             onEnded={() => {
                 playRandomSong()
             }}
+            autoPlay={autoplay}
             defaultCurrentTime="00:00"
             defaultDuration="00:00"
             layout="stacked-reverse"
@@ -243,8 +253,8 @@ const Player : NextComponentType = () => {
 function addCurrentSongToFav() {
     let preFavArr = JSON.parse(localStorage.getItem("Fav-Arr") || '[]')
     let currFavToAdd = JSON.parse(document.getElementsByTagName("audio")[0].getAttribute("data-curr-song") || '[]')
-    let favBtnIcon = document.getElementById("fav-icon-img")
-    let favBtnMob = document.getElementById("fav-icon-mob-img")
+    let favBtnIcon = document.getElementById("fav-icon-img") as HTMLImageElement
+    let favBtnMob = document.getElementById("fav-icon-mob-img") as HTMLImageElement
 
     for(let i = 0; i < preFavArr.length; i++)
         if(preFavArr[i].songID === currFavToAdd.songID)
@@ -276,11 +286,11 @@ function shareCurrentSong() {
         navigator.share({
             title: currSongData.songTitle,
             text: "Listen it.",
-            url: `${window.location.origin}/share/${currSongData.songID}`
+            url: `${window.location.origin}/track/${currSongData.songID}`
         })
         return;
     } catch(err) {
-        navigator.clipboard.writeText(`${window.location.origin}/share/${currSongData.songID}`)
+        navigator.clipboard.writeText(`${window.location.origin}/track/${currSongData.songID}`)
         alert("Link Copied to Clipboard.")
     }
 }

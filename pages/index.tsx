@@ -19,6 +19,9 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     document.documentElement.style.setProperty("--mobile-height", `${window.innerHeight}px`)
+    window.addEventListener("resize", (e) => {
+      document.documentElement.style.setProperty("--mobile-height", `${window.innerHeight}px`)
+    })
   }, [])
 
 

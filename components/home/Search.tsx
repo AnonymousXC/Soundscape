@@ -152,7 +152,7 @@ const SearchBar : NextComponentType = () => {
             </Flex>
             <Flex
             display={router.query.tab === "Search" ? "flex" : "none"}
-            h={searchHeight}
+            h={isMobile ? searchHeight : "calc(100vh - 145px)"}
             width={"100%"}
             mt={2}
             pb={"8px"}

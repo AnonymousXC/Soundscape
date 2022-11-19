@@ -9,7 +9,17 @@ import {
 import { useEffect, useState } from "react";
 import { pushRecentPlayedToDB } from "../../.firebase/miscellaneous"
 
-const SongInfoBar : NextComponentType<any> = (props : any)  => {
+interface SongProps {
+    songImage : string,
+    songTitle : string,
+    songPlayURL : string,
+    artistName : string,
+    songDuration : string,
+    songID : string,
+    card : boolean,
+}
+
+const SongInfoBar : NextComponentType<SongProps> = (props : SongProps)  => {
 
     const currBR = useBreakpoint()
     const isMobile = currBR === "sm" || currBR === "base" ? true : false
@@ -84,7 +94,7 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
                 }
                 
                 
-                let imageSong = document.getElementById("song-image")
+                let imageSong = document.getElementById("song-image") as HTMLImageElement
                 let songName = document.getElementById("song-name")
                 let artistNameEl = document.getElementById("artist-name")
                 audio.src = props.songPlayURL
@@ -128,8 +138,8 @@ const SongInfoBar : NextComponentType<any> = (props : any)  => {
                 })
 
                 let favArr = JSON.parse(localStorage.getItem("Fav-Arr") || '[]')
-                let favBtnIcon = document.getElementById("fav-icon-img")
-                let favBtnMob = document.getElementById("fav-icon-mob-img")
+                let favBtnIcon = document.getElementById("fav-icon-img") as HTMLImageElement
+                let favBtnMob = document.getElementById("fav-icon-mob-img") as HTMLImageElement
                 for (let i = 0; i < favArr.length; i++) {
                     const el = favArr[i];
                     if(el.songID === props.songID)
