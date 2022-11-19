@@ -50,7 +50,7 @@ const SharePage = () => {
                 localStorage.setItem("recent-played", JSON.stringify(last))
                 localStorage.setItem("auto-play", true)
                 pushRecentPlayedToDB()
-                router.push("/?tab=Home")
+                window.location = "https://soundscape-psi.vercel.app/?tab=Home"
             }
 
         })()
