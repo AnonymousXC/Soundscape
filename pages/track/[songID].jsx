@@ -59,7 +59,7 @@ const SharePage = () => {
     return (
         <Flex justifyContent={"center"} alignItems="center" height={"100vh"} direction="column">
             <Heading>Getting Your Song Ready.</Heading>
-            <Progress size='lg' isIndeterminate  w="80%" mt={8} colorScheme="pink"/>
+            <Progress size='lg' isIndeterminate  w="80%" mt={8} colorScheme="teal"/>
         </Flex>
     )
 }

@@ -55,12 +55,15 @@ const Player : NextComponentType = () => {
             ]
         })
 
+        // Audio MetaData
         try {
-            let loopBtn = document.getElementsByClassName("rhap_repeat-button")[0]
-            loopBtn.addEventListener("click", (e) => {
-                localStorage.setItem("loop-check", loopBtn.getAttribute("aria-label") === "Enable loop" ? "true" : "false")
-            })
+            document.getElementsByTagName("audio")[0].setAttribute("data-curr-song", JSON.stringify(lastSessionSong))
         } catch(err) {}
+
+        let loopBtn = document.getElementsByClassName("rhap_repeat-button")[0]
+        loopBtn.addEventListener("click", (e) => {
+            localStorage.setItem("loop-check", loopBtn.getAttribute("aria-label") === "Enable loop" ? "true" : "false")
+        })
 
     }
 
@@ -174,18 +177,19 @@ const Player : NextComponentType = () => {
                     </Link>
                     
                 ] : [ 
+                    RHAP_UI.LOOP,
                     <Button variant={"unstyled"} mx={1} key="lyrics-asdjknddf"
                     onClick={() => {
                         router.push("/?tab=Lyrics", undefined, {shallow : true})
                     }}>
                         <Image src="images/icons/Mic Icon Mobile.svg" w={"24px"} />
                     </Button>,
-                    <Button variant={"unstyled"} key="share-desktop"
-                    onClick={() => {
-                        shareCurrentSong()
-                    }}>
-                        <Image src="images/icons/Share Icon.svg" w={"24px"} />
-                    </Button>
+                    // <Button variant={"unstyled"} key="share-desktop"
+                    // onClick={() => {
+                    //     shareCurrentSong()
+                    // }}>
+                    //     <Image src="images/icons/Share Icon.svg" w={"24px"} />
+                    // </Button>
                  ]
             }
             customControlsSection={
