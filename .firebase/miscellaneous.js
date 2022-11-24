@@ -16,6 +16,22 @@ function pushRecentPlayedToDB() {
     .catch(err => {})
 }
 
+function pushRecentPlayedToDBWithPromiseReturn() {
+  return new Promise((resolve, reject) => {
+      let userID = localStorage.getItem("userID")
+      if(!userID) return;
+      const docRef = doc(Database, "userData", userID)
+      updateDoc(docRef, {
+          recentPlays : JSON.parse(localStorage.getItem("recent-played") || '[]')
+      })
+      .then((e) => {
+        resolve()
+      })
+      .catch(err => {reject()})
+  })
+}
+
+
 function pushFavSongToDB() {
   let userID = localStorage.getItem("userID")
   if(!userID) return;
@@ -26,4 +42,4 @@ function pushFavSongToDB() {
   .catch(err => {})
 }
 
-export { pushRecentPlayedToDB, pushFavSongToDB }
+export { pushRecentPlayedToDB, pushFavSongToDB, pushRecentPlayedToDBWithPromiseReturn }

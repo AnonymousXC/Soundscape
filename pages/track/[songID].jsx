@@ -5,8 +5,7 @@ import {
 } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
-import { pushRecentPlayedToDB } from "../../.firebase/miscellaneous"
-
+import { pushRecentPlayedToDBWithPromiseReturn } from "../../.firebase/miscellaneous"
 
 const SharePage = () => {
 
@@ -27,13 +26,26 @@ const SharePage = () => {
 
             let data = await queryed.json()
             if(data.results) {
-                let last =  JSON.parse(localStorage.getItem("recent-played"))
+                let last =  JSON.parse(localStorage.getItem("recent-played") || '[]')
+
+                if(last.length === 0) {
+                    localStorage.setItem("recent-played", JSON.stringify([{
+                        playURL: data.results.downloadUrl[4].link,
+                        songArtist: data.results.artist,
+                        songDuration: data.results.duration,
+                        songID: data.results.id,
+                        songImgUrl: data.results.image[2].link,
+                        songTitle: data.results.name,
+                    }]))
+                    localStorage.setItem("auto-play", true)
+                    window.location = window.location.origin + "/?tab=Home"
+                    return;
+                }
 
                 last.forEach((ele, idx) => {
                     if(ele.songID === data.results.id)
                         {
                             last.splice(idx, 1)
-                            pushRecentPlayedToDB()
                             localStorage.setItem("auto-play", true)
                             return
                         }
@@ -49,8 +61,11 @@ const SharePage = () => {
                 })
                 localStorage.setItem("recent-played", JSON.stringify(last))
                 localStorage.setItem("auto-play", true)
-                pushRecentPlayedToDB()
-                window.location = "https://soundscape-psi.vercel.app/?tab=Home"
+                pushRecentPlayedToDBWithPromiseReturn().then(() => {
+                    window.location = window.location.origin + "/?tab=Home"
+                }).catch(err => {
+                    document.getElementById("msg").innerText = "Internal Server Error."
+                })
             }
 
         })()
@@ -58,10 +73,14 @@ const SharePage = () => {
 
     return (
         <Flex justifyContent={"center"} alignItems="center" height={"100vh"} direction="column">
-            <Heading>Getting Your Song Ready.</Heading>
+            <Heading id="msg">Getting Your Song Ready.</Heading>
             <Progress size='lg' isIndeterminate  w="80%" mt={8} colorScheme="teal"/>
         </Flex>
     )
 }
+
+
+
+
 
 export default SharePage
