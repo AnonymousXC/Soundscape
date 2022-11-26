@@ -73,6 +73,7 @@ const SongInfoBar : NextComponentType<SongProps> = (props : SongProps)  => {
         direction={props.card === true ? "column" : "row"}
         onClick={() => {
             if(isMobile === false){
+                sessionStorage.setItem("songClicked", JSON.stringify(props))
                 router.push("/?tab=CurrentSong", undefined, { shallow : true })
             }
         }}

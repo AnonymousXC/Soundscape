@@ -45,10 +45,10 @@ const HomeTabMain : NextComponentType = () => {
             justifyContent="flex-start"
             direction={"column"}> 
                 <SearchBar />
-                {
+                <HomeTab />
+                {/*
                     (router.query.tab === "Home" || router.query.tab === undefined) &&
-                    <HomeTab />
-                }
+                */}
                 {
                     router.query.tab === "LikedSong" &&
                     <LikedTab />
