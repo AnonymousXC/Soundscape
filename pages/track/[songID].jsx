@@ -63,7 +63,7 @@ const SharePage = () => {
                 localStorage.setItem("auto-play", true)
                 pushRecentPlayedToDBWithPromiseReturn().then(() => {
                     window.location = window.location.origin + "/?tab=Home"
-                }).catch(err => {
+                }).finally(e => {
                     document.getElementById("msg").innerText = "Internal Server Error."
                 })
             }

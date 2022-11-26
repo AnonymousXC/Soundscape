@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react"
 import { useEffect, useState } from "react";
 import { pushRecentPlayedToDB } from "../../.firebase/miscellaneous"
+import { useRouter } from "next/router";
 
 interface SongProps {
     songImage : string,
@@ -19,10 +20,13 @@ interface SongProps {
     card : boolean,
 }
 
+
 const SongInfoBar : NextComponentType<SongProps> = (props : SongProps)  => {
 
     const currBR = useBreakpoint()
     const isMobile = currBR === "sm" || currBR === "base" ? true : false
+    const router = useRouter()
+
 
     let [isPlaying, setIsPlaying] = useState(false)
 
@@ -66,7 +70,13 @@ const SongInfoBar : NextComponentType<SongProps> = (props : SongProps)  => {
         alignItems="center"
         backgroundColor={"rgba(0,0,0,0.2)"}
         color="rgba(255,255,255,0.8)"
-        direction={props.card === true ? "column" : "row"}>
+        direction={props.card === true ? "column" : "row"}
+        onClick={() => {
+            if(isMobile === false){
+                router.push("/?tab=CurrentSong", undefined, { shallow : true })
+            }
+        }}
+        cursor="pointer" >
             <Image src={props.songImage} alt="" width={props.card === true ? "90%" : "40px"} height={props.card === true ? "auto" : "40px"} rounded={6} mx={4} loading="lazy" className="songBarImage" />
             <Flex justifyContent={"space-between"} h={"100%"} w={props.card === true ? "100%" : "70%"} alignItems={props.card === true ? "center" : "center"}
             direction={props.card === true ? "column" : "row"} minH={isMobile ? "40px" : "65px"} textOverflow="ellipsis">
@@ -74,9 +84,11 @@ const SongInfoBar : NextComponentType<SongProps> = (props : SongProps)  => {
                 <Text fontSize={props.card === true ? "0.8rem" : ""} color={props.card === true ? "#747474" : ""} textOverflow="ellipsis"overflow={"hidden"} h="20px" >{isMobile === false ? props.artistName : props.card === true ? props.artistName : ""}</Text>
                 <Text>{props.card === true || isMobile === true ? "" :  props.songDuration}</Text>
             </Flex>
-            <Button variant={"unstyled"}
+            <Button variant={"unstyled"} zIndex={100} cursor="default"
             onClick={(e) => {
                 
+                e.stopPropagation()
+
                 let audio = document.getElementsByTagName("audio")[0]
 
                 if(audio.paused === false && audio.src === props.songPlayURL)

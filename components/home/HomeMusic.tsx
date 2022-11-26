@@ -8,6 +8,7 @@ import SearchBar from "./Search";
 import HomeTab from "./HomeTab";
 import LikedTab from "../home/FavTab"
 import LyricsTab from "../home/LyricsTab"
+import SongDetailDesk from "../songDetailDesktop/songDetailDesktop"
 import { useRouter } from "next/router";
 
 
@@ -55,6 +56,10 @@ const HomeTabMain : NextComponentType = () => {
                 {
                     router.query.tab === "Lyrics" &&
                     <LyricsTab />
+                }
+                {
+                    router.query.tab === "CurrentSong" &&
+                    <SongDetailDesk />
                 }
             </Flex>
         </Flex>
