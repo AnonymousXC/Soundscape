@@ -19,7 +19,7 @@ import {
 
 const SideBar : NextComponentType = () => {
 
-    const [ isPlaylistDropDown, setPlaylistDropDown ] = useState(true)
+    const [ isPlaylistDropDown, setPlaylistDropDown ] = useState(false)
     let [ songImgUrl, setSongImgURL] = useState("")
     const router = useRouter()
 

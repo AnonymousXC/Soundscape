@@ -33,26 +33,25 @@ const SongInfoBar : NextComponentType<SongProps> = (props : SongProps)  => {
     useEffect(() => {
         let audio = document.getElementsByTagName("audio")[0]
         if(!audio) return;
-        if(audio.src === props.songPlayURL && audio.paused !== true) setIsPlaying(true)
+            
+        if(JSON.parse(document.getElementsByTagName("audio")[0].getAttribute("data-curr-song") || '{}').songID === props.songID && audio.paused === false) 
+            setIsPlaying(true)
+        else 
+            setIsPlaying(false)
+        
         audio.addEventListener("play", (e) => {
-            if(audio.src === props.songPlayURL)
+            if(JSON.parse(document.getElementsByTagName("audio")[0].getAttribute("data-curr-song") || '{}').songID === props.songID)
                 setIsPlaying(true)
-                
+            else
+                setIsPlaying(false)
         })
 
         audio.addEventListener("pause", () => {
             setIsPlaying(false)
         })
 
-    }, [])
+    }, [props.songID])
 
-    setInterval(() => {
-        let audio = document.getElementsByTagName("audio")[0]
-        if(!audio) return
-        if(audio.src != props.songPlayURL)
-            setIsPlaying(false)
-
-    }, 1500)
 
     return (
         <Flex
@@ -72,10 +71,8 @@ const SongInfoBar : NextComponentType<SongProps> = (props : SongProps)  => {
         color="rgba(255,255,255,0.8)"
         direction={props.card === true ? "column" : "row"}
         onClick={() => {
-            if(isMobile === false){
-                sessionStorage.setItem("songClicked", JSON.stringify(props))
-                router.push("/?tab=CurrentSong", undefined, { shallow : true })
-            }
+            sessionStorage.setItem("songClicked", JSON.stringify(props))
+            router.push("/?tab=Detail", undefined, { shallow : true })
         }}
         cursor="pointer" >
             <Image src={props.songImage} alt="" width={props.card === true ? "90%" : "40px"} height={props.card === true ? "auto" : "40px"} rounded={6} mx={4} loading="lazy" className="songBarImage" />
@@ -85,33 +82,36 @@ const SongInfoBar : NextComponentType<SongProps> = (props : SongProps)  => {
                 <Text fontSize={props.card === true ? "0.8rem" : ""} color={props.card === true ? "#747474" : ""} textOverflow="ellipsis"overflow={"hidden"} h="20px" >{isMobile === false ? props.artistName : props.card === true ? props.artistName : ""}</Text>
                 <Text>{props.card === true || isMobile === true ? "" :  props.songDuration}</Text>
             </Flex>
-            <Button variant={"unstyled"} zIndex={100} cursor="default"
+            <Button variant={"unstyled"} zIndex={100} cursor="default" className="playing-current"
             onClick={(e) => {
                 
                 e.stopPropagation()
 
                 let audio = document.getElementsByTagName("audio")[0]
-
-                if(audio.paused === false && audio.src === props.songPlayURL)
+                
+                // Pausing if playing and same song
+                // if(audio.paused === false && audio.src === props.songPlayURL)
+                if(isPlaying === true)
                 {
                     setIsPlaying(false)
                     audio.pause()
                     return
                 }
 
+                // Playing if paused and same song
                 if(audio.src === props.songPlayURL && audio.paused === true)
                 {
                     audio.play()
                     setIsPlaying(true)
                     return;
                 }
-                
-                
+
+                // Changing The Song
                 let imageSong = document.getElementById("song-image") as HTMLImageElement
                 let songName = document.getElementById("song-name")
                 let artistNameEl = document.getElementById("artist-name")
                 audio.src = props.songPlayURL
-                audio.play().catch((error) => {}) 
+                audio.play().catch((e) => {} ) 
                 if(imageSong && songName && artistNameEl)
                 {
                     imageSong.src! = props.songImage
@@ -129,8 +129,7 @@ const SongInfoBar : NextComponentType<SongProps> = (props : SongProps)  => {
                     ]
                 })
 
-                // Song Meta Data End
-
+                // Data to save
                 let musicDataToSave = {
                     "songImgUrl" : props.songImage,
                     "songTitle" : props.songTitle,
@@ -140,6 +139,7 @@ const SongInfoBar : NextComponentType<SongProps> = (props : SongProps)  => {
                     "songID" : props.songID
                 }
 
+                // Saving the data
                 let recentPlayedArray : any = JSON.parse(localStorage.getItem("recent-played") || '[]')
 
                 recentPlayedArray.forEach((ele : any, idx : number) => {
@@ -150,6 +150,7 @@ const SongInfoBar : NextComponentType<SongProps> = (props : SongProps)  => {
                         }
                 })
 
+                // Checking if favourite song
                 let favArr = JSON.parse(localStorage.getItem("Fav-Arr") || '[]')
                 let favBtnIcon = document.getElementById("fav-icon-img") as HTMLImageElement
                 let favBtnMob = document.getElementById("fav-icon-mob-img") as HTMLImageElement
@@ -185,19 +186,6 @@ const SongInfoBar : NextComponentType<SongProps> = (props : SongProps)  => {
     )
 }
 
-
-// const getCircularReplacer = () => {
-//     const seen = new WeakSet();
-//     return (key : any, value : any) => {
-//       if (typeof value === "object" && value !== null) {
-//         if (seen.has(value)) {
-//           return;
-//         }
-//         seen.add(value);
-//       }
-//       return value;
-//     };
-//   };
 
 
 export default SongInfoBar
