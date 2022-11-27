@@ -37,7 +37,7 @@ const SearchBar : NextComponentType = () => {
         if(isMobile === false)
             setSearchHeight("calc(100vh - (90px + 48px + 4px))")
         else
-            setSearchHeight("calc(100vh - (90px + 48px + 8px + 50px))")
+            setSearchHeight("calc(var(--mobile-height) - (90px + 48px + 8px + 50px))")
     }, [])
 
     async function searchSongApi(queryStr : String)  {

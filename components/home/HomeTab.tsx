@@ -98,7 +98,7 @@ const HomeTab : NextComponentType = () => {
 
     return (
         <Flex 
-        h={isMobile === true ? `calc(100vh - (90px + 48px + 50px))` : "calc(100% - 35px)"}
+        h={isMobile === true ? `calc(var(--mobile-height) - (90px + 48px + 50px))` : "calc(100% - 35px)"}
         px={3}
         py={3}
         pb={0}

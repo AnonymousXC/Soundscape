@@ -55,7 +55,7 @@ const LikedTab = () => {
     return (
         <Flex 
         direction={"column"}
-        h={isMobile ? "calc(100vh - (90px + 48px + 50px))" : "calc(100% - 35px)"}
+        h={isMobile ? "calc(var(--mobile-height) - (90px + 48px + 50px))" : "calc(100% - 35px)"}
         py={4}
         pb={0}
         pl={4}>
