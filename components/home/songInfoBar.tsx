@@ -74,7 +74,12 @@ const SongInfoBar : NextComponentType<SongProps> = (props : SongProps)  => {
             sessionStorage.setItem("songClicked", JSON.stringify(props))
             router.push("/?tab=Detail", undefined, { shallow : true })
         }}
-        cursor="pointer" >
+        cursor="pointer"
+        transition={"all 150ms"}
+        _hover={props.card === true ? {
+            backgroundColor: "rgba(0,0,0,0.6)",
+            transform: "scale(1.05)"
+        } : {}} >
             <Image src={props.songImage} alt="" width={props.card === true ? "90%" : "40px"} height={props.card === true ? "auto" : "40px"} rounded={6} mx={4} loading="lazy" className="songBarImage" />
             <Flex justifyContent={"space-between"} h={"100%"} w={props.card === true ? "100%" : "70%"} alignItems={props.card === true ? "center" : "center"}
             direction={props.card === true ? "column" : "row"} minH={isMobile ? "40px" : "65px"} textOverflow="ellipsis">

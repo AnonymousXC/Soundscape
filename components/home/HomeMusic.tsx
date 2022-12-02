@@ -10,6 +10,7 @@ import LikedTab from "../home/FavTab"
 import LyricsTab from "../home/LyricsTab"
 import SongDetailDesk from "../songDetail/songDetail"
 import { useRouter } from "next/router";
+import YouTube from 'react-youtube';
 
 
 const HomeTabMain : NextComponentType = () => {
@@ -60,6 +61,17 @@ const HomeTabMain : NextComponentType = () => {
                 {
                     router.query.tab === "Detail" &&
                     <SongDetailDesk />
+                }
+                {
+                    router.query.tab === "video" &&
+                    <YouTube videoId={sessionStorage.getItem("videoId")} 
+                    opts={{
+                        playerVars : {
+                            controls : 0,
+                            showinfo : 0,
+                            autohide : 1
+                        }
+                    }} />
                 }
             </Flex>
         </Flex>

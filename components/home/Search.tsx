@@ -1,20 +1,22 @@
 import { NextComponentType } from "next";
 import { useEffect, useState } from "react";
 import SongInfoBar from "./songInfoBar";
-// import CreatableSelect from "react-select/creatable"
+import VideoComponent from "../videoSearchComponent/videoSearch"
 import { useRouter } from "next/router";
 import  {
     Flex,
     Input,
     Avatar,
     Button,
+    Text,
     Image,
     useBreakpoint,
     Menu,
     MenuButton,
     MenuList,
     MenuItem,
-    Divider
+    Divider,
+    Box
 } from "@chakra-ui/react"
 
 
@@ -27,6 +29,7 @@ const SearchBar : NextComponentType = () => {
     let [ searchQuery, setSearchQuery ] = useState("")
     let [ searchHeight, setSearchHeight ] = useState("0px")
     let [ searchResultNext, setSearchResultNext] = useState([])
+    let [ videoSearch, setVideoSearch] = useState([])
     let [ musicQuality, setMusicQuality ] = useState(4)
     let router = useRouter()
 
@@ -81,6 +84,31 @@ const SearchBar : NextComponentType = () => {
         })
         setSearchResultNext(componentArray)
     }
+
+    async function addYoutubeVideo(queryStr : String) {
+        if(queryStr === "" || queryStr === " " || queryStr === undefined || queryStr === null) return;
+        let componentArray : any = []
+        queryStr = queryStr.replace(' ', "%20")    
+        let queryed = await fetch("api/youtubeVideoSearch", {
+            body: JSON.stringify({
+                searchQuery : queryStr,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: "POST",
+        })
+
+        if(!queryed) return
+        let data = await queryed.json();
+        if(!data) return;
+        data.map(async(element : any, key: number) => {
+            componentArray.push(
+                <VideoComponent videoID={element.id.videoId} key={key.toString() + "video-yt"} />
+            )
+        })
+        setVideoSearch(componentArray)
+    }
     
     
 
@@ -105,7 +133,7 @@ const SearchBar : NextComponentType = () => {
                 rounded={29.5}
                 onClick={() => {
                     setSearchHeight("0px")
-                    router.push("/?tab=Home", undefined, {shallow: true})
+                    router.back()
                 }}> <Image src="images/icons/Back Button.svg" alt="Back" w={"40px"} /> </Button>
                 <Input
                 w={isMobile === true ? "95%" : "85%"}
@@ -120,7 +148,10 @@ const SearchBar : NextComponentType = () => {
 
                 onKeyUp= {(e) => {
                     if(e.key === "Enter")
+                    {
                         searchSongApi(searchQuery)
+                        addYoutubeVideo(searchQuery)
+                    }
                 }}
 
                 onFocus={() => {
@@ -162,6 +193,25 @@ const SearchBar : NextComponentType = () => {
             alignItems="center"
             direction="column">
                 {searchResultNext}
+                <Box
+                mt={6}
+                mx={1}
+                rounded={4}
+                backgroundColor="rgba(0,0,0,0.1)">
+                    <Text 
+                    fontWeight={"bold"}
+                    fontSize={"xl"}
+                    px={2}>More Results from Youtube</Text>
+                    <Flex 
+                    width={"100%"}
+                    pt={2}
+                    justifyContent="center"
+                    flexWrap="wrap"
+                    gap={2}>
+                        {videoSearch}
+                    </Flex>
+                </Box>
+
             </Flex>
         </Flex>
     )

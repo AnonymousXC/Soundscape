@@ -5,6 +5,7 @@ import {
     Heading,
     Text,
     useBreakpoint,
+    Button,
 } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 
@@ -50,8 +51,24 @@ const SongDetailDesk = () => {
             h={isMobile ? "unset" : "50%"}
             alignItems={"center"}
             direction={isMobile === true ? "column" : "row"}>
-                <Image src={songData.songImage} h={"250px"} w="auto" rounded={6} />
+                {
+                    isMobile === true &&
+                    <Flex justifyContent={"center"} alignItems="center" direction={"column"} h={"315px"}>
+                        <Image src={songData.songImage} h={"250px"} w="auto" rounded={6} />
+                        <Button 
+                        pt={1}
+                        position={"relative"}
+                        variant="unstyled">
+                            <Image src="images/icons/Pause Music Icon.svg" w={"50px"} />
+                        </Button>
+                    </Flex>
+                }
+                {
+                    isMobile === false &&
+                    <Image src={songData.songImage} h={"250px"} w="auto" rounded={6} />
+                }
                 <Box
+                minH={"max-content"}
                 pt={isMobile ? 2 : 0}
                 w={isMobile ? "250px" : "initial"}
                 px={isMobile ? 0 : 4}>
@@ -62,9 +79,17 @@ const SongDetailDesk = () => {
                         <>
                             <Text color="#B0B0B0" pt={0}> <span style={{ color: "#747474" }}>Album</span> {serverSongData.album.name ? serverSongData.album.name : "Loading..."}</Text>
                             <Text color="#B0B0B0" pt={0}> <span style={{ color: "#747474" }}>Date Added</span> {serverSongData.releaseDate}</Text>
-                            <Text color="#B0B0B0" pt={0}> <span style={{ color: "#747474" }}>Duration</span> {serverSongData.duration}</Text>
+                            <Text color="#B0B0B0" pt={0}> <span style={{ color: "#747474" }}>Duration</span> {(serverSongData.duration)}</Text>
                             <Text color="#B0B0B0" pt={0}> <span style={{ color: "#747474" }}>Play Count</span> {intl.NumberFormat().format(serverSongData.playCount)}</Text>
                         </>
+                    }
+                    {
+                        isMobile === false &&
+                        <Button 
+                        // mt={1}
+                        variant="unstyled">
+                            <Image src="images/icons/Pause Music Icon.svg" w={"50px"} />
+                        </Button>
                     }
                 </Box>
             </Flex>
@@ -76,21 +101,32 @@ const SongDetailDesk = () => {
                 <Flex justifyContent={"space-between"} w={"100%"} h="25px" direction={"column"}>
                     {
                         isMobile === false &&
-                        <>
-                            <Flex justifyContent={"space-between"}>
+                        <Flex justifyContent={"space-between"}>
+                            <Box>
                                 <Text>Name</Text>
+                                <Text color="#B0B0B0" pt={1}>{serverSongData.name}</Text>
+                            </Box>
+                            <Box>
                                 <Text>Artist</Text>
+                                <Text color="#B0B0B0" pt={1}>{serverSongData.artist}</Text>
+                            </Box>
+                            <Box>
                                 <Text>Album</Text>
+                                <Text color="#B0B0B0" pt={1}> {serverSongData.album.name ? serverSongData.album.name : "Loading..."}</Text>
+                            </Box>
+                            {/* <Box>
                                 <Text>Added Date</Text>
+                                <Text color="#B0B0B0" pt={1}>{serverSongData.releaseDate}</Text>
+                            </Box> */}
+                            <Box>
                                 <Text>Duration</Text>
-                            </Flex>
-                            <Flex justifyContent={"space-between"}>
-                                <Text color="#B0B0B0" pt={0}> {serverSongData.album.name ? serverSongData.album.name : "Loading..."}</Text>
-                                <Text color="#B0B0B0" pt={0}>{serverSongData.releaseDate}</Text>
-                                <Text color="#B0B0B0" pt={0}>{serverSongData.duration}</Text>
-                                <Text color="#B0B0B0" pt={0}>{intl.NumberFormat().format(serverSongData.playCount)}</Text>
-                            </Flex>
-                        </>
+                                <Text color="#B0B0B0" pt={1}>{serverSongData.duration}</Text>
+                            </Box>
+                            <Box>
+                                <Text>Play Count</Text>
+                                <Text color="#B0B0B0" pt={1}>{intl.NumberFormat().format(serverSongData.playCount)}</Text>
+                            </Box>
+                        </Flex>
                     }
                 </Flex>
             </Flex>
