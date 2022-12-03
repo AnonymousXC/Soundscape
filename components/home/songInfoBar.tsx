@@ -67,7 +67,7 @@ const SongInfoBar : NextComponentType<SongProps> = (props : SongProps)  => {
         ml={props.card === true ? 4 : 0}
         mb={props.card === true ? 8 : 0}
         alignItems="center"
-        backgroundColor={"rgba(0,0,0,0.2)"}
+        backgroundColor={isPlaying ? "rgba(0,0,0,0.6)" : "rgba(0,0,0,0.2)"}
         color="rgba(255,255,255,0.8)"
         direction={props.card === true ? "column" : "row"}
         onClick={() => {
@@ -76,10 +76,11 @@ const SongInfoBar : NextComponentType<SongProps> = (props : SongProps)  => {
         }}
         cursor="pointer"
         transition={"all 150ms"}
-        _hover={props.card === true ? {
+        _hover={props.card === true && isMobile === false ? {
             backgroundColor: "rgba(0,0,0,0.6)",
             transform: "scale(1.05)"
-        } : {}} >
+        } : {}}
+        transform={isPlaying ? "scale(1.05)" : ""} >
             <Image src={props.songImage} alt="" width={props.card === true ? "90%" : "40px"} height={props.card === true ? "auto" : "40px"} rounded={6} mx={4} loading="lazy" className="songBarImage" />
             <Flex justifyContent={"space-between"} h={"100%"} w={props.card === true ? "100%" : "70%"} alignItems={props.card === true ? "center" : "center"}
             direction={props.card === true ? "column" : "row"} minH={isMobile ? "40px" : "65px"} textOverflow="ellipsis">

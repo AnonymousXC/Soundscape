@@ -18,6 +18,7 @@ const HomeTabMain : NextComponentType = () => {
     const currBR = useBreakpoint()
     const isMobile = currBR === "sm" || currBR === "base" ? true : false
     const router = useRouter()
+    let videoSize = isMobile ?  "calc(var(--mobile-height) - 187px)" : "100%"
 
 
     return (
@@ -64,12 +65,21 @@ const HomeTabMain : NextComponentType = () => {
                 }
                 {
                     router.query.tab === "video" &&
-                    <YouTube videoId={sessionStorage.getItem("videoId")} 
+                    <YouTube videoId={sessionStorage.getItem("videoId") || ""} 
+                    style={{
+                        pointerEvents : "none",
+                        maxWidth : "100%",
+                        height: videoSize,
+                        width: "100vw"
+                    }}
                     opts={{
+                        width : "100%",
+                        height : "100%",
                         playerVars : {
-                            controls : 0,
+                            controls : 1,
                             showinfo : 0,
-                            autohide : 1
+                            autohide : 1,
+                            autoplay : 1,
                         }
                     }} />
                 }
