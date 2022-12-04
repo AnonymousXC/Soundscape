@@ -67,7 +67,6 @@ const HomeTabMain : NextComponentType = () => {
                     router.query.tab === "video" &&
                     <YouTube videoId={sessionStorage.getItem("videoId") || ""} 
                     style={{
-                        pointerEvents : "none",
                         maxWidth : "100%",
                         height: videoSize,
                         width: "100vw"

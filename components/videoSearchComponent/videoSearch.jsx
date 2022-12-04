@@ -1,7 +1,9 @@
 import {
     Flex,
     Image,
-    Text
+    Text,
+    Button,
+    useBreakpoint
 } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
@@ -10,41 +12,49 @@ const VideoComponent = ({videoID}) => {
 
     const [ videoTitle, setVideoTitle ] = useState("")
     const router = useRouter()
+    const currBR = useBreakpoint()
+    const isMobile = currBR === "sm" || currBR === "base" ? true : false
 
     useEffect(() => {
         fetchVideoData(videoID)
         .then(data => {
             setVideoTitle(data.snippet.title)
         })
-    }, [])
+    }, [videoID])
 
     return (
         <Flex 
-        direction={"column"}
+        direction={"row"}
         onClick={() => {
             sessionStorage.setItem("videoId", videoID)
             router.push("/?tab=video", undefined, { shallow : true})
+            document.getElementsByTagName("audio")[0].pause()
         }}
-        w={"250px"}
+        w={isMobile === false ? "98%" : "95%"}
+        h={"50px"}
+        py={2}
+        mt={2}
+        justifyContent="space-around"
+        alignItems={"center"}
         cursor="pointer"
-        rounded={4}
-        _hover={{
-            transform: "scale(1.05)",
-            backgroundColor: "rgba(0,0,0,0.5)"
-        }}
+        rounded={8}
+        // _hover={{
+        //     transform: "scale(1.05)",
+        //     backgroundColor: "rgba(0,0,0,0.5)"
+        // }}
         transition="all 150ms"
         backgroundColor="rgba(0,0,0,0.2)">
-            <Image src={`https://i.ytimg.com/vi/${videoID}/hqdefault.jpg`} w={"250px"} height="140px" objectFit={"cover"} roundedTop={4} />
+            <Image src={`https://i.ytimg.com/vi/${videoID}/hqdefault.jpg`} w={"71px"} height="40px" objectFit={"cover"} rounded={4} />
             <Text
-            px={2}
-            py={1}
-            className="youtube-video-search"
-            css={{
-                display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-            }}>{videoTitle}</Text>
+            h={"max-content"}
+            className="one-line-overflow"
+            w={"60%"}>{videoTitle}</Text>
+            <Button variant={"unstyled"}
+            onClick={() => {
+                sessionStorage.setItem("videoId", videoID)
+                router.push("/?tab=video", undefined, { shallow : true})
+                document.getElementsByTagName("audio")[0].pause()
+            }}>Play</Button>
         </Flex>
     )
 }

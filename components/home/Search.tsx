@@ -193,24 +193,11 @@ const SearchBar : NextComponentType = () => {
             alignItems="center"
             direction="column">
                 {searchResultNext}
-                <Box
-                mt={6}
-                mx={1}
-                rounded={4}
-                backgroundColor="rgba(0,0,0,0.1)">
-                    <Text 
-                    fontWeight={"bold"}
-                    fontSize={"xl"}
-                    px={2}>More Results from Youtube</Text>
-                    <Flex 
-                    width={"100%"}
-                    pt={2}
-                    justifyContent="center"
-                    flexWrap="wrap"
-                    gap={2}>
-                        {videoSearch}
-                    </Flex>
-                </Box>
+                {/* <Text 
+                fontWeight={"bold"}
+                fontSize={"xl"}
+                px={2}>More Results from Youtube</Text> */}
+                {videoSearch}
 
             </Flex>
         </Flex>
