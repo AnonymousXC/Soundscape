@@ -109,7 +109,7 @@ const HomeTab : NextComponentType = () => {
             {
                 showRecent &&
                 <Box height="max-content" pt={1}>
-                    <Text fontSize={"1.2rem"} fontWeight="500">Recently Played</Text>
+                    <Text fontSize={"1.2rem"} fontWeight="400">Recently Played</Text>
                     <Divider />
                     <Flex wrap={"wrap"} id="recent-played-cards-el" pt={2}>
                         {cardsMetaArray}
@@ -117,7 +117,7 @@ const HomeTab : NextComponentType = () => {
                 </Box>
             }
             <Box height="max-content">
-                <Text fontSize={"1.2rem"} fontWeight="500">Trending Today</Text>
+                <Text fontSize={"1.2rem"} fontWeight="400">Trending Today</Text>
                 <Divider />
                 <Flex wrap={"wrap"} pt={2} id="trending-today-cards">
                     { trendingTodayCards }

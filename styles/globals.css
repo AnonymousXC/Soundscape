@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Roboto:ital,wght@0,100;0,400;0,500;0,700;0,900;1,500&display=swap');
 
+
+* {
+  scrollbar-width: thin;
+}
 
 
 body {
@@ -52,9 +55,10 @@ a {
   background-color: transparent !important;
   width: 100%;
   text-align:start;
-  font-weight: bold !important;
+  font-weight: 500 !important;
   justify-content: flex-start !important;
   font-size: 0.9rem !important;
+  height: 25px !important;
 }
 
 .playlist-btn:hover {
@@ -96,10 +100,38 @@ a {
 }
 
 
+.song-name-cl, .artist-name-cl {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden !important;
+}
+
+
 .youtube-video-search > iframe > .ytp-gradient-top {
   display: none;
 }
 
 .ytp-impression-link {
   display: none !important;
+}
+
+
+::-webkit-scrollbar {
+  width: 6px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5);
+  -webkit-border-radius: 1ex;
+  -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.65);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: rgba(255, 255, 255, 0.45);
 }
