@@ -119,7 +119,10 @@ const SongDetailDesk = () => {
                 {
                     isMobile === true &&
                     <Flex justifyContent={"center"} alignItems="center" direction={"column"} h={"315px"}>
-                        <Image src={songData.songImage} h={"250px"} w="auto" rounded={6} />
+                        <Image src={songData.songImage} h={"250px"} w="auto" rounded={6}
+                        onError={(e) => {
+                            e.currentTarget.src = "https://i.pinimg.com/originals/38/fd/ec/38fdec6bd4072081487b5aee95bec376.jpg"
+                        }} />
                         <Button 
                         pt={1}
                         onClick={handlePlay}
@@ -131,7 +134,10 @@ const SongDetailDesk = () => {
                 }
                 {
                     isMobile === false &&
-                    <Image src={songData.songImage} h={"250px"} w="auto" rounded={6} />
+                    <Image src={songData.songImage} h={"250px"} w="auto" rounded={6}
+                    onError={(e) => {
+                        e.currentTarget.src = "https://i.pinimg.com/originals/38/fd/ec/38fdec6bd4072081487b5aee95bec376.jpg"
+                    }} />
                 }
                 <Box
                 minH={"max-content"}

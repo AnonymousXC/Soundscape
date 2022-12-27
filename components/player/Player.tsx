@@ -73,6 +73,11 @@ const Player : NextComponentType = () => {
             playRandomSong()
         })
 
+        navigator.mediaSession.setActionHandler("previoustrack", (e) => {
+            document.getElementsByTagName('audio')[0].currentTime = 0;
+            
+        })
+
         let isAutoPlay = localStorage.getItem("auto-play")
         if(isAutoPlay === "true") {
             // document.getElementsByTagName("audio")[0].play()
@@ -247,6 +252,9 @@ const Player : NextComponentType = () => {
             loop={loopState}
             onClickNext={() => {
                 playRandomSong()
+            }}
+            onClickPrevious={() => {
+                document.getElementsByTagName("audio")[0].currentTime = 0
             }}
             />
         </Flex>

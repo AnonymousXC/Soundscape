@@ -91,6 +91,10 @@ const SideBar : NextComponentType = () => {
                 <Button variant={'unstyled'} fontSize={'14px'} fontWeight={'500'} mb={'1px'}>Create a new Playlist <AddIcon ml={'6px'} w={'10px'} fontWeight={'extrabold'} /> </Button>
                 <Image 
                 id="song-image"
+                onError={() => {
+                    console.log('asdasd');
+                    (document.getElementById("song-image") as HTMLImageElement).src = 'https://i.pinimg.com/originals/38/fd/ec/38fdec6bd4072081487b5aee95bec376.jpg'
+                }}
                 src={songImgUrl ? songImgUrl : "https://media.istockphoto.com/vectors/flag-ribbon-welcome-old-school-flag-banner-vector-id1223088904?k=20&m=1223088904&s=612x612&w=0&h=b_ilJpFTSQbZeCrZusHRLEskmfiONWH0hFASAJbgz9g="}
                 width={"80%"}
                 rounded={12}
@@ -102,5 +106,13 @@ const SideBar : NextComponentType = () => {
         </Flex>
     )
 }
+
+
+// function imageExistsURL(url : string) {
+//     let http = new XMLHttpRequest()
+//     http.open('HEAD', url, false)
+//     http.send()
+//     return http.status != 404;
+// } 
 
 export default SideBar;
