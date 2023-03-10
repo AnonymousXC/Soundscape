@@ -106,7 +106,7 @@ const  OpenAudioQualityModal = ({op, cl, defVal}) => {
       })
       localStorage.setItem("recent-played", JSON.stringify(recentPlays))
       pushRecentPlayedToDB()
-    }}>
+    }} isCentered>
       <ModalOverlay />
       <ModalContent mx={2}>
         <ModalHeader>Audio Quality</ModalHeader>

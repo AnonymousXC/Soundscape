@@ -3,12 +3,12 @@ import {
   Flex,
   useBreakpoint
 } from "@chakra-ui/react"
-import Head from 'next/head'
 import SideBar from '../components/sidebar/SideBar'
 import HomeTabMain from '../components/home/HomeMusic'
 import Player from '../components/player/Player'
 import ContextMenu from '../components/context/contextMenu'
 import MobileBar from '../components/sidebar/mobileBottomBar'
+import Ads from '../components/ads/Ads Model'
 import { useEffect } from 'react'
 
 
@@ -50,6 +50,7 @@ const Home: NextPage = () => {
       </Flex>
       <Player />
       { isMobile === true && <MobileBar /> }
+      <Ads />
     </>
   )
 }

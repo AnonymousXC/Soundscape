@@ -161,10 +161,10 @@ const SearchBar : NextComponentType = () => {
                 />
                 { isMobile === false &&
                     <Menu>
-                        <MenuButton>
+                        <MenuButton zIndex={1000}>
                             <Avatar name="Hello World" bg={"#737373"} mt={2} size="sm" />
                         </MenuButton>
-                        <MenuList backgroundColor={"#10141f"}>
+                        <MenuList backgroundColor={"#10141f"} zIndex={1000}>
                             <MenuItem 
                             onClick={() => {
                                 router.push("/signup", undefined, {shallow: true})
