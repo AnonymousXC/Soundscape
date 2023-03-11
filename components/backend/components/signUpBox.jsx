@@ -31,6 +31,7 @@ function SignupCard() {
     const [showPassword, setShowPassword] = useState(false);
     const [ email, setEmail ] = useState("")
     const [ password, setPassword ] = useState("")
+    const [ name, setName ] = useState("")
 
     return (
         <Flex
@@ -53,20 +54,12 @@ function SignupCard() {
             boxShadow={'lg'}
             p={8}>
             <Stack spacing={4}>
-                <HStack>
-                <Box>
+                <Box >
                     <FormControl id="firstName" isRequired>
-                    <FormLabel>First Name</FormLabel>
-                    <Input type="text" />
+                    <FormLabel>Name</FormLabel>
+                    <Input type="text" onChange={(e) => { setName(e.currentTarget.value )}} />
                     </FormControl>
                 </Box>
-                <Box>
-                    <FormControl id="lastName">
-                    <FormLabel>Last Name</FormLabel>
-                    <Input type="text" />
-                    </FormControl>
-                </Box>
-                </HStack>
                 <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>
                 <Input type="email" onChange={(e) => {setEmail(e.currentTarget.value)}} />
@@ -96,7 +89,7 @@ function SignupCard() {
                     bg: 'blue.500',
                     }}
                     onClick={() => {
-                        signUpUser(email, password)
+                        signUpUser(email, password, name)
                     }}>
                     Sign up
                 </Button>
@@ -115,10 +108,10 @@ function SignupCard() {
 }
 
 
-function signUpUser(em, pass) {
+function signUpUser(em, pass, name) {
     createUserWithEmailAndPassword(AuthInstance, em, pass)
     .then(e => {
-        makeUserDatabaseID(e.user.uid)
+        makeUserDatabaseID(e.user.uid, name)
         document.getElementById("signup-status").innerText = "Account Made Successfully."
         setTimeout(() => {
             Router.push("/login")
@@ -132,8 +125,9 @@ function signUpUser(em, pass) {
     })
 }
 
-async function makeUserDatabaseID(userId) {
+async function makeUserDatabaseID(userId, name) {
     const docRef = await setDoc(doc(Database, `userData`, userId), {
+        name: name,
         recentPlays : [],
         favSongs : [],
     })
