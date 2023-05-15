@@ -50,7 +50,7 @@ const Home: NextPage = () => {
       </Flex>
       <Player />
       { isMobile === true && <MobileBar /> }
-      <Ads />
+      { /* <Ads /> */}
     </>
   )
 }

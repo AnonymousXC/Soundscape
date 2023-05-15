@@ -62,7 +62,7 @@ const SearchBar : NextComponentType = () => {
         if(!data) return;
         
         searchResultNext = []
-        data.results.map(async(element : any, key: number) => {
+        data.map(async(element : any, key: number) => {
             const dateObj = new Date(element.duration *1000)
             let durationStr = dateObj.getUTCMinutes() + ":" + dateObj.getSeconds()
             if(element.downloadUrl[4] === undefined)
@@ -74,9 +74,9 @@ const SearchBar : NextComponentType = () => {
                 <SongInfoBar 
                 key={key}
                 songImage={element.image[2].link}
-                songTitle={element.name.length > 50 ? element.artist.substring(0,50) : element.name}
+                songTitle={element.name.length > 50 ? element.primaryArtists.substring(0,50) : element.name}
                 songDuration={durationStr}
-                artistName={element.artist.length >= 30 ? element.artist.substring(0,30) + "..." : element.artist}
+                artistName={element.primaryArtists.length >= 30 ? element.primaryArtists.substring(0,30) + "..." : element.artist}
                 songPlayURL={element.downloadUrl[musicQuality].link || ""}
                 songID={element.id}
                 card={false} />

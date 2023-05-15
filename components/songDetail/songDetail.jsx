@@ -180,7 +180,7 @@ const SongDetailDesk = () => {
                                 </Box>
                                 <Box>
                                     <Text>Artist</Text>
-                                    <Text color="#B0B0B0" pt={1}>{serverSongData.artist}</Text>
+                                    <Text color="#B0B0B0" pt={1}>{serverSongData.primaryArtists}</Text>
                                 </Box>
                                 <Box>
                                     <Text>Album</Text>
@@ -222,10 +222,11 @@ async function getSongDataServer(songID) {
     })
 
     let data = await queryed.json()
-    const dateObj = new Date(data.results.duration *1000)
+    const dateObj = new Date(data.duration *1000)
     let durationStr = dateObj.getUTCMinutes() + ":" + dateObj.getSeconds()
-    data.results.duration = durationStr
-    return data.results
+    data.duration = durationStr
+    console.log(data)
+    return data
 
 }
 

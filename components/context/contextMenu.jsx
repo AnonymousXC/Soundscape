@@ -28,7 +28,10 @@ const ContextMenu = () => {
 
     document.body.addEventListener("contextmenu", (e) => {
       e.preventDefault()
-      setDisplay("flex")
+      if( display === "none")
+        setDisplay("flex")
+      else
+        setDisplay("none")
       setMenuPos({x : e.clientX, y : e.clientY })
 
       let musicQuality = localStorage.getItem("song-quality") || "4"
@@ -46,7 +49,7 @@ const ContextMenu = () => {
         <Flex 
         id="context-menu"
         w={"250px"}
-        h={"320px"}
+        h={"340px"}
         position="absolute"
         backgroundColor={"rgba(16, 20, 31, 1)"}
         display={display}
@@ -79,6 +82,13 @@ const ContextMenu = () => {
           onClick={() => {
             toogleCurrTheme()            
           }}>Toggle Theme</Button>
+          <Button variant={"ghost"} roundedTop={0} justifyContent="flex-start" px={6}
+          onClick={() => {
+            localStorage.removeItem('recent-played')
+            window.location.reload()
+          }}>
+            Clear Data
+          </Button>
           <OpenAudioQualityModal op={isOpen} cl={onClose} defVal={musicQuality}/>
         </Flex>
     )

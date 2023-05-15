@@ -56,10 +56,11 @@ const HomeTab : NextComponentType = () => {
 
     async function addTrendingToday() {
         let songDataRes = await fetch("api/fetchTopSongs", {method: "GET"})
-        let songData = (await songDataRes.json()).results.songs
+        let songData = (await songDataRes.json())
+        let noOFSongs = songData.length > 20 ? 20 : songData.length;
         
         let newSongArr = []
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < noOFSongs; i++) {
             const el = songData[i];
             newSongArr.push({
                 "songImgUrl" : el.image[2].link,
