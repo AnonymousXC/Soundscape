@@ -11,7 +11,7 @@ import LyricsTab from "../home/LyricsTab"
 import SongDetailDesk from "../songDetail/songDetail"
 import { useRouter } from "next/router";
 import YouTube from 'react-youtube';
-
+import RecentPlayed from '../home/Recent Played';
 
 const HomeTabMain : NextComponentType = () => {
 
@@ -62,6 +62,10 @@ const HomeTabMain : NextComponentType = () => {
                 {
                     router.query.tab === "Detail" &&
                     <SongDetailDesk />
+                }
+                {
+                    router.query.tab === "RecentSongs" &&
+                    <RecentPlayed />
                 }
                 {
                     router.query.tab === "video" &&

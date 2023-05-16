@@ -225,7 +225,6 @@ async function getSongDataServer(songID) {
     const dateObj = new Date(data.duration *1000)
     let durationStr = dateObj.getUTCMinutes() + ":" + dateObj.getSeconds()
     data.duration = durationStr
-    console.log(data)
     return data
 
 }
@@ -248,3 +247,4 @@ async function getLyrics(sID) {
 
 
 export default SongDetailDesk;
+export { getSongDataServer }

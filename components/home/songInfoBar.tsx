@@ -140,11 +140,6 @@ const SongInfoBar : NextComponentType<SongProps> = (props : SongProps)  => {
 
                 // Data to save
                 let musicDataToSave = {
-                    "songImgUrl" : props.songImage,
-                    "songTitle" : props.songTitle,
-                    "songDuration" : props.songDuration,
-                    "songArtist" : props.artistName,
-                    "playURL" : props.songPlayURL,
                     "songID" : props.songID
                 }
 

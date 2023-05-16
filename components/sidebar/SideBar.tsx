@@ -58,6 +58,10 @@ const SideBar : NextComponentType = () => {
                             onClick={() => {
                                 router.push("/?tab=LikedSong", undefined, {shallow: true})
                             }}><Image src="images/icons/Liked Icon.svg" pr={"5"} w="38px" alt="" /> Liked Songs</Tab>
+                            <Tab fontWeight={"500"} fontSize="0.9rem" _hover={{color: "#909090"}}
+                            onClick={() => {
+                                router.push("/?tab=RecentSongs", undefined, {shallow: true})
+                            }}><Image src="https://cdn.onlinewebfonts.com/svg/img_98095.png" pr={"5"} w="38px" alt="" /> Recent Played</Tab>
                         </TabList>
                     </Tabs>
                 </Box>
@@ -92,7 +96,6 @@ const SideBar : NextComponentType = () => {
                 <Image 
                 id="song-image"
                 onError={() => {
-                    console.log('asdasd');
                     (document.getElementById("song-image") as HTMLImageElement).src = 'https://i.pinimg.com/originals/38/fd/ec/38fdec6bd4072081487b5aee95bec376.jpg'
                 }}
                 src={songImgUrl ? songImgUrl : "https://media.istockphoto.com/vectors/flag-ribbon-welcome-old-school-flag-banner-vector-id1223088904?k=20&m=1223088904&s=612x612&w=0&h=b_ilJpFTSQbZeCrZusHRLEskmfiONWH0hFASAJbgz9g="}

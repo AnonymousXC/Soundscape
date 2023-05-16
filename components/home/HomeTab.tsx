@@ -17,7 +17,7 @@ import {
     getDoc,
 } from "firebase/firestore"
 import { Database } from "../../.firebase/firebaseMain"
-
+import { getSongDataServer } from '../songDetail/songDetail'
 
 
 
@@ -66,7 +66,7 @@ const HomeTab : NextComponentType = () => {
                 "songImgUrl" : el.image[2].link,
                 "songTitle" : el.name.replace(/\(.+\)/, ""),
                 "songDuration" : el.duration,
-                "songArtist" : el.artist,
+                "songArtist" : el.primaryArtists,
                 "playURL" : el.downloadUrl[4].link,
                 "songID" : el.id
             })
@@ -88,11 +88,26 @@ const HomeTab : NextComponentType = () => {
             return
         }
 
-        let recentPlayedArray = JSON.parse(localStorage.getItem("recent-played") || '[]')       
-        addCards(recentPlayedArray, false)
+        // FIXME: Get last songs played on page.
+        (async () => {
+            let recentPlayedSongIDs = await JSON.parse(localStorage.getItem("recent-played") || '[]')
+            let recentPlayedArray : any = []
+            recentPlayedSongIDs.forEach(async (ele : any, idx : number) => {
+                let data = await getSongDataServer(ele.songID)
+                recentPlayedArray.push({
+                    "songImgUrl" : data.image[2].link,
+                    "songTitle" : data.name.replace(/\(.+\)/, ""),
+                    "songDuration" : data.duration,
+                    "songArtist" : data.primaryArtists,
+                    "playURL" : data.downloadUrl[4].link,
+                    "songID" : data.id
+                })
+            })
+            await addCards(recentPlayedArray, false)
+            if(recentPlayedArray.length > 0)
+                setShowRecent(true)        
+        })()
         addTrendingToday()
-        if(recentPlayedArray.length > 0)
-            setShowRecent(true)        
 
     }, [])
 
