@@ -61,7 +61,7 @@ const SideBar : NextComponentType = () => {
                             <Tab fontWeight={"500"} fontSize="0.9rem" _hover={{color: "#909090"}}
                             onClick={() => {
                                 router.push("/?tab=RecentSongs", undefined, {shallow: true})
-                            }}><Image src="https://cdn.onlinewebfonts.com/svg/img_98095.png" pr={"5"} w="38px" alt="" /> Recent Played</Tab>
+                            }}><Image src="https://cdn.onlinewebfonts.com/svg/img_98095.png" pr={"5"} w="38px" alt="" filter={"invert(1)"} /> Recent Played</Tab>
                         </TabList>
                     </Tabs>
                 </Box>

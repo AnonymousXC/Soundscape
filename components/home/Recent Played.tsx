@@ -1,25 +1,75 @@
 import {
-    Box,
     Text,
     Divider,
-    Flex
+    Flex,
+    useBreakpoint
 } from '@chakra-ui/react'
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import SongInfoBar from '../home/songInfoBar';
 
 function RecentPlayed() {
 
-    const [ cardsMetaArray, setCardsMetaArray ] = useState([])
+    const [cardsMetaArray, setCardsMetaArray] = useState<any>([])
+    const currBR = useBreakpoint()
+    const isMobile = currBR === "sm" || currBR === "base" ? true : false 
+    const router = useRouter()
+
+    useEffect(() => {
+
+        let recentPlayedRawData = JSON.parse(localStorage.getItem("recent-played") || '{}')
+        let recentPlayedSong : any = []
+        for(let i = recentPlayedRawData.length - 1; i >= 0; i--) {
+            fetchSong(recentPlayedRawData[i].songID)
+            .then((val : any) => {
+                recentPlayedSong.push(
+                <SongInfoBar 
+                    key={i}
+                    songImage={val.image[2].link}
+                    songTitle={val.name}
+                    songPlayURL={val.downloadUrl[4].link}
+                    artistName={val.primaryArtists}
+                    songDuration={444}
+                    songID={val.id}
+                    card={true}/>
+                )
+                setCardsMetaArray(recentPlayedSong)
+            })
+        }
+
+    }, [])
 
     return (
-        <Box height="max-content" pt={1}>
+        <Flex height="max-content" pt={1}
+            h={isMobile === true ? `calc(var(--mobile-height) - (90px + 48px + 50px))` : "calc(100% - 35px)"}
+            px={3}
+            py={3}
+            pb={0}
+            pr={0}
+            direction={"column"}
+            overflowY="auto">
             <Text fontSize={"1.2rem"} fontWeight="400">Recently Played</Text>
             <Divider />
             <Flex wrap={"wrap"} id="recent-played-cards-el" pt={2}>
                 {cardsMetaArray}
             </Flex>
-        </Box>
+        </Flex>
     )
 }
+
+async function fetchSong(id : string) {
+    const rawData = await fetch(`${window.location.origin}/api/fetchSongData`, {
+        body: JSON.stringify({
+            songDataID : id,
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        },
+        method: "POST",
+    })
+    const data = await rawData.json()
+    return data;
+}
+
 
 export default RecentPlayed;

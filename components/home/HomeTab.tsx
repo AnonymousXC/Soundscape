@@ -4,7 +4,8 @@ import {
     Text,
     useBreakpoint,
     Divider,
-    Box
+    Box,
+    Button,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import SongInfoBar from "./songInfoBar";
@@ -75,38 +76,6 @@ const HomeTab : NextComponentType = () => {
     }
 
     useEffect(() => {
-
-        if(localStorage.getItem("userID"))
-        {
-            addRecentPlayFromDatabase().then(data => {
-                addCards(data!.recentPlays, false);
-                setShowRecent(true)
-                addTrendingToday()
-                localStorage.setItem("recent-played", JSON.stringify(data?.recentPlays))
-            });
-
-            return
-        }
-
-        // FIXME: Get last songs played on page.
-        (async () => {
-            let recentPlayedSongIDs = await JSON.parse(localStorage.getItem("recent-played") || '[]')
-            let recentPlayedArray : any = []
-            recentPlayedSongIDs.forEach(async (ele : any, idx : number) => {
-                let data = await getSongDataServer(ele.songID)
-                recentPlayedArray.push({
-                    "songImgUrl" : data.image[2].link,
-                    "songTitle" : data.name.replace(/\(.+\)/, ""),
-                    "songDuration" : data.duration,
-                    "songArtist" : data.primaryArtists,
-                    "playURL" : data.downloadUrl[4].link,
-                    "songID" : data.id
-                })
-            })
-            await addCards(recentPlayedArray, false)
-            if(recentPlayedArray.length > 0)
-                setShowRecent(true)        
-        })()
         addTrendingToday()
 
     }, [])
@@ -132,12 +101,15 @@ const HomeTab : NextComponentType = () => {
                     </Flex>
                 </Box>
             }
-            <Box height="max-content">
+            <Box height="max-content" pb={2}>
                 <Text fontSize={"1.2rem"} fontWeight="400">Trending Today</Text>
                 <Divider />
                 <Flex wrap={"wrap"} pt={2} id="trending-today-cards">
                     { trendingTodayCards }
                 </Flex>
+                <Button left={'50%'} transform={'translateX(-50%)'}>
+                    Load More
+                </Button>
             </Box>
         </Flex>
     )
