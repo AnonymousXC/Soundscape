@@ -22,8 +22,8 @@ const LyricsTab = () => {
         
         getLyrics(currSongData.songID)
         .then(data => {
-            if(data.results)
-                setLyrics(data.results)
+            if(data.lyrics)
+                setLyrics(data.lyrics)
             else
                 setLyrics("Lyrics Not Found.")
         })

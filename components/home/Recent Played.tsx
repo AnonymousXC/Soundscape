@@ -5,7 +5,6 @@ import {
     useBreakpoint
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import SongInfoBar from '../home/songInfoBar';
 
 function RecentPlayed() {
@@ -13,18 +12,17 @@ function RecentPlayed() {
     const [cardsMetaArray, setCardsMetaArray] = useState<any>([])
     const currBR = useBreakpoint()
     const isMobile = currBR === "sm" || currBR === "base" ? true : false 
-    const router = useRouter()
 
     useEffect(() => {
 
-        let recentPlayedRawData = JSON.parse(localStorage.getItem("recent-played") || '{}')
+        let recentPlayedRawData = JSON.parse(localStorage.getItem("recent-played") || '[]')
         let recentPlayedSong : any = []
-        for(let i = recentPlayedRawData.length - 1; i >= 0; i--) {
-            fetchSong(recentPlayedRawData[i].songID)
+        recentPlayedRawData.forEach((el : any, idx : number) => {
+            fetchSong(el.songID)
             .then((val : any) => {
                 recentPlayedSong.push(
                 <SongInfoBar 
-                    key={i}
+                    key={idx}
                     songImage={val.image[2].link}
                     songTitle={val.name}
                     songPlayURL={val.downloadUrl[4].link}
@@ -35,7 +33,7 @@ function RecentPlayed() {
                 )
                 setCardsMetaArray(recentPlayedSong)
             })
-        }
+        })
 
     }, [])
 
@@ -50,7 +48,7 @@ function RecentPlayed() {
             overflowY="auto">
             <Text fontSize={"1.2rem"} fontWeight="400">Recently Played</Text>
             <Divider />
-            <Flex wrap={"wrap"} id="recent-played-cards-el" pt={2}>
+            <Flex wrap={"wrap"} id="recent-played-cards-el" pt={2} overflowX={'hidden'}>
                 {cardsMetaArray}
             </Flex>
         </Flex>

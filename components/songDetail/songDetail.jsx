@@ -54,8 +54,8 @@ const SongDetailDesk = () => {
         })
         getLyrics(JSON.parse(audioData).songID)
         .then(data => {
-            data.results = data.results ? data.results : "Lyrics not found."
-            setLyrics("<h1 style='font-weight: bold;font-size:18px;padding-bottom:8px;text-decoration:underline;'>Lyrics</h1>" + data.results)
+            console.log(data)
+            setLyrics("<h1 style='font-weight: bold;font-size:18px;padding-bottom:8px;text-decoration:underline;'>Lyrics</h1>" + data.lyrics)
         })
 
     }, []);
@@ -144,8 +144,8 @@ const SongDetailDesk = () => {
                 pt={isMobile ? 2 : 0}
                 w={isMobile ? "250px" : "initial"}
                 px={isMobile ? 0 : 4}>
-                    <Heading>{songData.songTitle}</Heading>
-                    <Text color="#B0B0B0" pt={2}> <span style={{ color: "#747474" }}>Artist</span> {songData.artistName}</Text>
+                    <Heading>{serverSongData.name ? serverSongData.name : 'Loading...'}</Heading>
+                    <Text color="#B0B0B0" pt={2}> <span style={{ color: "#747474" }}>Artist</span> {serverSongData.primaryArtists ? serverSongData.primaryArtists : 'Loading...'}</Text>
                     {
                         isMobile === true && 
                         <>

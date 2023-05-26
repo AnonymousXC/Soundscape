@@ -29,7 +29,7 @@ const HomeTab : NextComponentType = () => {
 
     const [ cardsMetaArray, setCardsMetaArray ] = useState([])
     const [ trendingTodayCards, setTrendingTodayCards ] = useState([])
-    const [ showRecent, setShowRecent ] = useState(false)
+    // const [ showRecent, setShowRecent ] = useState(false)
     const router = useRouter()
 
 
@@ -91,7 +91,7 @@ const HomeTab : NextComponentType = () => {
         display={router.query.tab === "Home" || router.query.tab === undefined ? "flex" : "none"}
         direction={"column"}
         overflowY="auto">
-            {
+            { /*
                 showRecent &&
                 <Box height="max-content" pt={1}>
                     <Text fontSize={"1.2rem"} fontWeight="400">Recently Played</Text>
@@ -99,12 +99,12 @@ const HomeTab : NextComponentType = () => {
                     <Flex wrap={"wrap"} id="recent-played-cards-el" pt={2}>
                         {cardsMetaArray}
                     </Flex>
-                </Box>
+                </Box> */
             }
             <Box height="max-content" pb={2}>
                 <Text fontSize={"1.2rem"} fontWeight="400">Trending Today</Text>
                 <Divider />
-                <Flex wrap={"wrap"} pt={2} id="trending-today-cards">
+                <Flex wrap={"wrap"} pt={2} id="trending-today-cards" overflowX={'hidden'}>
                     { trendingTodayCards }
                 </Flex>
                 <Button left={'50%'} transform={'translateX(-50%)'}>

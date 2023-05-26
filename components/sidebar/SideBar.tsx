@@ -92,7 +92,9 @@ const SideBar : NextComponentType = () => {
             alignItems={'center'}
             alignContent={"center"}
             direction={'column'}>
-                <Button variant={'unstyled'} fontSize={'14px'} fontWeight={'500'} mb={'1px'}>Create a new Playlist <AddIcon ml={'6px'} w={'10px'} fontWeight={'extrabold'} /> </Button>
+                <Button variant={'unstyled'} fontSize={'14px'} fontWeight={'500'} mb={'1px'} onClick={() => {
+                    router.push('/newplaylist', undefined, { shallow : true })
+                }}>Create a new Playlist <AddIcon ml={'6px'} w={'10px'} fontWeight={'extrabold'} /> </Button>
                 <Image 
                 id="song-image"
                 onError={() => {

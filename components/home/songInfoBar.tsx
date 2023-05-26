@@ -87,7 +87,7 @@ const SongInfoBar : NextComponentType<SongProps> = (props : SongProps)  => {
             }} />
             <Flex justifyContent={"space-between"} h={"100%"} w={props.card === true ? "100%" : "70%"} alignItems={props.card === true ? "center" : "center"}
             direction={props.card === true ? "column" : "row"} minH={isMobile ? "40px" : "65px"} textOverflow="ellipsis">
-                <Text w={isMobile === false ? props.card === true ? "100%" : "50%" : "95%"} textAlign={props.card === true ? "center" : "initial"}  height={props.card ? "25px" : "initial"} overflow={props.card ? "hidden" : "auto"}  className="one-line-overflow" mt={props.card ? 1 : 0}>{props.songTitle}</Text>
+                <Text w={isMobile === false ? props.card === true ? "100%" : "50%" : "95%"} textAlign={props.card === true ? "center" : "initial"}  height={props.card ? "25px" : "initial"} overflow={props.card ? "hidden" : "auto"}  className="one-line-overflow" mt={props.card ? 1 : 0}>{props.songTitle.replace(/&#.*;/, '')}</Text>
                 <Text className="one-line-overflow" fontSize={props.card === true ? "0.8rem" : ""} color={props.card === true ? "#747474" : ""} textOverflow="ellipsis"overflow={"hidden"} h="20px"  mt={props.card ? 1 : 0} >{isMobile === false ? props.artistName : props.card === true ? props.artistName : ""}</Text>
                 <Text>{props.card === true || isMobile === true ? "" :  props.songDuration}</Text>
             </Flex>
