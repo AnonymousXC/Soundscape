@@ -1,7 +1,8 @@
 import { 
     Flex,
     Text,
-    useBreakpoint
+    Divider,
+    useBreakpoint,
 } from "@chakra-ui/react"
 import { useState, useEffect } from "react"
 import { addRecentPlayFromDatabase } from "./HomeTab"
@@ -17,38 +18,37 @@ const LikedTab = () => {
 
     function addCards(recentPlayedArray) {
         let nextJSCardsComp = []
-        recentPlayedArray.reverse().forEach((ele, idx) => {
-            if(!ele.songID) return;
-            nextJSCardsComp.push(
+        recentPlayedArray.forEach((el, idx) => {
+                var val = fetchSong(el.songID)
+                nextJSCardsComp.push(
                 <SongInfoBar 
-                key={idx}
-                songImage={ele.songImgUrl}
-                songTitle={ele.songTitle}
-                songPlayURL={ele.playURL}
-                artistName={ele.songArtist}
-                songDuration={ele.songDuration}
-                songID={ele.songID}
-                card={true} />
-            )
-        })
-        setCardsMetaArray(nextJSCardsComp)
+                    songImage={val.image[2].link}
+                    songTitle={val.name}
+                    songPlayURL={val.downloadUrl[4].link}
+                    artistName={val.primaryArtists}
+                    songDuration={444}
+                    songID={val.id}
+                    card={true}/>
+                )
+                setCardsMetaArray(nextJSCardsComp)
+            })
     }
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if(localStorage.getItem("userID"))
-        {
-            addRecentPlayFromDatabase().then(data => {
-                addCards(data.favSongs)
-                localStorage.setItem("Fav-Arr", JSON.stringify(data.favSongs))
-            })
+    //     if(localStorage.getItem("userID"))
+    //     {
+    //         addRecentPlayFromDatabase().then(data => {
+    //             addCards(data.favSongs)
+    //             localStorage.setItem("Fav-Arr", JSON.stringify(data.favSongs))
+    //         })
             
-            return
-        }
+    //         return
+    //     }
 
-        let favArr = JSON.parse(localStorage.getItem("Fav-Arr") || '[]')       
-        addCards(favArr)
-    }, [])
+    //     let favArr = JSON.parse(localStorage.getItem("Fav-Arr") || '[]')       
+    //     addCards(favArr)
+    // }, [])
 
 
 
@@ -60,16 +60,44 @@ const LikedTab = () => {
         pb={0}
         pl={4}>
             <Text fontSize={"1.2rem"} fontWeight="500" pb={2}>Liked Songs</Text>
+            <Divider />
             <Flex
             w={"100%"}
             h={"100%"}
             flexWrap="wrap"
             overflowY={"auto"}
             id="liked-cards-el">
-                { cardsMetaArray }
+                { <Loading /> }
             </Flex>
         </Flex>
     )
 }
+
+const Loading = () => {
+    return (
+        <Flex h={"60vh"} w={"full"} justifyContent={"center"} alignItems={"center"}>
+            <Text fontSize={"1.6rem"}>Loading...</Text>
+        </Flex>
+    )
+}
+
+function fetchSong(id) {
+    const rawData = fetch(`${window.location.origin}/api/fetchSongData`, {
+        body: JSON.stringify({
+            songDataID : id,
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        },
+        method: "POST",
+    })
+    .then((val) => {
+        val.json()
+        .then((value) => {
+            return value
+        })
+    })
+}
+
 
 export default LikedTab

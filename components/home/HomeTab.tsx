@@ -105,11 +105,11 @@ const HomeTab : NextComponentType = () => {
                 <Text fontSize={"1.2rem"} fontWeight="400">Trending Today</Text>
                 <Divider />
                 <Flex wrap={"wrap"} pt={2} id="trending-today-cards" overflowX={'hidden'}>
-                    { trendingTodayCards }
+                    { trendingTodayCards.length >= 19 ? trendingTodayCards : <Loading /> }
                 </Flex>
-                <Button left={'50%'} transform={'translateX(-50%)'}>
+                {trendingTodayCards.length >= 19 ? <Button left={'50%'} transform={'translateX(-50%)'}>
                     Load More
-                </Button>
+                </Button> : ""}
             </Box>
         </Flex>
     )
@@ -132,6 +132,14 @@ function storeSongForRandomPlay() {
     songsArray.recent.push(document.getElementById("recent-played-cards-el")!.childNodes)
     songsArray.trending.push(document.getElementById("trending-today-cards")!.childNodes)
     localStorage.setItem("song-dom-el", JSON.stringify(songsArray))
+}
+
+const Loading = () => {
+    return (
+        <Flex h={"60vh"} w={"full"} justifyContent={"center"} alignItems={"center"}>
+            <Text fontSize={"1.6rem"}>Loading...</Text>
+        </Flex>
+    )
 }
 
 

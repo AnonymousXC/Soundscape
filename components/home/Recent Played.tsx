@@ -31,10 +31,9 @@ function RecentPlayed() {
                     songID={val.id}
                     card={true}/>
                 )
-                setCardsMetaArray(recentPlayedSong)
             })
+            setCardsMetaArray(recentPlayedSong)
         })
-
     }, [])
 
     return (
@@ -49,8 +48,16 @@ function RecentPlayed() {
             <Text fontSize={"1.2rem"} fontWeight="400">Recently Played</Text>
             <Divider />
             <Flex wrap={"wrap"} id="recent-played-cards-el" pt={2} overflowX={'hidden'}>
-                {cardsMetaArray}
+                {cardsMetaArray.length != 0 ? cardsMetaArray : <Loading />}
             </Flex>
+        </Flex>
+    )
+}
+
+const Loading = () => {
+    return (
+        <Flex h={"60vh"} w={"full"} justifyContent={"center"} alignItems={"center"}>
+            <Text fontSize={"1.6rem"}>Loading...</Text>
         </Flex>
     )
 }
