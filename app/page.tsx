@@ -1,8 +1,9 @@
+import Sidebar from "@/components/desktop/Sidebar"
 
-export default function Home() {
+export default function HomeDesktop() {
   return (
     <main>
-        Hello World
+        <Sidebar />
     </main>
   )
 }
