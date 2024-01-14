@@ -1,7 +1,13 @@
-
+* {
+    --var-main-dark-gradient: linear-gradient(to right, #B5179E , #7209B7);
+}
 
 .sidebar-active-tab {
     background-image: linear-gradient(to right, #B5179E , #7209B7);
     color: #fff !important;
     fill: white;
+}
+
+.border-image-gradient {
+    background-image: linear-gradient(to right, #B5179E , #7209B7);
 }
