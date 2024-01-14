@@ -13,11 +13,11 @@ const Button : ComponentStyleConfig = {
             gap: '10px',
             fill: 'primaryText',
             transition: 'all 200ms',
-            _active: {
-                bgImage: 'linear-gradient(to right, #B5179E , #7209B7)',
-                color: '#fff',
-                fill: 'white'
-            }
+            // _active: {
+            //     bgImage: 'linear-gradient(to right, #B5179E , #7209B7)',
+            //     color: '#fff',
+            //     fill: 'white'
+            // }
         }
     }
 }

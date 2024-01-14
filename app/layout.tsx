@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { CKProviders } from './providers'
 import { Inter } from 'next/font/google'
+import Sidebar from '@/components/desktop/Sidebar'
  
 export const metadata: Metadata = {
   title: 'Soundscape',
@@ -13,11 +14,15 @@ const inter = Inter({
   subsets: ['latin']
 })
 
-export default function RootLayout({ children, }: { children: React.ReactNode }) {
+export default function DesktopLLayout({ children, }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={inter.className + ' chakra-ui-dark'}>
+      <body className={inter.className + ' chakra-ui-dark'} style={{
+        display: 'flex',
+        overflow: 'hidden',
+      }}>
         <CKProviders>
+          <Sidebar />
           {children}
         </CKProviders>
       </body>

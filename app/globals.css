@@ -1,0 +1,7 @@
+
+
+.sidebar-active-tab {
+    background-image: linear-gradient(to right, #B5179E , #7209B7);
+    color: #fff !important;
+    fill: white;
+}
