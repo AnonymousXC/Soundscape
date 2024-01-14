@@ -3,6 +3,7 @@ import './globals.css'
 import { CKProviders } from './providers'
 import { Inter } from 'next/font/google'
 import Sidebar from '@/components/desktop/Sidebar'
+import ActivityBar from '@/components/desktop/ActivityBar'
  
 export const metadata: Metadata = {
   title: 'Soundscape',
@@ -24,6 +25,7 @@ export default function DesktopLLayout({ children, }: { children: React.ReactNod
         <CKProviders>
           <Sidebar />
           {children}
+          <ActivityBar />
         </CKProviders>
       </body>
     </html>

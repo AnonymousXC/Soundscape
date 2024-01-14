@@ -4,7 +4,7 @@ import {
 
 function Profile() {
     return (
-        <Flex position={'relative'} top={0} left={0}>
+        <Flex position={'relative'} top={0} left={0} width={'100%'}>
             Profile
         </Flex>
     )
