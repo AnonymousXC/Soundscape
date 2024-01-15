@@ -1,5 +1,6 @@
-* {
+*, html {
     --var-main-dark-gradient: linear-gradient(to right, #B5179E , #7209B7);
+    font-size: 16px;
 }
 
 .sidebar-active-tab {
