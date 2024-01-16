@@ -5,6 +5,8 @@ import { Inter } from 'next/font/google'
 import Sidebar from '@/components/desktop/Sidebar'
 import ActivityBar from '@/components/desktop/ActivityBar'
 import Player from '@/components/Player'
+import PlayerFallback from '@/components/PlayerFallback'
+import { Suspense } from 'react'
  
 export const metadata: Metadata = {
   title: 'Soundscape',
@@ -28,7 +30,9 @@ export default function DesktopLLayout({ children, }: { children: React.ReactNod
           <Sidebar />
           {children}
           <ActivityBar />
-          <Player />
+          <Suspense fallback={<PlayerFallback />}>
+            <Player />
+          </Suspense>
         </CKProviders>
       </body>
     </html>
