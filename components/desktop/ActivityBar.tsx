@@ -15,7 +15,7 @@ function ActivityBar() {
     const [ isVisible, setVisibility ] = useState<boolean>(true)
 
     return (
-        <Flex bgColor={'sidebarBG'} width={isVisible ? '100%' : '0px'} maxWidth={'21.875rem'} height={'100vh'} flexDirection={'column'} px={isVisible ? '1.75rem' : '0px'} pt={'1.875rem'} position={'relative'} top={0} left={0} boxShadow={'1px 3px 25px rgb(0 0 0 / 0.8)'} zIndex={1000}>
+        <Flex bgColor={'sidebarBG'} width={isVisible ? '100%' : '0px'} maxWidth={'21.875rem'} height={'calc(100vh - 6.25rem)'} flexDirection={'column'} px={isVisible ? '1.75rem' : '0px'} pt={'1.875rem'} position={'relative'} top={0} left={0} boxShadow={'1px 3px 25px rgb(0 0 0 / 0.8)'} zIndex={1000}>
             <Button position={'absolute'} rounded={0} top={'0%'} right={'0px'} px={0} height={'100%'} opacity={0} onClick={() => {
                 setVisibility(!isVisible)
             }} _hover={{ opacity : 1 }}>
@@ -33,7 +33,7 @@ function ActivityBar() {
                     <Img src='/icons/Notification.svg' width={'25px'} height={'auto'} />
                 </Button>
             </Flex>
-            <Flex flexDirection={'column'} overflow={'auto'}>
+            <Flex flexDirection={'column'} overflow={'auto'} className='hide-scroll-bar'>
                 <Flex flexDirection={'column'}>
                     <Text color={'primaryText'} fontSize={'1.188rem'} fontWeight={500}>Top Artist</Text>
                     <Flex flexDirection={'column'} gap={'0.75rem'} mt={'1.25rem'}>

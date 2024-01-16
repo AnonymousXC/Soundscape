@@ -47,9 +47,9 @@ function Artist(props : Props) {
                     <Flex className="border-image-gradient" rounded={'full'} width={'2.938rem'} height={'2.938rem'} justifyContent={'center'} alignItems={'center'}>
                         <Img src={data?.image[1].link + ''} width={'2.813rem'} height={'2.813rem'} rounded={'full'} />
                     </Flex>
-                    <Flex flexDirection={'column'}>
-                        <Text fontWeight={500} color={'#fff'} fontSize={'1rem'}>{data?.name}</Text>
-                        <Text color={'primaryText'} fontSize={'0.75rem'}>{data?.followerCount} followers</Text>
+                    <Flex flexDirection={'column'} width={'100%'} maxWidth={'6.25rem'} gap={'0.4rem'}>
+                        <Text fontWeight={500} color={'#fff'} fontSize={'1rem'} lineHeight={'1.1rem'} height={'1.1rem'} textOverflow={'ellipsis'} overflow={'hidden'} whiteSpace={'nowrap'}>{data?.name}</Text>
+                        <Text color={'primaryText'} fontSize={'0.75rem'} lineHeight={'0.75rem'} height={'0.75rem'} overflow={'hidden'} textOverflow={'ellipsis'} whiteSpace={'nowrap'}>{data?.followerCount} followers</Text>
                     </Flex>
                     <Button variant={'unstyled'} width={'1.25rem'} display={'flex'} justifyContent={'flex-end'}>
                         <Img src={'/icons/Three Dots.svg'} width={'auto'} height={'20px'} />

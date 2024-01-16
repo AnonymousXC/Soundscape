@@ -12,3 +12,7 @@
 .border-image-gradient {
     background-image: linear-gradient(to right, #B5179E , #7209B7);
 }
+
+.hide-scroll-bar::-webkit-scrollbar {
+    width: 0px;
+}

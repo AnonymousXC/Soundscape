@@ -16,14 +16,14 @@ function Sidebar() {
     const [ isVisible, setVisibility ] = useState<boolean>(true)
 
     return (
-        <Flex bgColor={'sidebarBG'} width={isVisible ? '100%' : '0px'} maxWidth={'18.75rem'} height={'100vh'} flexDirection={'column'} px={isVisible ? '2.375rem' : '0px'} pt={'1.875rem'} position={'relative'} top={0} left={0} boxShadow={'1px 3px 25px rgb(0 0 0 / 0.8)'} zIndex={1000}>
+        <Flex bgColor={'sidebarBG'} width={isVisible ? '100%' : '0px'} maxWidth={'18.75rem'} height={'calc(100vh - 6.25rem)'} flexDirection={'column'} px={isVisible ? '2.375rem' : '0px'} pt={'1.875rem'} position={'relative'} top={0} left={0} boxShadow={'1px 3px 25px rgb(0 0 0 / 0.8)'} zIndex={1000}>
             <Button position={'absolute'} rounded={0} top={'0%'} left={'0px'} px={0} height={'100%'} opacity={0} onClick={() => {
                 setVisibility(!isVisible)
             }} _hover={{ opacity : 1 }}>
                 {isVisible ? '←' : '→'}
             </Button>
             <Img src={'/SidebarLogo.svg'} alt='logo' width={'90%'} height={'auto'} pb={'2.5rem'} />
-            <Flex flexDirection={'column'} overflowY={'auto'}>
+            <Flex flexDirection={'column'} overflowY={'auto'} className='hide-scroll-bar'>
                 <Flex className='menu' flexDirection={'column'} mb={'2.5rem'}>
                     <Text color={'primaryText'} letterSpacing={'0.2px'} fontWeight={'500'} mb={'8px'} fontSize={'1.1875rem'}>
                         Menu
@@ -57,7 +57,7 @@ function Sidebar() {
                         </Button>
                     </Flex>
                 </Flex>
-                <Flex className='menu' flexDirection={'column'}>
+                <Flex className='menu' flexDirection={'column'} pb={'2rem'}>
                     <Text color={'primaryText'} letterSpacing={'0.2px'} fontWeight={'500'} mb={'0.5rem'} fontSize={'1.1875rem'}>
                         Help
                     </Text> 
