@@ -8,6 +8,7 @@ import {
 import { useEffect, useState } from "react";
 import getSongDetails from "@/app/actions/getSongDetails.server";
 import { SongResponse } from "@/interfaces/song.interface";
+import { useRouter } from "next/navigation";
 
 interface Props {
     id: string,
@@ -19,6 +20,7 @@ function RecentlyPlayedSong(props : Props) {
     const [ data, setData ] = useState<SongResponse>()
     const [ loading, setLoading ] = useState<boolean>(false)
     const [ error, setError ] = useState<boolean>(false)
+    const router = useRouter()
 
     useEffect(() => {
         getSongDetails(props.id)
@@ -50,7 +52,9 @@ function RecentlyPlayedSong(props : Props) {
                     <Flex flexDirection={'column'} width={'100%'} maxWidth={'6.25rem'}>
                         <Text fontWeight={500} color={'#fff'} fontSize={'1rem'}>{data?.name}</Text>
                     </Flex>
-                    <Button variant={'unstyled'} width={'1.25rem'} display={'flex'} justifyContent={'flex-end'}>
+                    <Button variant={'unstyled'} width={'1.25rem'} display={'flex'} justifyContent={'flex-end'} onClick={() => {
+                        router.replace(location.protocol + '//' + location.host + location.pathname + `?id=${props.id}`)
+                    }}>
                         <Img src={'/icons/Play Button.svg'} width={'auto'} height={'1.25rem'} />
                     </Button>
             </Flex>
