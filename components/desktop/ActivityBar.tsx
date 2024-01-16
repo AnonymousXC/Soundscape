@@ -8,6 +8,7 @@ import {
 import { Img } from '@chakra-ui/react'
 import { useState } from 'react'
 import Artist from '../Artist'
+import RecentlyPlayedSong from '../RecentlyPlayedSideBar'
 
 function ActivityBar() {
 
@@ -46,11 +47,11 @@ function ActivityBar() {
                 <Flex flexDirection={'column'} mt={'1.875rem'} pb={'2.5rem'}>
                     <Text color={'primaryText'} fontSize={'1.188rem'} fontWeight={500}>Recently Played</Text>
                     <Flex flexDirection={'column'} gap={'0.75rem'} mt={'1.25rem'}>
-                        <Artist id={'568707'} visible={isVisible} />
-                        <Artist id={'599452'} visible={isVisible} />
-                        <Artist id={'755042'} visible={isVisible} />
-                        <Artist id={'1274170'} visible={isVisible} />
-                        <Artist id={'615155'} visible={isVisible} />
+                        <RecentlyPlayedSong id={'R35H6BI-'} visible={isVisible} />
+                        <RecentlyPlayedSong id={'OsolMgGF'} visible={isVisible} />
+                        <RecentlyPlayedSong id={'4rsc10Q0'} visible={isVisible} />
+                        <RecentlyPlayedSong id={'bovWQRQP'} visible={isVisible} />
+                        <RecentlyPlayedSong id={'cRU9XgwN'} visible={isVisible} />
                     </Flex>
                 </Flex>
             </Flex>
