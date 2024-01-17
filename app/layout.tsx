@@ -5,7 +5,8 @@ import { Inter } from 'next/font/google'
 import Sidebar from '@/components/desktop/Sidebar'
 import ActivityBar from '@/components/desktop/ActivityBar'
 import Player from '@/components/Player'
-import PlayerFallback from '@/components/PlayerFallback'
+import PlayerFallback from '@/components/fallbacks/PlayerFallback'
+import SidebarFallback from '@/components/fallbacks/SidebarFallback'
 import { Suspense } from 'react'
  
 export const metadata: Metadata = {
@@ -27,7 +28,9 @@ export default function DesktopLLayout({ children, }: { children: React.ReactNod
         height: '100vh'
       }}>
         <CKProviders>
-          <Sidebar />
+          <Suspense fallback={<SidebarFallback />}>
+            <Sidebar />
+          </Suspense>
           {children}
           <ActivityBar />
           <Suspense fallback={<PlayerFallback />}>

@@ -1,8 +1,7 @@
+import Profile from "./profile/page"
 
 export default function HomeDesktop() {
   return (
-    <main>
-        
-    </main>
+    <Profile />
   )
 }

@@ -1,3 +1,4 @@
+'use client'
 import { 
     Flex,
     Text,
@@ -8,7 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import getSongDetails from "@/app/actions/getSongDetails.server";
 import { SongResponse } from "@/interfaces/song.interface";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface Props {
     id: string,
@@ -21,6 +22,21 @@ function RecentlyPlayedSong(props : Props) {
     const [ loading, setLoading ] = useState<boolean>(false)
     const [ error, setError ] = useState<boolean>(false)
     const router = useRouter()
+    const params = useSearchParams()
+    const currentSongID = params.get('id')
+
+    const handlePlay = () => {
+        if(currentSongID == props.id)
+        {
+            if(document.querySelector('audio')?.paused === true)
+                document.querySelector('audio')?.play()
+            else
+                document.querySelector('audio')?.pause()
+            return
+        }
+        else
+            router.replace(location.protocol + '//' + location.host + location.pathname + `?id=${props.id}`)
+    }
 
     useEffect(() => {
         getSongDetails(props.id)
@@ -32,7 +48,6 @@ function RecentlyPlayedSong(props : Props) {
             }
             else
                 setError(true)
-            console.log(val)
         })
     }, [])
 
@@ -52,10 +67,11 @@ function RecentlyPlayedSong(props : Props) {
                     <Flex flexDirection={'column'} width={'100%'} maxWidth={'6.25rem'}>
                         <Text fontWeight={500} color={'#fff'} fontSize={'1rem'}>{data?.name}</Text>
                     </Flex>
-                    <Button variant={'unstyled'} width={'1.25rem'} display={'flex'} justifyContent={'flex-end'} onClick={() => {
-                        router.replace(location.protocol + '//' + location.host + location.pathname + `?id=${props.id}`)
-                    }}>
-                        <Img src={'/icons/Play Button.svg'} width={'auto'} height={'1.25rem'} />
+                    <Button variant={'unstyled'} width={'1.25rem'} display={'flex'} justifyContent={'flex-end'} onClick={handlePlay}>
+                        {
+                            currentSongID === props.id  ? 
+                            <Img src={'/icons/player/Pause.svg'} width={'auto'} height={'1.25rem'} /> : <Img src={'/icons/Play Button.svg'} width={'auto'} height={'1.25rem'} />
+                        }
                     </Button>
             </Flex>
         </Skeleton>

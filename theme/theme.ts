@@ -9,7 +9,7 @@ const theme = extendTheme({
     },
     semanticTokens: {
         colors: {
-            sidebarBG: {
+            background: {
                 default: "#fff",
                 _dark: "#111111"
             },
