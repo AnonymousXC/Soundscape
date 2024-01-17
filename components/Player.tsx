@@ -6,11 +6,18 @@ import {
     SkeletonText,
     Text,
     Button,
+    Slider,
+    SliderTrack,
+    SliderFilledTrack,
+    SliderThumb,
+    Stack,
 } from "@chakra-ui/react";
 import { useSearchParams } from "next/navigation";
 import { createRef, useEffect, useState } from "react";
 import getSongDetails from "@/app/actions/getSongDetails.server";
 import { SongResponse } from "@/interfaces/song.interface";
+
+const audio = createRef<HTMLAudioElement>()
 
 function Player() {
 
@@ -19,10 +26,9 @@ function Player() {
     const [ data, setData ] = useState<SongResponse>()
     const [ loaded, setLoaded ] = useState<boolean>(false)
     const [ isPlaying, setPlaying ] = useState<boolean>(false)
-    const audio = createRef<HTMLAudioElement>()
+    var [ currentTime, setCurrentTime ] = useState<number>(0)
     
     useEffect(() => {
-        audio.current?.pause()
         getSongDetails(id)
         .then((val) => {
             if(val.status == 'SUCCESS')
@@ -53,6 +59,7 @@ function Player() {
                     </SkeletonText>
                 </Flex>
             </Flex>
+            {/* Control buttons */}
             <Flex maxWidth={'270px'} w={'100%'} justifyContent={'space-between'} alignItems={'center'} ml={'30px'}>
                 <Button variant={'unstyled'} textAlign={'center'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
                     <Img src={'icons/player/Play Previous.svg'} height={'1rem'} width={'auto'} />
@@ -75,11 +82,34 @@ function Player() {
                     <Img src={'icons/player/Play Next.svg'} height={'1rem'} width={'auto'} />
                 </Button>
             </Flex>
-            <audio src={data?.downloadUrl[4].link} ref={audio} onPlay={() => {
+            <audio src={data?.downloadUrl[4].link} ref={audio} 
+            onPlay={() => {
                 setPlaying(true)
-            }} onPause={() => {
+            }} 
+            onPause={() => {
                 setPlaying(false)
+            }} 
+            autoPlay={true}
+            onTimeUpdate={(e) => {
+                setCurrentTime(audio.current?.currentTime || 0)
             }}></audio>
+            {/* Control slider */}
+            <Stack width={'100%'} maxWidth={'27rem'} ml={'1.8rem'} justifyContent={'center'} gap={'2px'}>
+                <Slider max={parseInt(data?.duration || '0')}
+                onChangeEnd={(e) => {
+                    if(audio.current?.currentTime)
+                        audio.current.currentTime = e
+                }}>
+                    <SliderTrack backgroundColor={'#464646'}>
+                        <SliderFilledTrack background={'linear-gradient(to right, #B5179E , #7209B7)'} />
+                    </SliderTrack>
+                    <SliderThumb background={'linear-gradient(to right, #B5179E , #7209B7)'} width={'12px'} height={'12px'} />
+                </Slider>
+                <Flex justifyContent={'space-between'}>
+                    <Text fontSize={'0.625rem'} color={'primaryText'}>{calculateTime(parseInt(data?.duration ?? '0'))}</Text>
+                    <Text fontSize={'0.625rem'} color={'primaryText'}>{calculateTime(currentTime || 0)}</Text>
+                </Flex>
+            </Stack>
         </Flex>
     )
 }
@@ -106,4 +136,12 @@ function updateNavigator(data : SongResponse) {
         })
 }
 
+const calculateTime = (secs : number) => {
+    const minutes = Math.floor(secs / 60);
+    const seconds = Math.floor(secs % 60);
+    const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+    return `${minutes}:${returnedSeconds}`;
+}
+
 export default Player;
+export { audio }
