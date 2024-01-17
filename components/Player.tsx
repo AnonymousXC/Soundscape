@@ -16,8 +16,11 @@ import { useSearchParams } from "next/navigation";
 import { createRef, useEffect, useState } from "react";
 import getSongDetails from "@/app/actions/getSongDetails.server";
 import { SongResponse } from "@/interfaces/song.interface";
+import Love from "@/assets/icons/Love";
+import Loop from "@/assets/icons/Loop";
+import Shuffle from "@/assets/icons/Shuffle";
+import Share from "@/assets/icons/Share";
 
-const audio = createRef<HTMLAudioElement>()
 
 function Player() {
 
@@ -26,6 +29,7 @@ function Player() {
     const [ data, setData ] = useState<SongResponse>()
     const [ loaded, setLoaded ] = useState<boolean>(false)
     const [ isPlaying, setPlaying ] = useState<boolean>(false)
+    const audio = createRef<HTMLAudioElement>()
     var [ currentTime, setCurrentTime ] = useState<number>(0)
     
     useEffect(() => {
@@ -43,7 +47,7 @@ function Player() {
     }, [id])
 
     return (
-        <Flex width={'100vw'} height={'6.25rem'} position={'absolute'} backgroundColor={'sidebarBG'} bottom={0} left={0} zIndex={10000}>
+        <Flex width={'100vw'} height={'6.25rem'} position={'absolute'} backgroundColor={'sidebarBG'} bottom={0} left={0} zIndex={10000} justifyContent={'space-evenly'} boxShadow={'1px 3px 25px rgb(0 0 0 / 0.8)'}>
             <Flex className="song-details" width={'100%'} maxWidth={'15rem'} justifyContent={'space-around'} alignItems={'center'}>
                 <Skeleton isLoaded={loaded} rounded={'full'}>
                     <Flex width={'4.4rem'} height={"4.4rem"} rounded={'full'} className="border-image-gradient" justifyContent={'center'} alignItems={'center'} animation={'rotating 4s linear infinite'} style={{
@@ -52,7 +56,7 @@ function Player() {
                         <Img src={data?.image[2].link} width={"4.1rem"} height={"4.1rem"} rounded={"full"} />
                     </Flex>
                 </Skeleton>
-                <Flex flexDirection={'column'} maxW={'6.25rem'} width={'100%'}>
+                <Flex flexDirection={'column'} maxW={'7.5rem'} width={'100%'}>
                     <SkeletonText isLoaded={loaded} height={'3rem'}>
                         <Text color={'#fff'} fontSize={'1.2rem'} fontWeight={500} maxHeight={'1.875rem'} overflow={'hidden'} textOverflow={'ellipsis'} whiteSpace={'nowrap'} width={'100%'}>{data?.name}</Text>
                         <Text color={'primaryText'} fontWeight={400} fontSize={'0.75rem'} maxHeight={'1.125rem'} overflow={'hidden'} textOverflow={'ellipsis'} whiteSpace={'nowrap'}>{data?.primaryArtists}</Text>
@@ -112,6 +116,35 @@ function Player() {
                     <Text fontSize={'0.625rem'} color={'primaryText'}>{calculateTime(currentTime || 0)}</Text>
                 </Flex>
             </Stack>
+            <Flex alignItems={'center'} pl={'20px'} maxWidth={'8rem'} width={'100%'} gap={'0.1rem'}>
+                <Button variant={'unstyled'} size={'sm'}>
+                    <Img src={'icons/player/Volume.svg'} height={'auto'} width={'24px'} />
+                </Button>
+                <Slider defaultValue={100} max={100} min={1}
+                onChangeEnd={(e) => {
+                    if(audio.current?.volume)
+                        audio.current.volume = e / 100
+                }}>
+                    <SliderTrack backgroundColor={'#464646'}>
+                        <SliderFilledTrack background={'linear-gradient(to right, #B5179E , #7209B7)'} />
+                    </SliderTrack>
+                    <SliderThumb background={'linear-gradient(to right, #B5179E , #7209B7)'} width={'12px'} height={'12px'} boxShadow={'none !important'} />
+                </Slider>
+            </Flex>
+            <Flex ml={'1.875rem'} justifyContent={'center'} alignItems={'center'} gap={'1rem'}>
+                <Button variant={'unstyled'} size={'sm'}>
+                    <Shuffle />
+                </Button>
+                <Button variant={'unstyled'} size={'sm'}>
+                    <Loop />
+                </Button>
+                <Button variant={'unstyled'} size={'sm'}>
+                    <Love />
+                </Button>
+                <Button variant={'unstyled'} size={'sm'}>
+                    <Share />
+                </Button>
+            </Flex>
         </Flex>
     )
 }
@@ -138,7 +171,7 @@ function updateNavigator(data : SongResponse) {
         })
 }
 
-const calculateTime = (secs : number) => {
+function calculateTime(secs : number) {
     const minutes = Math.floor(secs / 60);
     const seconds = Math.floor(secs % 60);
     const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
@@ -146,4 +179,3 @@ const calculateTime = (secs : number) => {
 }
 
 export default Player;
-export { audio }
