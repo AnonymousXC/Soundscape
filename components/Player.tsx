@@ -91,20 +91,22 @@ function Player() {
             }} 
             autoPlay={true}
             onTimeUpdate={(e) => {
-                setCurrentTime(audio.current?.currentTime || 0)
+                setCurrentTime(Math.floor(audio.current?.currentTime || 0))
             }}></audio>
             {/* Control slider */}
             <Stack width={'100%'} maxWidth={'27rem'} ml={'1.8rem'} justifyContent={'center'} gap={'2px'}>
-                <Slider max={parseInt(data?.duration || '0')}
-                onChangeEnd={(e) => {
-                    if(audio.current?.currentTime)
-                        audio.current.currentTime = e
-                }}>
-                    <SliderTrack backgroundColor={'#464646'}>
-                        <SliderFilledTrack background={'linear-gradient(to right, #B5179E , #7209B7)'} />
-                    </SliderTrack>
-                    <SliderThumb background={'linear-gradient(to right, #B5179E , #7209B7)'} width={'12px'} height={'12px'} />
-                </Slider>
+                <Skeleton isLoaded={loaded} height={'12px'} display={'flex'}>
+                    <Slider max={parseInt(data?.duration || '0')} value={currentTime} defaultValue={0}
+                    onChange={(e) => {
+                        if(audio.current?.currentTime)
+                            audio.current.currentTime = e
+                    }}>
+                        <SliderTrack backgroundColor={'#464646'}>
+                            <SliderFilledTrack background={'linear-gradient(to right, #B5179E , #7209B7)'} />
+                        </SliderTrack>
+                        <SliderThumb background={'linear-gradient(to right, #B5179E , #7209B7)'} width={'12px'} height={'12px'} boxShadow={'none !important'} />
+                    </Slider>
+                </Skeleton>
                 <Flex justifyContent={'space-between'}>
                     <Text fontSize={'0.625rem'} color={'primaryText'}>{calculateTime(parseInt(data?.duration ?? '0'))}</Text>
                     <Text fontSize={'0.625rem'} color={'primaryText'}>{calculateTime(currentTime || 0)}</Text>
