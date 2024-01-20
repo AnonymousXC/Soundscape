@@ -32,12 +32,12 @@ function Sidebar() {
                     <Flex flexDirection={'column'} alignItems={'center'} mt={'1.875rem'} gap={'1rem'}>
                         <Button variant={'sidebar'} fontSize={'1rem'} leftIcon={<Img src={'/icons/User.svg'} alt='logo' width={'20px'} height={'auto'}/>} onClick={() => { 
                             router.push('/profile' + window.location.search)
-                            }} className={pathname === '/profile' || pathname === '/' ? 'sidebar-active-tab' : ''}>
+                            }} className={pathname.indexOf('/profile') != -1 || pathname === '/' ? 'sidebar-active-tab' : ''}>
                             Profile
                         </Button>
                         <Button variant={'sidebar'} fontSize={'1rem'} leftIcon={<Img src={'/icons/Dashboard.svg'} alt='logo' width={'20px'}  height={'auto'}/>} onClick={() => {
                             router.push('/dashboard' + window.location.search)
-                        }} className={pathname === '/dashboard' ? 'sidebar-active-tab' : ''}>
+                        }} className={pathname.indexOf('/dashboard') != -1  ? 'sidebar-active-tab' : ''}>
                             Dashboard
                         </Button>
                         <Button variant={'sidebar'} fontSize={'1rem'} leftIcon={<Img src={'/icons/Love.svg'} alt='logo' width={'20px'} height={'auto'}/>} onClick={() => {

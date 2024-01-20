@@ -6,7 +6,7 @@ import Sidebar from '@/components/desktop/Sidebar'
 import ActivityBar from '@/components/desktop/ActivityBar'
 import Player from '@/components/Player'
 import PlayerFallback from '@/components/fallbacks/PlayerFallback'
-import SidebarFallback from '@/components/fallbacks/SidebarFallback'
+import ActivityBarFallback from '@/components/fallbacks/SidebarFallback'
 import { Suspense } from 'react'
  
 export const metadata: Metadata = {
@@ -28,11 +28,11 @@ export default function DesktopLLayout({ children, }: { children: React.ReactNod
         height: '100vh'
       }}>
         <CKProviders>
-          <Suspense fallback={<SidebarFallback />}>
-            <Sidebar />
-          </Suspense>
+          <Sidebar />
           {children}
-          <ActivityBar />
+          <Suspense fallback={<ActivityBarFallback />}>
+            <ActivityBar />
+          </Suspense>
           <Suspense fallback={<PlayerFallback />}>
             <Player />
           </Suspense>
