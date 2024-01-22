@@ -12,7 +12,7 @@ import {
     SliderThumb,
     Stack,
 } from "@chakra-ui/react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createRef, useEffect, useState } from "react";
 import getSongDetails from "@/app/actions/getSongDetails.server";
 import { SongResponse } from "@/interfaces/song.interface";
@@ -26,6 +26,7 @@ function Player() {
 
     const params = useSearchParams()
     const id = params.get('id') || ''
+    const router = useRouter()
     const [ data, setData ] = useState<SongResponse>()
     const [ loaded, setLoaded ] = useState<boolean>(false)
     const [ isPlaying, setPlaying ] = useState<boolean>(false)
@@ -89,9 +90,21 @@ function Player() {
             <audio src={data?.downloadUrl[4].link} ref={audio} 
             onPlay={() => {
                 setPlaying(true)
+                const url = new URL(window.location.href)
+                if(url.searchParams.get('paused'))
+                {
+                    url.searchParams.delete('paused')
+                    router.replace(url.toString())
+                }
             }} 
             onPause={() => {
                 setPlaying(false)
+                const url = new URL(window.location.href)
+                if(!url.searchParams.get('paused'))
+                {
+                    url.searchParams.append('paused', '1')
+                    router.replace(url.toString())
+                }
             }} 
             autoPlay={true}
             onTimeUpdate={(e) => {
