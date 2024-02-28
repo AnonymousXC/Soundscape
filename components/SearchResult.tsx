@@ -28,7 +28,7 @@ function SearchResult(props : Props) {
         <Flex width={'100%'} mt={'1.5rem'} height={'100%'} overflowY={'auto'} flexDirection={'column'} gap={'0.4rem'}>
             {
                 songs.map((val, idx) => {
-                    return <Song data={val}/>
+                    return <Song data={val} key={idx} />
                 })
             }
         </Flex>

@@ -32,7 +32,7 @@ function Artist(props : Props) {
             else
                 setError(true)
         })
-    }, [])
+    }, [props.id])
 
     if(error)
         return (
