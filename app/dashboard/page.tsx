@@ -5,6 +5,8 @@ import {
     Flex,
 } from '@chakra-ui/react';
 import { useState } from 'react';
+import Genre from './Genre';
+import TopMusic from './TopMusic';
 
 function Dashboard() {
 
@@ -16,9 +18,18 @@ function Dashboard() {
             <SearchBar setQueryParent={setQuery} setResultsVisibilityParent={setVisibility} isResultsOpen={visibility} currentQuery={query || ''} />
             {
                 visibility == true ?
-                <SearchResult query={query || ''} /> : 'Dashboard'
+                <SearchResult query={query || ''} /> : <DB_Dashboard />
             }
         </Flex>
+    )
+}
+
+function DB_Dashboard() {
+    return (
+        <>
+            <Genre />
+            <TopMusic />
+        </>
     )
 }
 

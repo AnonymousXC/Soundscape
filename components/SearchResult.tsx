@@ -25,7 +25,7 @@ function SearchResult(props : Props) {
     }, [props.query])
 
     return (
-        <Flex width={'100%'} mt={'1.5rem'} height={'100%'} overflowY={'auto'} flexDirection={'column'} gap={'0.4rem'}>
+        <Flex width={'100%'} mt={'1.5rem'} height={'100%'} overflowY={'auto'} flexDirection={'column'} gap={'0.4rem'} overflowX={'hidden'} className='hide-scroll-bar'>
             {
                 songs.map((val, idx) => {
                     return <Song data={val} key={idx} />

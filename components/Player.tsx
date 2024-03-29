@@ -30,10 +30,12 @@ function Player() {
     const [ data, setData ] = useState<SongResponse>()
     const [ loaded, setLoaded ] = useState<boolean>(false)
     const [ isPlaying, setPlaying ] = useState<boolean>(false)
+    const [ loop, setLoop ] = useState<boolean>(false)
     const audio = createRef<HTMLAudioElement>()
     var [ currentTime, setCurrentTime ] = useState<number>(0)
     
     useEffect(() => {
+        // get song
         getSongDetails(id)
         .then((val) => {
             if(val.status == 'SUCCESS')
@@ -44,7 +46,18 @@ function Player() {
             setLoaded(true)
             if(!id) 
                 setLoaded(false)
-        })  
+        })
+
+        // loop handler
+        if(localStorage.getItem("loop"))
+        {
+            if(JSON.parse(localStorage.getItem("loop") || "") == true)
+                setLoop(true)
+            else
+                setLoop(false)
+        }
+        else
+            localStorage.setItem("loop", "false")
     }, [id])
 
     return (
@@ -59,7 +72,7 @@ function Player() {
                 </Skeleton>
                 <Flex flexDirection={'column'} maxW={'7.5rem'} width={'100%'}>
                     <SkeletonText isLoaded={loaded} height={'3rem'}>
-                        <Text color={'#fff'} fontSize={'1.2rem'} fontWeight={500} maxHeight={'1.875rem'} overflow={'hidden'} textOverflow={'ellipsis'} whiteSpace={'nowrap'} width={'100%'}>{data?.name}</Text>
+                        <Text color={'primaryTextRe'} fontSize={'1.2rem'} fontWeight={500} maxHeight={'1.875rem'} overflow={'hidden'} textOverflow={'ellipsis'} whiteSpace={'nowrap'} width={'100%'}>{data?.name}</Text>
                         <Text color={'primaryText'} fontWeight={400} fontSize={'0.75rem'} maxHeight={'1.125rem'} overflow={'hidden'} textOverflow={'ellipsis'} whiteSpace={'nowrap'}>{data?.primaryArtists}</Text>
                     </SkeletonText>
                 </Flex>
@@ -109,7 +122,8 @@ function Player() {
             autoPlay={true}
             onTimeUpdate={(e) => {
                 setCurrentTime(Math.floor(audio.current?.currentTime || 0))
-            }}></audio>
+            }}
+            loop={loop}></audio>
             {/* Control slider */}
             <Stack width={'100%'} maxWidth={'27rem'} ml={'1.8rem'} justifyContent={'center'} gap={'2px'}>
                 <Skeleton isLoaded={loaded} height={'12px'} display={'flex'}>
@@ -144,12 +158,16 @@ function Player() {
                     <SliderThumb background={'linear-gradient(to right, #B5179E , #7209B7)'} width={'12px'} height={'12px'} boxShadow={'none !important'} />
                 </Slider>
             </Flex>
+            {/* extra buttons */}
             <Flex ml={'1.875rem'} justifyContent={'center'} alignItems={'center'} gap={'1rem'}>
                 <Button variant={'unstyled'} size={'sm'}>
                     <Shuffle />
                 </Button>
-                <Button variant={'unstyled'} size={'sm'}>
-                    <Loop />
+                <Button variant={'unstyled'} size={'sm'} onClick={() => {
+                    setLoop(!loop)
+                    localStorage.setItem("loop", !loop + "")
+                }}>
+                    <Loop isActive={loop} />
                 </Button>
                 <Button variant={'unstyled'} size={'sm'}>
                     <Love />

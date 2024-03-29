@@ -65,7 +65,7 @@ function RecentlyPlayedSong(props : Props) {
                         <Img src={data?.image[0].link} width={'2.813rem'} height={'2.813rem'} rounded={'full'} />
                     </Flex>
                     <Flex flexDirection={'column'} width={'100%'} maxWidth={'6.25rem'}>
-                        <Text fontWeight={500} color={'#fff'} fontSize={'1rem'}>{data?.name}</Text>
+                        <Text fontWeight={500} color={'primaryTextRe'} fontSize={'1rem'}>{data?.name}</Text>
                     </Flex>
                     <Button variant={'unstyled'} width={'1.25rem'} display={'flex'} justifyContent={'flex-end'} onClick={handlePlay}>
                         {

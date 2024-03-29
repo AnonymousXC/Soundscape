@@ -3,6 +3,13 @@
     font-size: 16px;
 }
 
+.gradient-text {
+    background: linear-gradient(to right, #B5179E , #7209B7) !important;
+    background-clip: text !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
 .sidebar-active-tab {
     background-image: linear-gradient(to right, #B5179E , #7209B7);
     color: #fff !important;
@@ -14,8 +21,11 @@
 }
 
 .hide-scroll-bar::-webkit-scrollbar {
-    width: 0px;
+    display: none;
+    -ms-overflow-style: none;
 }
+
+
 
 @keyframes rotating {
     from {

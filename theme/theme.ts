@@ -10,16 +10,20 @@ const theme = extendTheme({
     semanticTokens: {
         colors: {
             background: {
-                default: "#fff",
+                default: "#eeeeee",
                 _dark: "#111111"
             },
             primaryText: {
-                default: '#000',
+                default: '#474747',
                 _dark: '#B8B8B8'
             },
             secondaryText: {
-                default: '#000',
+                default: '#0e0e0e',
                 _dark: '#F1F1F1'
+            },
+            primaryTextRe: {
+                default: '#000',
+                _dark: '#fff'
             }
         }
     },

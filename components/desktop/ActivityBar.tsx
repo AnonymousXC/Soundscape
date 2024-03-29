@@ -25,7 +25,7 @@ function ActivityBar() {
                 <Flex gap={'0.625rem'}>
                     <Avatar name='Thearcane' src='https://bit.ly/dan-abramov' />
                     <Flex flexDirection={'column'}>
-                        <Text color={'#fff'} fontSize={'1.188rem'} fontWeight={500}> Thearcane </Text>
+                        <Text color={'primaryTextRe'} fontSize={'1.188rem'} fontWeight={500}> Thearcane </Text>
                         <Text color={'primaryText'} fontSize={'0.75rem'} > premium blog </Text>
                     </Flex>
                 </Flex>
