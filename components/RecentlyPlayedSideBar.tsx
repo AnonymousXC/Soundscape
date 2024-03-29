@@ -69,7 +69,7 @@ function RecentlyPlayedSong(props : Props) {
                     </Flex>
                     <Button variant={'unstyled'} width={'1.25rem'} display={'flex'} justifyContent={'flex-end'} onClick={handlePlay}>
                         {
-                            currentSongID === props.id  ? 
+                            currentSongID === props.id && document.querySelector('audio')?.paused == false ? 
                             <Img src={'/icons/player/Pause.svg'} width={'auto'} height={'1.25rem'} /> : <Img src={'/icons/Play Button.svg'} width={'auto'} height={'1.25rem'} />
                         }
                     </Button>

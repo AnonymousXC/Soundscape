@@ -113,7 +113,7 @@ function Player() {
             {/* Control slider */}
             <Stack width={'100%'} maxWidth={'27rem'} ml={'1.8rem'} justifyContent={'center'} gap={'2px'}>
                 <Skeleton isLoaded={loaded} height={'12px'} display={'flex'}>
-                    <Slider max={parseInt(data?.duration || '0')} value={currentTime} defaultValue={0}
+                    <Slider max={parseInt(data?.duration || '0')}  value={currentTime} defaultValue={0} focusThumbOnChange={false}
                     onChange={(e) => {
                         if(audio.current?.currentTime)
                             audio.current.currentTime = e
