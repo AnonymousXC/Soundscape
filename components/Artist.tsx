@@ -23,7 +23,6 @@ function Artist(props : Props) {
     useEffect(() => {
         getArtistDetails(props.id)
         .then((val) => {
-            console.log(val)
             if(val.status == 'SUCCESS')
             {
                 setLoading(true)

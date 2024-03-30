@@ -31,6 +31,7 @@ function Player() {
     const [ loaded, setLoaded ] = useState<boolean>(false)
     const [ isPlaying, setPlaying ] = useState<boolean>(false)
     const [ loop, setLoop ] = useState<boolean>(false)
+    const [ isFavourite, setIsFavourite ] = useState<boolean>(false)
     const audio = createRef<HTMLAudioElement>()
     var [ currentTime, setCurrentTime ] = useState<number>(0)
     
@@ -58,6 +59,17 @@ function Player() {
         }
         else
             localStorage.setItem("loop", "false")
+
+        // favourite handler
+        if(localStorage.getItem('favourite'))
+        {
+            const favArray : Array<string> = JSON.parse(localStorage.getItem('favourite') || '[]')
+            if(favArray.indexOf(id) != -1)
+                setIsFavourite(true)
+            else
+                setIsFavourite(false)
+        }
+
     }, [id])
 
     return (
@@ -169,8 +181,10 @@ function Player() {
                 }}>
                     <Loop isActive={loop} />
                 </Button>
-                <Button variant={'unstyled'} size={'sm'}>
-                    <Love />
+                <Button variant={'unstyled'} size={'sm'} onClick={() => {
+                    addToFavouriteLocal(id)
+                }}>
+                    <Love isActive={isFavourite} />
                 </Button>
                 <Button variant={'unstyled'} size={'sm'}>
                     <Share />
@@ -178,6 +192,26 @@ function Player() {
             </Flex>
         </Flex>
     )
+}
+
+function addToFavouriteLocal(id : string) {
+    if(localStorage.getItem('favourite'))
+    {
+        let favArray : Array<string> = JSON.parse(localStorage.getItem('favourite') || '[]')
+        if(favArray.indexOf(id) != -1)
+        {
+            favArray.splice(favArray.indexOf(id))
+            localStorage.setItem('favourite', JSON.stringify(favArray))
+        }
+        else
+        {
+            favArray.push(id)
+            favArray.sort()
+            localStorage.setItem('favourite', JSON.stringify(favArray))
+        }
+    }
+    else
+        localStorage.setItem('favourite', '[]')
 }
 
 function updateNavigator(data : SongResponse) {

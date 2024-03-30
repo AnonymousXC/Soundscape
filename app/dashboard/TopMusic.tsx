@@ -7,18 +7,18 @@ import { Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import getTrending from '../actions/getTrending.server';
 import Song from '@/components/SearchSongBar';
+import { SongResponse } from '@/interfaces/song.interface';
 
 function TopMusic() {
 
-    const [ trendingSongs, setTrendingSongs ] = useState<any>([])
+    const [ trendingSongs, setTrendingSongs ] = useState<Array<SongResponse>>([])
 
     useEffect(() => {
         getTrending()
         .then((data : any) => {
             setTrendingSongs(data.data.trending.songs)
-            console.log(data.data.trending.songs)
         })
-    }, [trendingSongs])
+    }, [])
 
     return (
         <Flex mt={"1rem"} flexDirection={'column'}>
@@ -36,7 +36,7 @@ function TopMusic() {
             <Flex width={'100%'} mt={'1.5rem'} height={'100%'} overflowY={'auto'} flexDirection={'column'} gap={'0.4rem'} overflowX={'hidden'} className='hide-scroll-bar'>
             {/* {
                 trendingSongs.map((val : any, idx : number) => {
-                    return <Song data={val} key={idx} />
+                    return (<Song data={val} key={idx} />)
                 })
             } */}
         </Flex>
