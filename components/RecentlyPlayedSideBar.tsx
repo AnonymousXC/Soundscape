@@ -24,6 +24,12 @@ function RecentlyPlayedSong(props : Props) {
     const router = useRouter()
     const params = useSearchParams()
     const currentSongID = params.get('id')
+    let isPaused = true
+
+    if(params.get('paused'))
+        isPaused = true
+    else
+        isPaused = false
 
     const handlePlay = () => {
         if(currentSongID == props.id)
@@ -69,7 +75,7 @@ function RecentlyPlayedSong(props : Props) {
                     </Flex>
                     <Button variant={'unstyled'} width={'1.25rem'} display={'flex'} justifyContent={'flex-end'} onClick={handlePlay}>
                         {
-                            currentSongID === props.id && document.querySelector('audio')?.paused == false ? 
+                            currentSongID === props.id && isPaused == false ? 
                             <Img src={'/icons/player/Pause.svg'} width={'auto'} height={'1.25rem'} /> : <Img src={'/icons/Play Button.svg'} width={'auto'} height={'1.25rem'} />
                         }
                     </Button>

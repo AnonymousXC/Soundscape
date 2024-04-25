@@ -14,10 +14,13 @@ function TopMusic() {
     const [ trendingSongs, setTrendingSongs ] = useState<Array<SongResponse>>([])
 
     useEffect(() => {
-        getTrending()
-        .then((data : any) => {
+        
+        (async () => {
+            const data = await getTrending()
+            console.log(data.data.trending.songs)
             setTrendingSongs(data.data.trending.songs)
-        })
+        })()
+
     }, [])
 
     return (
@@ -35,10 +38,14 @@ function TopMusic() {
             </Flex>
             <Flex width={'100%'} mt={'1.5rem'} height={'100%'} overflowY={'auto'} flexDirection={'column'} gap={'0.4rem'} overflowX={'hidden'} className='hide-scroll-bar'>
             {/* {
-                trendingSongs.map((val : any, idx : number) => {
+                trendingSongs.length > 0 &&
+                trendingSongs.map((val : SongResponse, idx : number) => {
                     return (<Song data={val} key={idx} />)
                 })
             } */}
+            {
+                JSON.stringify(trendingSongs)
+            }
         </Flex>
         </Flex>
     )
