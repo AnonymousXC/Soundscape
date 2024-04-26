@@ -13,8 +13,8 @@ import {
     Stack,
 } from "@chakra-ui/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { createRef, useEffect, useState } from "react";
-import getSongDetails from "@/app/actions/getSongDetails.server";
+import { Dispatch, SetStateAction, createRef, useEffect, useState } from "react";
+import getSongDetails from "@/app/server/getSongDetails.server";
 import { SongResponse } from "@/interfaces/song.interface";
 import Love from "@/assets/icons/Love";
 import Loop from "@/assets/icons/Loop";
@@ -182,7 +182,7 @@ function Player() {
                     <Loop isActive={loop} />
                 </Button>
                 <Button variant={'unstyled'} size={'sm'} onClick={() => {
-                    addToFavouriteLocal(id)
+                    addToFavouriteLocal(id, setIsFavourite)
                 }}>
                     <Love isActive={isFavourite} />
                 </Button>
@@ -194,7 +194,7 @@ function Player() {
     )
 }
 
-function addToFavouriteLocal(id : string) {
+function addToFavouriteLocal(id : string, setFavouriteButton: Dispatch<SetStateAction<boolean>>) {
     if(localStorage.getItem('favourite'))
     {
         let favArray : Array<string> = JSON.parse(localStorage.getItem('favourite') || '[]')
@@ -202,12 +202,14 @@ function addToFavouriteLocal(id : string) {
         {
             favArray.splice(favArray.indexOf(id))
             localStorage.setItem('favourite', JSON.stringify(favArray))
+            setFavouriteButton(false)
         }
         else
         {
             favArray.push(id)
             favArray.sort()
             localStorage.setItem('favourite', JSON.stringify(favArray))
+            setFavouriteButton(true)
         }
     }
     else

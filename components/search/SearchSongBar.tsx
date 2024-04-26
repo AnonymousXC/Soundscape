@@ -51,7 +51,7 @@ function Song(props : Props) {
     }
 
     return (
-        <Flex width={'100%'} maxHeight={'80px'} height={'4rem'} py={'0.5rem'} alignItems={'center'} justifyContent={'space-around'} background={playing ? 'linear-gradient(to right, #B5179E , #7209B7)' : '#1D1D1D'} transition={'all 400ms'} _hover={{
+        <Flex rounded={6} width={'100%'} maxHeight={'80px'} height={'4rem'} py={'0.5rem'} alignItems={'center'} justifyContent={'space-around'} background={playing ? 'linear-gradient(to right, #B5179E , #7209B7)' : '#1D1D1D'} transition={'all 400ms'} _hover={{
             transform: 'scale(1.07)'
         }}>
             <Flex gap={'1rem'} alignItems={'center'} maxWidth={'25rem'} width={'100%'}>

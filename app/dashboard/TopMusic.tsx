@@ -5,13 +5,20 @@ import {
 } from '@chakra-ui/react';
 import { Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import getTrending from '../actions/getTrending.server';
+import getTrending from '../server/getTrending.server';
 import Song from '@/components/search/SearchSongBar';
 import { SongResponse } from '@/interfaces/song.interface';
+import { useRouter } from 'next/navigation';
 
 function TopMusic() {
 
     const [trendingSongs, setTrendingSongs] = useState<Array<SongResponse>>([])
+    const router = useRouter()
+
+    const handleRouteChange = (path : string) => {
+        const url = new URL(window.location.href)
+        router.push(path + '?' + url.searchParams.toString())
+    }
 
     useEffect(() => {
 
@@ -31,11 +38,14 @@ function TopMusic() {
                         Top Music
                     </Text>
                 </Flex>
-                <Button variant={'unstyled'} fontSize={'0.8rem'} fontWeight={"400"} className='gradient-text'>
+                <Button variant={'unstyled'} fontSize={'0.8rem'} fontWeight={"400"} className='gradient-text' 
+                onClick={() => {
+                    handleRouteChange('/trending')
+                }}>
                     Show more &gt;&gt;
                 </Button>
             </Flex>
-            <Flex width={'100%'} mt={'1.5rem'} height={'100%'} overflowY={'auto'} flexDirection={'column'} gap={'0.4rem'} overflowX={'hidden'} className='hide-scroll-bar'>
+            <Flex width={'100%'} mt={'1.5rem'} height={'100%'} overflowY={'auto'} flexDirection={'column'} gap={'0.4rem'} overflowX={'hidden'} className='hide-scroll-bar' px={1}>
                 {
                     trendingSongs.length > 0 &&
                     trendingSongs.map((val: SongResponse, idx: number) => {

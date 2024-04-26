@@ -2,7 +2,7 @@
 import { Flex } from "@chakra-ui/react";
 import Song from "./SearchSongBar";
 import { useEffect, useState } from "react";
-import search from "@/app/actions/search.server";
+import search from "@/app/server/search.server";
 import { SongResponse } from "@/interfaces/song.interface";
 
 interface Props {
