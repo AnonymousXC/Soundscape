@@ -7,8 +7,8 @@ import {
 } from '@chakra-ui/react'
 import { Img } from '@chakra-ui/react'
 import { useState } from 'react'
-import Artist from '../Artist'
-import RecentlyPlayedSong from '../RecentlyPlayedSideBar'
+import Artist from '../global/Artist'
+import RecentlyPlayedSong from './RecentlyPlayedSideBar'
 
 function ActivityBar() {
 

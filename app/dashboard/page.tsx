@@ -1,5 +1,5 @@
 'use client'
-import SearchResult from '@/components/SearchResult';
+import SearchResult from '@/components/search/SearchResult';
 import SearchBar from '@/components/desktop/SongSearchBar';
 import {
     Flex,
@@ -14,7 +14,7 @@ function Dashboard() {
     const [ visibility, setVisibility ] = useState(false)
 
     return (
-        <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'calc(100% - 18.75rem - 21.875rem)'} background={'background'} height={'calc(100vh - 6.25rem)'} px={'1.25rem'} pt={'1rem'} flexDir={'column'}>
+        <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={'calc(100vh - 6.25rem)'} px={'1.25rem'} pt={'1rem'} flexDir={'column'}>
             <SearchBar setQueryParent={setQuery} setResultsVisibilityParent={setVisibility} isResultsOpen={visibility} currentQuery={query || ''} />
             {
                 visibility == true ?

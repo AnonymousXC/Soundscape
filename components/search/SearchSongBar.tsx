@@ -58,7 +58,7 @@ function Song(props : Props) {
                 <Flex height={'3.5rem'} width={'3.5rem'} justifyContent={'center'} alignItems={'center'} rounded={'full'} background={'linear-gradient(to right, #B5179E , #7209B7)'}>
                     <Img src={data?.image[2].link} height={'3.4rem'} minWidth={'3.4rem'} rounded={'full'}  />
                 </Flex>
-                <Text fontWeight={500} whiteSpace={'nowrap'} overflow={'hidden'} textOverflow={'ellipsis'} >{data?.name} - {data?.primaryArtists}</Text>
+                <Text fontWeight={500} whiteSpace={'nowrap'} overflow={'hidden'} textOverflow={'ellipsis'} >{data?.name + ' - ' + data?.primaryArtists[0].name}</Text>
             </Flex>
             <Text>{calculateTime(parseInt(data?.duration || '0'))}</Text>
             <Box></Box>
