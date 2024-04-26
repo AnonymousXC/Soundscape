@@ -200,7 +200,7 @@ function addToFavouriteLocal(id : string, setFavouriteButton: Dispatch<SetStateA
         let favArray : Array<string> = JSON.parse(localStorage.getItem('favourite') || '[]')
         if(favArray.indexOf(id) != -1)
         {
-            favArray.splice(favArray.indexOf(id))
+            favArray.splice(favArray.indexOf(id), 1)
             localStorage.setItem('favourite', JSON.stringify(favArray))
             setFavouriteButton(false)
         }
@@ -213,7 +213,7 @@ function addToFavouriteLocal(id : string, setFavouriteButton: Dispatch<SetStateA
         }
     }
     else
-        localStorage.setItem('favourite', '[]')
+        localStorage.setItem('favourite', `[${id}]`)
 }
 
 function updateNavigator(data : SongResponse) {
