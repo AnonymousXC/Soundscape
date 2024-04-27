@@ -27,7 +27,15 @@ function Song(props : Props) {
             setPlaying(true)
         else
             setPlaying(false)
-    }, [paused, id])
+    }, [paused, id, props])
+
+    
+    useEffect(() => {
+        if(parseInt(paused || '0') == 0 && data?.id == id)
+            setPlaying(true)
+        else
+            setPlaying(false)
+    }, [])
 
 
     const handlePlay = () => {
@@ -55,10 +63,10 @@ function Song(props : Props) {
             transform: 'scale(1.07)'
         }}>
             <Flex gap={'1rem'} alignItems={'center'} maxWidth={'25rem'} width={'100%'}>
-                <Flex height={'3.5rem'} width={'3.5rem'} justifyContent={'center'} alignItems={'center'} rounded={'full'} background={'linear-gradient(to right, #B5179E , #7209B7)'}>
+                <Flex height={'3.5rem'} width={'3.5rem'} justifyContent={'center'} alignItems={'center'} rounded={'full'} background={'linear-gradient(to right, #B5179E , #7209B7)'} animation={'rotating 4s linear infinite'} style={{ animationPlayState : playing ? 'running' : 'paused'}}>
                     <Img src={data?.image[2].link} height={'3.4rem'} minWidth={'3.4rem'} rounded={'full'}  />
                 </Flex>
-                <Text fontWeight={500} whiteSpace={'nowrap'} overflow={'hidden'} textOverflow={'ellipsis'} >{data?.name + ' - ' + data?.primaryArtists[0].name}</Text>
+                <Text fontWeight={500} whiteSpace={'nowrap'} overflow={'hidden'} textOverflow={'ellipsis'} >{data?.name + ' - ' + (data?.primaryArtists[0].name ? data?.primaryArtists[0].name : data?.primaryArtists)}</Text>
             </Flex>
             <Text>{calculateTime(parseInt(data?.duration || '0'))}</Text>
             <Box></Box>

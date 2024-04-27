@@ -19,7 +19,6 @@ function SearchResult(props : Props) {
             if(val.status == 'SUCCESS')
             {
                 setSongs(val.data.results)
-                console.log(songs)
             }
         })
     }, [props.query])

@@ -11,7 +11,7 @@
 }
 
 .sidebar-active-tab {
-    background-image: linear-gradient(to right, #B5179E , #7209B7);
+    background-image: linear-gradient(to right, #B5179E , #7209B7) !important;
     color: #fff !important;
     fill: white;
 }
@@ -25,7 +25,11 @@
     -ms-overflow-style: none;
 }
 
-
+.auth-success-gradient {
+    background-color: #166d3b;
+    background-image: linear-gradient(147deg, #166d3b 0%, #263228 74%);
+    color: white !important;
+}
 
 @keyframes rotating {
     from {

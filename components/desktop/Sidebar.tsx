@@ -27,7 +27,7 @@ function Sidebar() {
             }} _hover={{ opacity : 1 }}>
                 {isVisible ? '←' : '→'}
             </Button>
-            <Img src={'/SidebarLogo.svg'} alt='logo' width={'90%'} height={'auto'} pb={'2.5rem'} />
+            <Img src={'/SidebarLogo.svg'} alt='logo' width={'auto'} height={'90px'} pb={'2.5rem'} />
             <Flex flexDirection={'column'} overflowY={'auto'} className='hide-scroll-bar'>
                 <Flex className='menu' flexDirection={'column'} mb={'2.5rem'}>
                     <Text color={'primaryText'} letterSpacing={'0.2px'} fontWeight={'500'} mb={'8px'} fontSize={'1.1875rem'}>
