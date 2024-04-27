@@ -27,7 +27,7 @@ function Song(props : Props) {
             setPlaying(true)
         else
             setPlaying(false)
-    }, [paused, id])
+    }, [paused, id, props])
 
 
     const handlePlay = () => {
@@ -51,17 +51,18 @@ function Song(props : Props) {
     }
 
     return (
-        <Flex width={'100%'} maxHeight={'80px'} height={'4rem'} py={'0.5rem'} alignItems={'center'} justifyContent={'space-around'} background={'rgba(35,35,35,0.3)'} transition={'800ms'} fontWeight={500} >
+        <Flex width={'100%'} maxHeight={'80px'} height={'4rem'} py={'0.5rem'} alignItems={'center'} justifyContent={'space-around'} background={'rgba(35,35,35,0.3)'} transition={'200ms'} fontWeight={500} 
+        _hover={{ transform: 'scale(1.02)' }} rounded={6}>
             <Flex gap={'1rem'} alignItems={'center'} maxWidth={'25rem'} width={'100%'}>
                 <Flex height={'3.5rem'} width={'3.5rem'} justifyContent={'center'} alignItems={'center'} rounded={'full'} background={'linear-gradient(to right, #B5179E , #7209B7)'}
                 animation={'rotating 4s linear infinite'} style={{
                     animationPlayState: playing ? 'running' : 'paused'
                 }}>
-                    <Img src={data?.image[2].link} height={'3.4rem'} width={'3.4rem'} rounded={'full'}  />
+                    <Img src={data?.image[2].link} height={'3.4rem'} minWidth={'3.4rem'} rounded={'full'}  />
                 </Flex>
-                <Text background={playing ? 'linear-gradient(to right, #B5179E , #7209B7)'  : '#B8B8B8'} textColor={'transparent'} backgroundClip={'text'}>{data?.name} - {data?.primaryArtists}</Text>
+                <Text background={data?.id == id ? 'linear-gradient(to right, #B5179E , #7209B7)'  : '#B8B8B8'} textColor={'transparent'} backgroundClip={'text'}>{data?.name + ' - ' + (data?.primaryArtists[0].name ? data?.primaryArtists[0].name : data?.primaryArtists)}</Text>
             </Flex>
-            <Text background={playing ? 'linear-gradient(to right, #B5179E , #7209B7)'  : '#B8B8B8'} textColor={'transparent'} backgroundClip={'text'}>{calculateTime(parseInt(data?.duration || '0'))}</Text>
+            <Text background={data?.id == id ? 'linear-gradient(to right, #B5179E , #7209B7)'  : '#B8B8B8'} textColor={'transparent'} backgroundClip={'text'}>{calculateTime(parseInt(data?.duration || '0'))}</Text>
             <Box></Box>
             <Button variant={'unstyled'} alignItems={'center'} display={'flex'} onClick={handlePlay} >
                 <Img src={playing == false ? 'icons/player/Play.svg' : 'icons/player/Pause.svg '} height={'1.25rem'} width={'auto'} />

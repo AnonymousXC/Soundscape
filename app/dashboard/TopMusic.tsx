@@ -6,7 +6,7 @@ import {
 import { Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import getTrending from '../server/getTrending.server';
-import Song from '@/components/search/SearchSongBar';
+import Song from '@/components/global/SongBar';
 import { SongResponse } from '@/interfaces/song.interface';
 import { useRouter } from 'next/navigation';
 
@@ -30,7 +30,7 @@ function TopMusic() {
     }, [])
 
     return (
-        <Flex mt={"1rem"} flexDirection={'column'} height={'calc(100% - 9rem)'}>
+        <Flex mt={"1rem"} flexDirection={'column'}>
             <Flex alignItems={'center'} justifyContent={'space-between'}>
                 <Flex gap={'0.5rem'} alignItems={'center'}>
                     <Image src={'icons/Headphone icon.svg'} width={6} height={6} alt="music" />

@@ -1,6 +1,6 @@
 'use client'
 import { Flex } from "@chakra-ui/react";
-import Song from "./SearchSongBar";
+import Song from "../global/SongBar";
 import { useEffect, useState } from "react";
 import search from "@/app/server/search.server";
 import { SongResponse } from "@/interfaces/song.interface";

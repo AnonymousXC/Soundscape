@@ -84,4 +84,4 @@ function calculateTime(secs : number) {
     return `${minutes}:${returnedSeconds}`;
 }
 
-export default Song;
+// export default Song;

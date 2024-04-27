@@ -16,7 +16,8 @@ export const metadata: Metadata = {
 
 const inter = Inter({
   variable: '--font-inter',
-  subsets: ['latin']
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600']
 })
 
 export default function DesktopLLayout({ children, }: { children: React.ReactNode }) {

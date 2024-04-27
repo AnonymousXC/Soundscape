@@ -14,7 +14,7 @@ function Dashboard() {
     const [ visibility, setVisibility ] = useState(false)
 
     return (
-        <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={'calc(100vh - 6.25rem)'} px={'1.25rem'} pt={'1rem'} flexDir={'column'}>
+        <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={'calc(100vh - 6.25rem)'} px={'1.25rem'} pt={'1rem'} flexDir={'column'} overflowY={'auto'} overflowX={'hidden'} pb={4}>
             <SearchBar setQueryParent={setQuery} setResultsVisibilityParent={setVisibility} isResultsOpen={visibility} currentQuery={query || ''} />
             {
                 visibility == true ?
