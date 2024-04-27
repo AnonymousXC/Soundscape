@@ -1,6 +1,7 @@
 import { extendTheme } from "@chakra-ui/react";
 import Divider from "./Divider";
 import Button from "./Button";
+import Input from "./Input";
 
 const theme = extendTheme({
     config: {
@@ -29,7 +30,8 @@ const theme = extendTheme({
     },
     components: {
         Divider,
-        Button
+        Button,
+        Input,
     }
 })
 
