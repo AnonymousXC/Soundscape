@@ -8,6 +8,7 @@ import Player from '@/components/global/Player'
 import PlayerFallback from '@/components/fallbacks/PlayerFallback'
 import ActivityBarFallback from '@/components/fallbacks/SidebarFallback'
 import { Suspense } from 'react'
+import TopLoadingBar from '@/components/global/TopLoadingBar'
  
 export const metadata: Metadata = {
   title: 'Soundscape',
@@ -28,6 +29,7 @@ export default function DesktopLLayout({ children, }: { children: React.ReactNod
         overflow: 'hidden',
         height: '100vh'
       }}>
+        <TopLoadingBar />
         <CKProviders>
           <Sidebar />
           {children}

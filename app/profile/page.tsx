@@ -1,3 +1,4 @@
+'use server'
 import { createClient } from '@/database/supabase';
 import {
     Flex,
