@@ -70,6 +70,16 @@ function Player() {
                 setIsFavourite(false)
         }
 
+        // recent played handler
+        if(id)
+        {
+            let recentData : Array<string> = JSON.parse(localStorage.getItem('recents') || '[]')
+            recentData = [id, ...recentData]
+            if(recentData.length > 11)
+                recentData.pop()
+            localStorage.setItem('recents', JSON.stringify(recentData))
+        }
+
     }, [id])
 
     return (
@@ -121,6 +131,7 @@ function Player() {
                     url.searchParams.delete('paused')
                     router.replace(url.toString())
                 }
+
             }} 
             onPause={() => {
                 setPlaying(false)

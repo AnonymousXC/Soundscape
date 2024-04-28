@@ -12,28 +12,26 @@ async function Profile() {
     const userdata = (await supabase.auth.getUser()).data.user
 
     return (
-        <>
-            <Flex width={'full'} flexDir={'column'} gap={6} px={'1.25rem'}>
-                <Text color={'primaryText'} fontWeight={'500'} fontSize={"1.2rem"}>
-                    User Details
-                </Text>
-                <Flex gap={6}>
-                    <Avatar name={userdata?.user_metadata.username} size={'2xl'} />
-                    <Flex flex={1} flexDir={'column'} justifyContent={'center'}>
-                        <Text fontSize={'1.2rem'}>
-                            {userdata?.user_metadata.username}
-                        </Text>
-                        <Text fontSize={'0.8rem'}>
-                            Time Listened
-                        </Text>
-                        <Text fontSize={'0.8rem'}>
-                            {userdata?.email}
-                        </Text>
-                    </Flex>
+        <Flex width={'full'} flexDir={'column'} gap={6}>
+            <Text color={'primaryText'} fontWeight={'500'} fontSize={"1.2rem"}>
+                User Details
+            </Text>
+            <Flex gap={6}>
+                <Avatar name={userdata?.user_metadata.username} size={'2xl'} />
+                <Flex flex={1} flexDir={'column'} justifyContent={'center'}>
+                    <Text fontSize={'1.2rem'}>
+                        {userdata?.user_metadata.username}
+                    </Text>
+                    <Text fontSize={'0.8rem'}>
+                        Time Listened
+                    </Text>
+                    <Text fontSize={'0.8rem'}>
+                        {userdata?.email}
+                    </Text>
                 </Flex>
             </Flex>
-            {/* <Favorit    e /> */}
-        </>
+        </Flex>
+
     )
 }
 
