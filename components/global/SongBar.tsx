@@ -60,12 +60,12 @@ function Song(props : Props) {
                 }}>
                     <Img src={data?.image[2].link} height={'3.4rem'} minWidth={'3.4rem'} rounded={'full'}  />
                 </Flex>
-                <Text background={data?.id == id ? 'linear-gradient(to right, #B5179E , #7209B7)'  : '#B8B8B8'} textColor={'transparent'} backgroundClip={'text'}>{data?.name + ' - ' + (data?.primaryArtists[0].name ? data?.primaryArtists[0].name : data?.primaryArtists)}</Text>
+                <Text background={data?.id == id ? 'linear-gradient(to right, #B5179E , #7209B7)'  : '#B8B8B8'} textColor={'transparent'} backgroundClip={'text'}>{data?.name + ' - ' + (typeof data?.primaryArtists == 'string' ? data?.primaryArtists : data?.primaryArtists[0].name)}</Text>
             </Flex>
             <Text background={data?.id == id ? 'linear-gradient(to right, #B5179E , #7209B7)'  : '#B8B8B8'} textColor={'transparent'} backgroundClip={'text'}>{calculateTime(parseInt(data?.duration || '0'))}</Text>
             <Box></Box>
             <Button variant={'unstyled'} alignItems={'center'} display={'flex'} onClick={handlePlay} >
-                <Img src={playing == false ? 'icons/player/Play.svg' : 'icons/player/Pause.svg '} height={'1.25rem'} width={'auto'} />
+                <Img src={playing == false ? '/icons/player/Play.svg' : '/icons/player/Pause.svg '} height={'1.25rem'} width={'auto'} />
             </Button>
         </Flex>
     )

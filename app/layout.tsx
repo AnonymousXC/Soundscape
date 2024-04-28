@@ -29,7 +29,7 @@ export default function DesktopLLayout({ children, }: { children: React.ReactNod
         overflow: 'hidden',
         height: '100vh'
       }}>
-        <TopLoadingBar />
+        {/* <TopLoadingBar /> */}
         <CKProviders>
           <Sidebar />
           {children}
