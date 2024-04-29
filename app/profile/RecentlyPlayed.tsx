@@ -17,7 +17,8 @@ function RecentlyPlayed() {
         const data = JSON.parse(localStorage.getItem('recents') || '[]')
         getSongDetailsMulti(data)
         .then((data) => {
-            setSongsData(data)
+            if(!songsData)
+                setSongsData(data)
         })
     }, [JSON.parse(localStorage.getItem('recents') || '[]')])
 

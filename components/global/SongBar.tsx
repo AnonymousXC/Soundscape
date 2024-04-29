@@ -11,22 +11,30 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 interface Props {
-    data? : SongResponse
+    data? : SongResponse | null
 }
 
 function Song(props : Props) {
 
-    const data = props.data
-    const router = useRouter()
-    const paused = useSearchParams().get('paused')
-    const id = useSearchParams().get('id')
-    const [ playing, setPlaying ] = useState<boolean>(false)
+    let data = props.data
+    let router = useRouter()
+    let paused = useSearchParams().get('paused')
+    let id = useSearchParams().get('id')
+    let [ playing, setPlaying ] = useState<boolean | null>(false)
 
     useEffect(() => {
         if(parseInt(paused || '0') == 0 && data?.id == id)
             setPlaying(true)
         else
             setPlaying(false)
+
+        return () => {
+            data = null
+            paused = null
+            // id = null
+            playing = null
+        }
+
     }, [paused, id, props])
 
 

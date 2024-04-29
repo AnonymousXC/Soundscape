@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation';
 
 function TopMusic() {
 
-    const [trendingSongs, setTrendingSongs] = useState<Array<SongResponse>>([])
+    let [trendingSongs, setTrendingSongs] = useState<Array<SongResponse> | null>([])
     const router = useRouter()
 
     const handleRouteChange = (path : string) => {
@@ -26,6 +26,10 @@ function TopMusic() {
             const data = await getTrending()
             setTrendingSongs(data.data.trending.songs)
         })()
+
+        return () => {
+            trendingSongs = null
+        }
 
     }, [])
 
@@ -47,7 +51,7 @@ function TopMusic() {
             </Flex>
             <Flex width={'100%'} mt={'1.5rem'} height={'100%'} overflowY={'auto'} flexDirection={'column'} gap={'0.4rem'} overflowX={'hidden'} className='hide-scroll-bar' px={1}>
                 {
-                    trendingSongs.length > 0 &&
+                    trendingSongs !== null &&
                     trendingSongs.map((val: SongResponse, idx: number) => {
                         return (<Song data={val} key={idx} />)
                     })

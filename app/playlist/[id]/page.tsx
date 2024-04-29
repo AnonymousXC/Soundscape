@@ -11,13 +11,17 @@ import { useEffect, useState } from "react";
 function Playlist() {
 
     const id = useParams().id
-    const [ data, setData ] = useState<AlbumResponse>()
+    let [ data, setData ] = useState<AlbumResponse | null>()
 
     useEffect(() => {
         getAlbum(id)
         .then((data : AlbumResponse) => {
             setData(data)
+            sessionStorage.setItem('current-playlist', JSON.stringify(data))
         })
+        return () => {
+            data = null
+        }
     }, [id])
 
     return (
