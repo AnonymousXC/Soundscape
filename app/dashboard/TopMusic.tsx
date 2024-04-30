@@ -49,7 +49,7 @@ function TopMusic() {
                     Show more &gt;&gt;
                 </Button>
             </Flex>
-            <Flex width={'100%'} mt={'1.5rem'} height={'100%'} overflowY={'auto'} flexDirection={'column'} gap={'0.4rem'} overflowX={'hidden'} className='hide-scroll-bar' px={1}>
+            <Flex width={'100%'} mt={'1.5rem'} height={'100%'} overflowY={'hidden'} flexDirection={'column'} gap={'0.4rem'} overflowX={'hidden'} className='hide-scroll-bar' px={1}>
                 {
                     trendingSongs !== null &&
                     trendingSongs.map((val: SongResponse, idx: number) => {

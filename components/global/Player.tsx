@@ -83,7 +83,7 @@ function Player() {
     }, [id])
 
     return (
-        <Flex width={'100vw'} height={'6.25rem'} position={'absolute'} backgroundColor={'background'} bottom={0} left={0} zIndex={10000} justifyContent={'space-evenly'} boxShadow={'1px 3px 25px rgb(0 0 0 / 0.8)'}>
+        <Flex display={['none', 'none', 'flex']} width={'100vw'} height={'6.25rem'} position={'absolute'} backgroundColor={'background'} bottom={0} left={0} zIndex={10000} justifyContent={'space-evenly'} boxShadow={'1px 3px 25px rgb(0 0 0 / 0.8)'}>
             <Flex className="song-details" width={'100%'} maxWidth={'15rem'} justifyContent={'space-around'} alignItems={'center'}>
                 <Skeleton isLoaded={loaded} rounded={'full'}>
                     <Flex width={'4.4rem'} height={"4.4rem"} rounded={'full'} className="border-image-gradient" justifyContent={'center'} alignItems={'center'} animation={'rotating 4s linear infinite'} style={{

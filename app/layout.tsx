@@ -9,6 +9,7 @@ import PlayerFallback from '@/components/fallbacks/PlayerFallback'
 import ActivityBarFallback from '@/components/fallbacks/SidebarFallback'
 import { Suspense } from 'react'
 import TopLoadingBar from '@/components/global/TopLoadingBar'
+import BottomBar from '@/components/global/MobileBottom'
  
 export const metadata: Metadata = {
   title: 'Soundscape',
@@ -39,6 +40,7 @@ export default function DesktopLLayout({ children, }: { children: React.ReactNod
           <Suspense fallback={<PlayerFallback />}>
             <Player />
           </Suspense>
+          <BottomBar />
         </CKProviders>
       </body>
     </html>

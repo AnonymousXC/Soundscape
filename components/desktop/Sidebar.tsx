@@ -21,7 +21,7 @@ function Sidebar() {
     }
 
     return (
-        <Flex bgColor={'background'} width={isVisible ? '100%' : '0px'} maxWidth={'18.75rem'}  height={'calc(100vh - 6.25rem)'} flexDirection={'column'} px={isVisible ? '2.375rem' : '0px'} pt={'1.875rem'} position={'relative'} top={0} left={0} boxShadow={'1px 3px 25px rgb(0 0 0 / 0.8)'} zIndex={1000} transition={'all 200ms'}>
+        <Flex display={['none', 'none', 'flex']} bgColor={'background'} width={isVisible ? '100%' : '0px'} maxWidth={'18.75rem'}  height={'calc(100vh - 6.25rem)'} flexDirection={'column'} px={isVisible ? '2.375rem' : '0px'} pt={'1.875rem'} position={'relative'} top={0} left={0} boxShadow={'1px 3px 25px rgb(0 0 0 / 0.8)'} zIndex={1000} transition={'all 200ms'}>
             <Button position={'absolute'} rounded={0} top={'0%'} left={'0px'} px={0} height={'100%'} opacity={0} onClick={() => {
                 setVisibility(!isVisible)
             }} _hover={{ opacity : 1 }}>

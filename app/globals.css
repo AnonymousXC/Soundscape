@@ -58,6 +58,10 @@ html {
     background: #666;
 }
 
+/* remove blue highlight */
+button {
+    -webkit-tap-highlight-color: transparent;
+}
 
 @keyframes rotating {
     from {
