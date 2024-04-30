@@ -7,7 +7,7 @@ import {
     Skeleton,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import getSongDetails from "@/app/actions/getSongDetails.server";
+import getSongDetails from "@/app/server/getSongDetails.server";
 import { SongResponse } from "@/interfaces/song.interface";
 import { useRouter, useSearchParams } from "next/navigation";
 

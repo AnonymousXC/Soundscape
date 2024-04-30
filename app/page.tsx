@@ -1,6 +1,8 @@
 import Profile from "./profile/page"
 
-export default function HomeDesktop() {
+
+export default async function HomeDesktop() {
+
   return (
     <Profile />
   )

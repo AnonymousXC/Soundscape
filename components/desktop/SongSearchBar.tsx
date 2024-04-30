@@ -21,7 +21,7 @@ function SearchBar({ setQueryParent, setResultsVisibilityParent, isResultsOpen, 
     const [ query, setQuery ] = useState<string>('')
 
     const handleInput = (e : KeyboardEvent<HTMLInputElement>) => {
-        if(e.code == "Enter" || e.keyCode == 0)
+        if(e.code == "Enter" || e.keyCode == 13)
         {
             setQueryParent(query)
             setResultsVisibilityParent(true)
@@ -42,7 +42,7 @@ function SearchBar({ setQueryParent, setResultsVisibilityParent, isResultsOpen, 
                     }
                 </InputLeftElement>
                 <Input placeholder='Search Music, Artist, Genre' width={'100%'} height={'2.8rem'}rounded={'40px'} boxShadow={'none !important'} backgroundColor={'rgba(65,65,65,0.65)'} border={'none'} color={'primaryText'} _placeholder={{ color: 'primaryText' }} pl={'3rem'} 
-                onKeyDown={handleInput} onFocus={() => {
+                onKeyDown={handleInput} onSubmit={() => { console.log("SD")}} onFocus={() => {
                     if(currentQuery != "")
                         setResultsVisibilityParent(true)
                 }} />

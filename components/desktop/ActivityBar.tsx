@@ -6,16 +6,23 @@ import {
     Text,
 } from '@chakra-ui/react'
 import { Img } from '@chakra-ui/react'
-import { useState } from 'react'
-import Artist from '../Artist'
-import RecentlyPlayedSong from '../RecentlyPlayedSideBar'
+import { useEffect, useState } from 'react'
+import Artist from '../global/Artist'
+import RecentlyPlayedSong from './RecentlyPlayedSideBar'
 
 function ActivityBar() {
 
     const [ isVisible, setVisibility ] = useState<boolean>(true)
+    const [ recents, setRecents ] = useState<Array<string>>([])
+
+    useEffect(() => {
+        const recentsData = JSON.parse(localStorage.getItem('recents') || '[]')
+        if(!recents)
+            setRecents(recentsData)
+    }, [])
 
     return (
-        <Flex bgColor={'background'} width={isVisible ? '100%' : '0px'} maxWidth={'21.875rem'} height={'calc(100vh - 6.25rem)'} flexDirection={'column'} px={isVisible ? '1.75rem' : '0px'} pt={'1.875rem'} position={'relative'} top={0} left={0} boxShadow={'1px 3px 25px rgb(0 0 0 / 0.8)'} zIndex={1000}>
+        <Flex display={['none', 'none', 'flex']} bgColor={'background'} width={isVisible ? '100%' : '0px'} maxWidth={'21.875rem'} height={'calc(100vh - 6.25rem)'} flexDirection={'column'} px={isVisible ? '1.75rem' : '0px'} pt={'1.875rem'} position={'relative'} top={0} left={0} boxShadow={'1px 3px 25px rgb(0 0 0 / 0.8)'} zIndex={1000} transition={'all 200ms'}>
             <Button position={'absolute'} rounded={0} top={'0%'} right={'0px'} px={0} height={'100%'} opacity={0} onClick={() => {
                 setVisibility(!isVisible)
             }} _hover={{ opacity : 1 }}>
@@ -47,6 +54,11 @@ function ActivityBar() {
                 <Flex flexDirection={'column'} mt={'1.875rem'} pb={'2.5rem'}>
                     <Text color={'primaryText'} fontSize={'1.188rem'} fontWeight={500}>Recently Played</Text>
                     <Flex flexDirection={'column'} gap={'0.75rem'} mt={'1.25rem'}>
+                        {/* {
+                            recents.map((el: string, idx: number) => {
+                                return (<RecentlyPlayedSong id={el} key={idx} />)
+                            })
+                        } */}
                         <RecentlyPlayedSong id={'R35H6BI-'} visible={isVisible} />
                         <RecentlyPlayedSong id={'OsolMgGF'} visible={isVisible} />
                         <RecentlyPlayedSong id={'4rsc10Q0'} visible={isVisible} />

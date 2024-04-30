@@ -5,7 +5,7 @@ import {
     Img,
     Skeleton,
 } from "@chakra-ui/react";
-import getArtistDetails from "@/app/actions/getArtistDetails.server";
+import getArtistDetails from "@/app/server/getArtistDetails.server";
 import { useEffect, useState } from "react";
 import { ArtistResponse } from "@/interfaces/artist.interface";
 
