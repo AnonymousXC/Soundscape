@@ -1,6 +1,6 @@
-import type { Router } from 'express'
+// import type { Router } from 'express'
 
 export interface Route {
   path?: string
-  router: Router
+  router: any
 }
