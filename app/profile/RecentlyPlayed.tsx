@@ -20,7 +20,7 @@ function RecentlyPlayed() {
             if(!songsData)
                 setSongsData(data)
         })
-    }, [JSON.parse(localStorage.getItem('recents') || '[]')])
+    }, [])
 
     return (
         <Flex width={'full'} flexDir={'column'} gap={6}>

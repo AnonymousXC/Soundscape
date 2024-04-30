@@ -18,7 +18,7 @@ interface Props {
 
 function RecentlyPlayedSong(props : Props) {
 
-    const [ data, setData ] = useState<SongResponse>()
+    let [ data, setData ] = useState<SongResponse | null>()
     const [ loading, setLoading ] = useState<boolean>(false)
     const [ error, setError ] = useState<boolean>(false)
     const router = useRouter()
@@ -50,11 +50,18 @@ function RecentlyPlayedSong(props : Props) {
             if(val.status == 'SUCCESS')
             {
                 setLoading(true)
-                setData(val.data[0])
+                if(JSON.stringify(val.data[0]) !== JSON.stringify(data))
+                {
+                    setData(val.data[0])
+                }
             }
             else
                 setError(true)
         })
+
+        return () => {
+            data = null
+        }
     }, [props.id])
 
     if(error)

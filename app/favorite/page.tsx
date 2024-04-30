@@ -7,7 +7,6 @@ import {
 import { useEffect, useState } from 'react';
 import getSongDetailsMulti from '../server/getSongDetailsMulti.server';
 import Song from '@/components/global/SongBar';
-import Image from 'next/image';
 import Love from '@/assets/icons/Love';
 
 function Favorite() {
@@ -20,7 +19,7 @@ function Favorite() {
         .then((data : Array<SongResponse>) => {
             setSongsData(data)
         })
-    }, [JSON.parse(localStorage.getItem('favourite') || '[]')])
+    }, [])
 
     return (
         <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={'calc(100vh - 6.25rem)'} px={'1.25rem'} pt={'1rem'} flexDir={'column'}>

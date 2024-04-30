@@ -1,14 +1,14 @@
 'use client'
 import { SongResponse } from '@/interfaces/song.interface';
+import { Image } from '@chakra-ui/next-js';
 import {
     Button,
     Flex, 
-    Img, 
     Text,
     Box
 } from '@chakra-ui/react'
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 interface Props {
     data? : SongResponse | null
@@ -18,24 +18,18 @@ function Song(props : Props) {
 
     let data = props.data
     let router = useRouter()
-    let paused = useSearchParams().get('paused')
+    let paused : number | null = parseInt(useSearchParams().get('paused') || '0')
     let id = useSearchParams().get('id')
-    let [ playing, setPlaying ] = useState<boolean | null>(false)
+    let playing = data?.id === id && paused === 0
 
     useEffect(() => {
-        if(parseInt(paused || '0') == 0 && data?.id == id && id != null)
-            setPlaying(true)
-        else
-            setPlaying(false)
 
         return () => {
             data = null
             paused = null
-            // id = null
-            playing = null
         }
 
-    }, [paused, id, props])
+    }, [])
 
 
     const handlePlay = () => {
@@ -64,16 +58,16 @@ function Song(props : Props) {
             <Flex gap={'1rem'} alignItems={'center'} maxWidth={'25rem'} width={'100%'}>
                 <Flex height={'3.5rem'} width={'3.5rem'} justifyContent={'center'} alignItems={'center'} rounded={'full'} background={'linear-gradient(to right, #B5179E , #7209B7)'}
                 animation={'rotating 4s linear infinite'} style={{
-                    animationPlayState: playing ? 'running' : 'paused'
+                    animationPlayState: data?.id === id && paused === 0 ? 'running' : 'paused'
                 }}>
-                    <Img src={data?.image[2].link} height={'3.4rem'} minWidth={'3.4rem'} rounded={'full'}  />
+                    <Image alt='Song picture' src={data?.image[2].link || ''} loader={() => data?.image[2].link + "?w=3.4rem&h=auto" || ''} height={54} width={54} minWidth={'3.4rem'} h={'auto'} rounded={'full'}  />
                 </Flex>
                 <Text background={data?.id == id ? 'linear-gradient(to right, #B5179E , #7209B7)'  : '#B8B8B8'} textColor={'transparent'} backgroundClip={'text'}>{data?.name + ' - ' + (typeof data?.primaryArtists == 'string' ? data?.primaryArtists : data?.primaryArtists[0].name)}</Text>
             </Flex>
             <Text display={['none', 'none', 'block']} background={data?.id == id ? 'linear-gradient(to right, #B5179E , #7209B7)'  : '#B8B8B8'} textColor={'transparent'} backgroundClip={'text'}>{calculateTime(parseInt(data?.duration || '0'))}</Text>
             <Box></Box>
             <Button variant={'unstyled'} alignItems={'center'} display={'flex'} onClick={handlePlay} >
-                <Img src={playing == false ? '/icons/player/Play.svg' : '/icons/player/Pause.svg '} height={'1.25rem'} width={'auto'} />
+                <Image loader={() => playing == false ? '/icons/player/Play.svg' : '/icons/player/Pause.svg?'} src={playing == false ? '/icons/player/Play.svg' : '/icons/player/Pause.svg '} width={20} height={20} h={'1.25rem'} w={'auto'} alt='play-pause-btn' />
             </Button>
         </Flex>
     )
