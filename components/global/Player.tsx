@@ -37,7 +37,6 @@ function Player() {
     
     useEffect(() => {
 
-        console.log("Rendered")
         // get song
         getSongDetails(id)
         .then((val) => {

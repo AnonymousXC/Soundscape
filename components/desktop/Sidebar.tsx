@@ -1,5 +1,7 @@
 'use client'
 import {
+    Avatar,
+    AvatarGroup,
     Button,
     Divider,
     Flex,
@@ -50,10 +52,18 @@ function Sidebar() {
                         }} className={pathname.includes('/favorite') ? 'sidebar-active-tab' : ''}>
                             Favorite
                         </Button>
-                        <Button variant={'sidebar'} fontSize={'1rem'} leftIcon={<Img src={'/icons/Chat.svg'} alt='logo' width={'20px'} height={'auto'}/>} onClick={() => {
+                        <Button variant={'sidebar'} fontSize={'1rem'} onClick={() => {
                             handleRouteChange('/chat')
-                        }} className={pathname === '/chat' ? 'sidebar-active-tab' : ''}>
-                            Live Chat
+                        }} className={pathname === '/chat' ? 'sidebar-active-tab' : ''} display={'flex'} justifyContent={'space-between'}>
+                            <Flex gap={5}>
+                                <Img src={'/icons/Chat.svg'} alt='logo' width={'20px'} height={'auto'}/>
+                                Live Chat
+                            </Flex>
+                            <AvatarGroup size={'xs'} justifySelf={'right'}>
+                                <Avatar name='Hello World' border={'none'} />
+                                <Avatar name='James' border={'none'} />
+                                <Avatar name='Test' border={'none'} />
+                            </AvatarGroup>
                         </Button>
                         <Button variant={'sidebar'} fontSize={'1rem'} leftIcon={<Img src={'/icons/Friends.svg'} alt='logo' width={'20px'} height={'auto'}/>} onClick={()  => {
                             handleRouteChange('/friend')
