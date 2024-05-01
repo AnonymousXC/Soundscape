@@ -13,6 +13,9 @@ function Setting() {
             <Button onClick={() => { Logout() }}>
                 Logout
             </Button>
+            <Button onClick={() => { localStorage.removeItem('recents');localStorage.removeItem('favourite') }}>
+                Clear Data
+            </Button>
         </Flex>
     )
 }

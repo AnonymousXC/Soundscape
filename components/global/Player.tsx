@@ -36,6 +36,8 @@ function Player() {
     var [ currentTime, setCurrentTime ] = useState<number>(0)
     
     useEffect(() => {
+
+        console.log("Rendered")
         // get song
         getSongDetails(id)
         .then((val) => {
@@ -83,8 +85,8 @@ function Player() {
     }, [id])
 
     return (
-        <Flex display={['none', 'none', 'flex']} width={'100vw'} height={'6.25rem'} position={'absolute'} backgroundColor={'background'} bottom={0} left={0} zIndex={10000} justifyContent={'space-evenly'} boxShadow={'1px 3px 25px rgb(0 0 0 / 0.8)'}>
-            <Flex className="song-details" width={'100%'} maxWidth={'15rem'} justifyContent={'space-around'} alignItems={'center'}>
+        <Flex display={['flex', 'flex', 'flex']} width={'100%'} height={['8.2rem', '8.2rem', '6.25rem']} position={['fixed', 'fixed', 'absolute']} backgroundColor={'background'} bottom={["3.875rem", "3.875rem", "0"]} left={0} zIndex={100} justifyContent={'space-evenly'} boxShadow={'1px 3px 25px rgb(0 0 0 / 0.8)'} flexDirection={['column-reverse', 'column-reverse', 'row']} pt={[1,1,0]} gap={[1,1,0]} px={[4,4,0]}>
+            <Flex display={['none', 'none', 'flex']} className="song-details" width={'100%'} maxWidth={'15rem'} justifyContent={'space-around'} alignItems={'center'}>
                 <Skeleton isLoaded={loaded} rounded={'full'}>
                     <Flex width={'4.4rem'} height={"4.4rem"} rounded={'full'} className="border-image-gradient" justifyContent={'center'} alignItems={'center'} animation={'rotating 4s linear infinite'} style={{
                         animationPlayState: isPlaying ? 'running' : 'paused'
@@ -100,7 +102,7 @@ function Player() {
                 </Flex>
             </Flex>
             {/* Control buttons */}
-            <Flex maxWidth={'270px'} w={'100%'} justifyContent={'space-between'} alignItems={'center'} ml={'30px'}>
+            <Flex maxWidth={['100%', '100%', '270px']} w={'100%'}  justifyContent={'space-between'} alignItems={'center'} ml={[0,0,'30px']}>
                 <Button variant={'unstyled'} textAlign={'center'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
                     <Img src={'icons/player/Play Previous.svg'} height={'1rem'} width={'auto'} />
                 </Button>
@@ -148,7 +150,7 @@ function Player() {
             }}
             loop={loop}></audio>
             {/* Control slider */}
-            <Stack width={'100%'} maxWidth={'27rem'} ml={'1.8rem'} justifyContent={'center'} gap={'2px'}>
+            <Stack width={'100%'} maxWidth={['100%', '100%', '27rem']} ml={[0,0,'1.8rem']} justifyContent={'center'} gap={'2px'}>
                 <Skeleton isLoaded={loaded} height={'12px'} display={'flex'}>
                     <Slider max={parseInt(data?.duration || '0')}  value={currentTime} defaultValue={0} focusThumbOnChange={false}
                     onChange={(e) => {
@@ -166,7 +168,7 @@ function Player() {
                     <Text fontSize={'0.625rem'} color={'primaryText'}>{calculateTime(currentTime || 0)}</Text>
                 </Flex>
             </Stack>
-            <Flex alignItems={'center'} pl={'20px'} maxWidth={'8rem'} width={'100%'} gap={'0.1rem'}>
+            <Flex alignItems={'center'} pl={'20px'} maxWidth={'8rem'} width={'100%'} gap={'0.1rem'} display={['none', 'none', "flex"]}>
                 <Button variant={'unstyled'} size={'sm'}>
                     <Img src={'icons/player/Volume.svg'} height={'auto'} width={'24px'} />
                 </Button>
@@ -182,8 +184,23 @@ function Player() {
                 </Slider>
             </Flex>
             {/* extra buttons */}
-            <Flex ml={'1.875rem'} justifyContent={'center'} alignItems={'center'} gap={'1rem'}>
-                <Button variant={'unstyled'} size={'sm'}>
+            <Flex ml={[0,0,'1.875rem']} w={['100%', '100%', 'unset']} justifyContent={'center'} alignItems={'center'} gap={'1rem'}>
+                <Flex display={['flex', 'flex', 'none']} className="song-details" width={'100%'} maxWidth={'15rem'} alignItems={'center'} gap={3}>
+                    <Skeleton isLoaded={loaded} rounded={'full'}>
+                        <Flex width={'2rem'} height={"2rem"} rounded={'full'} className="border-image-gradient" justifyContent={'center'} alignItems={'center'} animation={'rotating 4s linear infinite'} style={{
+                            animationPlayState: isPlaying ? 'running' : 'paused'
+                        }}>
+                            <Img src={data?.image[2].link} width={"1.9rem"} height={"1.9rem"} rounded={"full"} />
+                        </Flex>
+                    </Skeleton>
+                    <Flex flexDirection={'column'} width={'100%'} maxW={'130px'}>
+                        <SkeletonText isLoaded={loaded} noOfLines={2}>
+                            <Text color={'primaryTextRe'} fontSize={'1rem'} fontWeight={500} maxHeight={'1.875rem'} overflow={'hidden'} textOverflow={'ellipsis'} whiteSpace={'nowrap'} width={'100%'}>{data?.name}</Text>
+                            <Text color={'primaryText'} fontWeight={400} fontSize={'0.6rem'} maxHeight={'1.125rem'} overflow={'hidden'} textOverflow={'ellipsis'} whiteSpace={'nowrap'}>{typeof data?.primaryArtists == 'string' ? data?.primaryArtists : data?.primaryArtists[0].name}</Text>
+                        </SkeletonText>
+                    </Flex>
+                </Flex>
+                <Button variant={'unstyled'} size={'sm'} display={['none', 'none', 'flex']}>
                     <Shuffle />
                 </Button>
                 <Button variant={'unstyled'} size={'sm'} onClick={() => {
