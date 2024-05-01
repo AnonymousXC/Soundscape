@@ -30,8 +30,8 @@ export default function DesktopLLayout({ children, }: { children: React.ReactNod
         overflow: 'hidden',
         height: '100vh'
       }}>
-        {/* <TopLoadingBar /> */}
         <CKProviders>
+          <TopLoadingBar />
           <Sidebar />
           {children}
           <Suspense fallback={<ActivityBarFallback />}>

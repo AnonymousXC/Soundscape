@@ -1,25 +1,28 @@
 'use client'
-import { Flex } from "@chakra-ui/react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
 
+import { Progress } from "@chakra-ui/react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
+let startLoading = () => {}
 
 function TopLoadingBar() {
     
-    const pathname = useSearchParams()
-    const searchParams = useSearchParams()
-    
-    useEffect(() => {
-        console.log("Route change started")
-        
-    }, [pathname, searchParams])
+    const [ isLoading, setIsLoading] = useState<boolean>(true)
+    const pathname = usePathname()
 
-    return (
-        <Flex w={'100%'} height={'2px'} backgroundColor={'#fff'} position={'absolute'} top={0} left={0} zIndex={1001}>
-        </Flex>
-    )
+    useEffect(() => {
+        setIsLoading(false)
+    }, [pathname])
+
+    startLoading = () => {
+        if(isLoading == false)
+            setIsLoading(true)
+    }
+
+    return <Progress w={'100%'} position={'absolute'} top={0} left={0} hidden={!isLoading} isIndeterminate={isLoading} height={'3px'} zIndex={1001} className="sidebar-active-tab" colorScheme="black" />
 }
 
 
 export default TopLoadingBar;
+export { startLoading };

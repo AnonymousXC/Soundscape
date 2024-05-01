@@ -10,6 +10,7 @@ import {
 import { Img } from '@chakra-ui/react'
 import { useRouter, usePathname } from 'next/navigation'
 import { useState } from 'react'
+import { startLoading } from '../global/TopLoadingBar'
 
 function Sidebar() {
 
@@ -18,6 +19,7 @@ function Sidebar() {
     const [ isVisible, setVisibility ] = useState<boolean>(true)
 
     const handleRouteChange = (path : string) => {
+        startLoading()
         const url = new URL(window.location.href)
         router.push(path + '?' + url.searchParams.toString())
     }

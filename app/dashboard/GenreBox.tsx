@@ -1,3 +1,4 @@
+import { startLoading } from "@/components/global/TopLoadingBar";
 import { 
     Button,
     Flex, Img, Text, Tooltip,
@@ -21,6 +22,7 @@ function GenreBox({ props }: any) {
                     <Text fontSize={'0.75rem'}>{props.songCount} tracks</Text>
                 </Flex>
                 <Button variant={'unstyled'} onClick={() => {
+                    startLoading()
                     router.replace('/playlist/' + props.id + "?" + params.toString())
                 }}>
                     <Img src="./icons/Playlist Play.svg" width={'35px'} height={'auto'} /> 
