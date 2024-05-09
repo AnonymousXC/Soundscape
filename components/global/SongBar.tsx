@@ -62,7 +62,7 @@ function Song(props : Props) {
                 }}>
                     <Image alt='Song picture' src={data?.image[2].link || ''} loader={() => data?.image[2].link + "?w=3.4rem&h=auto" || ''} height={54} width={54} minWidth={'3.4rem'} h={'auto'} rounded={'full'}  />
                 </Flex>
-                <Text background={data?.id == id ? 'linear-gradient(to right, #B5179E , #7209B7)'  : '#B8B8B8'} textColor={'transparent'} backgroundClip={'text'}>{data?.name + ' - ' + (typeof data?.primaryArtists == 'string' ? data?.primaryArtists : data?.primaryArtists[0].name)}</Text>
+                <Text noOfLines={2} background={data?.id == id ? 'linear-gradient(to right, #B5179E , #7209B7)'  : '#B8B8B8'} textColor={'transparent'} backgroundClip={'text'}>{data?.name + ' - ' + (typeof data?.primaryArtists == 'string' ? data?.primaryArtists : data?.primaryArtists[0].name)}</Text>
             </Flex>
             <Text display={['none', 'none', 'block']} background={data?.id == id ? 'linear-gradient(to right, #B5179E , #7209B7)'  : '#B8B8B8'} textColor={'transparent'} backgroundClip={'text'}>{calculateTime(parseInt(data?.duration || '0'))}</Text>
             <Box></Box>

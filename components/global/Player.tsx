@@ -213,7 +213,7 @@ function Player() {
                 }}>
                     <Love isActive={isFavourite} />
                 </Button>
-                <Button variant={'unstyled'} size={'sm'}>
+                <Button variant={'unstyled'} size={'sm'} onClick={() => { shareSong(data) }}>
                     <Share />
                 </Button>
             </Flex>
@@ -270,6 +270,15 @@ function calculateTime(secs : number) {
     const seconds = Math.floor(secs % 60);
     const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
     return `${minutes}:${returnedSeconds}`;
+}
+
+function shareSong(data : SongResponse | undefined) {
+    const url = location.toString()
+    navigator.share({
+        url: url,
+        text: 'Listen to song.',
+        title: data?.name,
+    })
 }
 
 export default Player;

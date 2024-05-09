@@ -3,6 +3,10 @@ html {
     --var-main-dark-gradient: linear-gradient(to right, #B5179E, #7209B7);
     font-size: 16px;
 }
+/* 
+body > *:not(img) {
+    filter: invert(100%); 
+} */
 
 .gradient-text {
     background: linear-gradient(to right, #B5179E, #7209B7) !important;

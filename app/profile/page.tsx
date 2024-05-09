@@ -6,6 +6,7 @@ import {
 import SignUpPage from './SignUp';
 import * as UserProfile from './Profile';
 import RecentlyPlayed from './RecentlyPlayed';
+import Playlist from './Playlist';
 
 
 async function Profile() {
@@ -20,6 +21,7 @@ async function Profile() {
 
                     <Flex flexDirection={'column'} gap={6}>
                         <UserProfile.default />
+                        <Playlist />
                         <RecentlyPlayed />
                     </Flex>
             }
