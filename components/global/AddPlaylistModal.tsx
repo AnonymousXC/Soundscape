@@ -1,3 +1,5 @@
+import addPlaylist from "@/database/addPlaylist";
+import getSession from "@/database/session";
 import {
     Button,
     Flex,
@@ -11,10 +13,9 @@ import {
     ModalHeader,
     ModalOverlay,
     Select,
-    Skeleton,
-    Text,
-    useDisclosure
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 type Props = {
     isOpen: any,
@@ -24,6 +25,19 @@ type Props = {
 
 function AddPlaylistModal({ isOpen, onOpen, onClose }: Props) {
 
+    const [ playlistName, setPlaylistName ] = useState("")
+    const [ folder, setFolder ] = useState("")
+    const [ access, setAccess ] = useState<"public" | "private">("public")
+    const [ username, setUsername ] = useState("")
+    const [ loading, setLoading ] = useState(false)
+    
+    useEffect(() => {
+        (async () => {
+            const username = (await getSession()).data.user?.user_metadata.username
+            setUsername(username)
+        })()
+    }, [])
+
     return (
         <Modal size={['sm', 'sm', 'xl']} isOpen={isOpen} onClose={onClose} isCentered={true} motionPreset="slideInBottom">
             <ModalOverlay bg='none' backdropFilter='auto' backdropInvert='80%' backdropBlur='2px' />
@@ -32,22 +46,28 @@ function AddPlaylistModal({ isOpen, onOpen, onClose }: Props) {
                 <ModalCloseButton />
                 <ModalBody>
                     <Flex gap={4} flexDirection={['column', 'column', 'row']}>
-                        <Skeleton maxW={'210px'} h={'210px'}>
-                            <Img w={'210px'} height={'210px'} />
-                        </Skeleton>
+                            <Img w={'210px'} height={'210px'} src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3" backgroundSize={'cover'} rounded={8} />
                         <Flex flex={'1'} flexDir={'column'} gap={4}>
-                            <Input size={'md'} placeholder="Enter playlist name" />
-                            <Input size={'md'} placeholder="Enter author name" />
-                            <Input size={'md'} placeholder="Add to folder" />
-                            <Select placeholder="Select Access">
-                                <option>Public</option>
-                                <option>Private</option>
+                            <Input size={'md'} placeholder="Enter playlist name" onChange={(e) => setPlaylistName(e.currentTarget.value)} />
+                            <Input size={'md'} placeholder="Enter author name" value={username} readOnly />
+                            <Input size={'md'} placeholder="Add to folder" onChange={(e) => setFolder(e.currentTarget.value)} />
+                            <Select placeholder="Select Access" value={access} onChange={(e) => setAccess(e.currentTarget.value == "public" ? "public" : 'private')}>
+                                <option value={'public'}>Public</option>
+                                <option value={'private'}>Private</option>
                             </Select>
                         </Flex>
                     </Flex>
                 </ModalBody>
                 <ModalFooter gap={5}>
-                    <Button onClick={onClose} className="sidebar-active-tab" >
+                    <Button onClick={async () => {
+                        setLoading(true)
+                        const status = await addPlaylist({name: playlistName, folder,access, author: username })
+                        if(status.statusText === 'Created')
+                            toast.success(`${playlistName} created successfully`)
+                        else
+                            toast.error(`Error creating playlist ${playlistName}`)
+                        setLoading(false)
+                    }} className="sidebar-active-tab" isLoading={loading} >
                         Create Playlist
                     </Button>
                     <Button onClick={onClose}>

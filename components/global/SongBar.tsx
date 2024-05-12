@@ -17,6 +17,7 @@ interface Props {
 function Song(props : Props) {
 
     let data = props.data
+    data!.name = data!.name.replaceAll('&amp;', "") || ''
     let router = useRouter()
     let paused : number | null = parseInt(useSearchParams().get('paused') || '0')
     let id = useSearchParams().get('id')

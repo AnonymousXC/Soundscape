@@ -1,4 +1,5 @@
 'use client'
+import { CloseIcon } from '@chakra-ui/icons';
 import {
     Button,
     Flex, 
@@ -38,7 +39,7 @@ function SearchBar({ setQueryParent, setResultsVisibilityParent, isResultsOpen, 
                         isResultsOpen == false ? <Img src='../icons/Search.svg' width={'1.25rem'} height={'auto'} /> : 
                         <Button variant={'unstyled'} onClick={() => {
                             setResultsVisibilityParent(false)
-                        }}>x</Button>
+                        }}> <CloseIcon boxSize={'12px'} color={'#B8B8B8'} /> </Button>
                     }
                 </InputLeftElement>
                 <Input placeholder='Search Music, Artist, Genre' width={'100%'} height={'2.8rem'}rounded={'40px'} boxShadow={'none !important'} backgroundColor={'rgba(65,65,65,0.65)'} border={'none'} color={'primaryText'} _placeholder={{ color: 'primaryText' }} pl={'3rem'} 

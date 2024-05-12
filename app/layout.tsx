@@ -10,6 +10,8 @@ import ActivityBarFallback from '@/components/fallbacks/SidebarFallback'
 import { Suspense } from 'react'
 import TopLoadingBar from '@/components/global/TopLoadingBar'
 import BottomBar from '@/components/global/MobileBottom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/ReactToastify.css'
  
 export const metadata: Metadata = {
   title: 'Soundscape',
@@ -41,6 +43,7 @@ export default function DesktopLLayout({ children, }: { children: React.ReactNod
             <Player />
           </Suspense>
           <BottomBar />
+          <ToastContainer newestOnTop={true} />
         </CKProviders>
       </body>
     </html>
