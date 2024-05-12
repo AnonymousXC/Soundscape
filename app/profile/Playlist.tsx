@@ -3,6 +3,7 @@ import { Flex } from "@chakra-ui/react";
 import AddPlaylistComp from "./AddPlaylistComp";
 import { useEffect, useState } from "react";
 import getPlaylists from "@/database/getUserPlaylists";
+import PlaylistBox from "./PlaylistBox";
 
 
 function Playlist() {
@@ -22,9 +23,16 @@ function Playlist() {
             {
                 playlistData &&
                 playlistData.map((el : any, idx : number) => {
-                    return <p>
-                        {el.playlist_id}
-                    </p>
+                    console.log(el)
+                    return <PlaylistBox 
+                            access={el.access} 
+                            author={el.author} 
+                            folder={el.details.folder} 
+                            imageURL={el.details.imageURL}
+                            name={el.details.name}
+                            playlistId={el.playlist_id}
+                            songCount={el.songs.length}
+                            key={idx} />
                 })
             }
             <AddPlaylistComp />

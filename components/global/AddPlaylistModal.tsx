@@ -29,6 +29,7 @@ function AddPlaylistModal({ isOpen, onOpen, onClose }: Props) {
     const [ folder, setFolder ] = useState("")
     const [ access, setAccess ] = useState<"public" | "private">("public")
     const [ username, setUsername ] = useState("")
+    const [ imageURL, setImageURL ] = useState("https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3")
     const [ loading, setLoading ] = useState(false)
     
     useEffect(() => {
@@ -46,7 +47,7 @@ function AddPlaylistModal({ isOpen, onOpen, onClose }: Props) {
                 <ModalCloseButton />
                 <ModalBody>
                     <Flex gap={4} flexDirection={['column', 'column', 'row']}>
-                            <Img w={'210px'} height={'210px'} src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3" backgroundSize={'cover'} rounded={8} />
+                            <Img w={'210px'} height={'210px'} src={imageURL} backgroundSize={'cover'} rounded={8} />
                         <Flex flex={'1'} flexDir={'column'} gap={4}>
                             <Input size={'md'} placeholder="Enter playlist name" onChange={(e) => setPlaylistName(e.currentTarget.value)} />
                             <Input size={'md'} placeholder="Enter author name" value={username} readOnly />
@@ -61,7 +62,7 @@ function AddPlaylistModal({ isOpen, onOpen, onClose }: Props) {
                 <ModalFooter gap={5}>
                     <Button onClick={async () => {
                         setLoading(true)
-                        const status = await addPlaylist({name: playlistName, folder,access, author: username })
+                        const status = await addPlaylist({name: playlistName, folder,access, author: username, imageURL })
                         if(status.statusText === 'Created')
                             toast.success(`${playlistName} created successfully`)
                         else

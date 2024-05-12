@@ -1,32 +1,23 @@
 'use server'
+import PlaylistDetails from "@/@types/PlaylistDetail.type";
 import { createClient } from "./supabase";
 
-interface Props {
-    name: string,
-    author: string,
-    folder: string,
-    access: string
-}
 
-async function addPlaylist( { name, author, folder, access } : Props ) {
+
+async function addPlaylist( { name, author, folder, access, imageURL } : PlaylistDetails ) {
     const supabase = createClient()
-    const userID = (await supabase.auth.getUser()).data.user?.id
     const status = await supabase.from('playlists').insert({
         details: {
             name,
             author,
             folder,
+            imageURL,
         },
         access: access,
-        songs: {}
+        songs: []
     })
     return status;
 }
 
-
-function randstr()
-{
-    return Math.random().toString(36);
-}
 
 export default addPlaylist;
