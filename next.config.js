@@ -7,6 +7,11 @@ const nextConfig = {
                 'https://opulent-guide-jpjg9r779442j5p-3000.app.github.dev',
             ],
         }
+    },
+    logging: {
+        fetches: {
+            fullUrl: true,
+        }
     }
 }
 

@@ -23,7 +23,7 @@ function GenreBox({ props }: any) {
                 </Flex>
                 <Button variant={'unstyled'} onClick={() => {
                     startLoading()
-                    router.replace('/playlist/' + props.id + "?" + params.toString())
+                    router.replace('/album/' + props.id + "?" + params.toString())
                 }}>
                     <Img src="./icons/Playlist Play.svg" width={'35px'} height={'auto'} /> 
                 </Button>

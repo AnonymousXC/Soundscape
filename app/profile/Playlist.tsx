@@ -1,29 +1,18 @@
-'use client'
 import { Flex } from "@chakra-ui/react";
 import AddPlaylistComp from "./AddPlaylistComp";
-import { useEffect, useState } from "react";
 import getPlaylists from "@/database/getUserPlaylists";
 import PlaylistBox from "./PlaylistBox";
 
 
-function Playlist() {
+async function Playlist() {
 
-    const [ playlistData, setPlaylistData ] = useState<any>([])
-
-    useEffect(() => {
-        (async () => {
-            let playlists = await getPlaylists()
-            setPlaylistData(playlists.data)
-            console.log(playlists)
-        })()
-    }, [])
+    let playlists = await getPlaylists()
 
     return (
         <Flex gap={4} overflowX={'auto'} className="hide-scroll-bar" py={3}>
             {
-                playlistData &&
-                playlistData.map((el : any, idx : number) => {
-                    console.log(el)
+                playlists.data &&
+                playlists.data.map((el : any, idx : number) => {
                     return <PlaylistBox 
                             access={el.access} 
                             author={el.author} 
