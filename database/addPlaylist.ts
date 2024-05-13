@@ -1,6 +1,7 @@
 'use server'
 import PlaylistDetails from "@/@types/PlaylistDetail.type";
 import { createClient } from "./supabase";
+import { revalidatePath } from "next/cache";
 
 
 
@@ -16,6 +17,8 @@ async function addPlaylist( { name, author, folder, access, imageURL } : Playlis
         access: access,
         songs: []
     })
+    if(status.statusText === 'Created')
+        revalidatePath('/profile')
     return status;
 }
 

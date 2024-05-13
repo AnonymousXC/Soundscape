@@ -63,7 +63,7 @@ function AddPlaylistModal({ isOpen, onOpen, onClose }: Props) {
                     <Button onClick={async () => {
                         setLoading(true)
                         const status = await addPlaylist({name: playlistName, folder,access, author: username, imageURL })
-                        if(status.statusText === 'Created')
+                        if(status!.statusText === 'Created')
                             toast.success(`${playlistName} created successfully`)
                         else
                             toast.error(`Error creating playlist ${playlistName}`)
