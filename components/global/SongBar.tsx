@@ -8,7 +8,7 @@ import {
     Box
 } from '@chakra-ui/react'
 import { useRouter, useSearchParams } from 'next/navigation';
-import { MouseEventHandler, useEffect } from 'react';
+import { useEffect } from 'react';
 import { startLoading } from './TopLoadingBar';
 
 interface Props {
@@ -56,8 +56,10 @@ function Song(props: Props) {
 
     
     const handleRouteChange = (path : string) => {
-        startLoading()
         const url = new URL(window.location.href)
+        if(url.toString().includes(id || '') && url.toString().includes('song'))
+            return
+        startLoading()
         router.push(path + '?' + url.searchParams.toString())
     }
 

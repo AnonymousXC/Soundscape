@@ -7,14 +7,13 @@ import {
 import { AddToPlaylist, FavouriteButton, PlayButton, ShareButton } from "../Buttons";
 
 
-async function Song({ params, searchParams }: any) {
+async function SongPage({ params, searchParams }: any) {
 
     const id = params.id
     const data = (await getSongDetails(id)).data[0]
-    console.log(searchParams)
 
     return (
-        <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={['calc(100vh - 3.875rem - 8.2rem - 3rem)', 'calc(100vh - 6.25rem)', 'calc(100vh - 6.25rem)']} px={'1.25rem'} pt={'1rem'} flexDir={'column'} overflowY={'auto'} overflowX={'hidden'} pb={4}>
+        <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={['calc(100vh - 3.875rem - 8.2rem - 3rem)', 'calc(100vh - 6.25rem)', 'calc(100vh - 6.25rem)']} px={'1.25rem'} pt={'1rem'} flexDir={'column'} overflowY={'auto'} overflowX={'hidden'} pb={4} gap={8}>
             <Flex gap={5} alignItems={'center'}>
                 <Img src={data.image[2].link} alt="cover image" width={300} height={300} rounded={8} />
                 <Flex flexDirection={'column'} gap={4}>
@@ -39,4 +38,4 @@ async function Song({ params, searchParams }: any) {
 
 
 
-export default Song;
+export default SongPage;
