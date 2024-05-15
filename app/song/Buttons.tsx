@@ -3,6 +3,7 @@ import Love from "@/assets/icons/Love"
 import Share from "@/assets/icons/Share"
 import addToPlaylist from "@/database/addToPlaylist"
 import getPlaylists from "@/database/getUserPlaylists"
+import { AddIcon } from "@chakra-ui/icons"
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
@@ -36,7 +37,7 @@ function PlayButton({ searchParams, id }: any) {
 
     return (
         <Button variant={'unstyled'} p={2} onClick={handlePlay}>
-            <Image loader={() => !playing ? '/icons/player/Play.svg' : '/icons/player/Pause.svg?'} src={!playing ? '/icons/player/Play.svg' : '/icons/player/Pause.svg '} width={17} height={17} alt='play-pause-btn' />
+            <Image loader={() => !playing ? '/icons/player/Play Light.svg' : '/icons/player/Pause Light.svg?'} src={!playing ? '/icons/player/Play Light.svg' : '/icons/player/Pause Light.svg '} width={17} height={17} alt='play-pause-btn' />
         </Button>
     )
 }
@@ -72,16 +73,19 @@ function AddToPlaylist({ id } : { id: string }) {
 
     return (
         <Menu>
-            <MenuButton as={Button}>
-                Add to Playlist
+            <MenuButton as={Button} variant={'unstyled'}>
+                <AddIcon boxSize={'18px'} color={'#7A7A7A'} />
             </MenuButton>
             <MenuList>
+                <MenuItem>Select a playlist</MenuItem>
                 {
                     playlist?.map((el: any, idx: number) => {
                         return <MenuItem value={el.playlist_id} 
                                     onClick={async () => { 
                                         const status = await addToPlaylist(el.playlist_id, id) 
-                                        if(status.status === 204)
+                                        if(status.statusText === 'Already exists')
+                                            toast.warn(`Song already exists in ${el.details.name}`)
+                                        else if(status.status === 204)
                                             toast.success(`Added song to playlist ${el.details.name}`)
                                         else
                                             toast.error("Error occured in the server")

@@ -19,8 +19,9 @@ function Sidebar() {
     const [ isVisible, setVisibility ] = useState<boolean>(true)
 
     const handleRouteChange = (path : string) => {
-        startLoading()
         const url = new URL(window.location.href)
+        if(url.toString().includes(path)) return
+        startLoading()
         router.push(path + '?' + url.searchParams.toString())
     }
 

@@ -19,6 +19,7 @@ function Song(props: Props) {
 
     let data = props.data
     data!.name = data!.name.replaceAll('&amp;', "") || ''
+    let songBarID = data?.id
     let router = useRouter()
     let paused: number | null = parseInt(useSearchParams().get('paused') || '0')
     let id = useSearchParams().get('id')
@@ -26,6 +27,7 @@ function Song(props: Props) {
 
     useEffect(() => {
 
+        
         return () => {
             data = null
             paused = null
@@ -47,10 +49,10 @@ function Song(props: Props) {
             return
         }
 
-        if (url.searchParams.get('id'))
-            url.searchParams.set('id', data?.id || '')
+        if (url.searchParams.has('id'))
+            url.searchParams.set('id', songBarID || '')
         else
-            url.searchParams.append('id', data?.id || '')
+            url.searchParams.append('id', songBarID || '')
         router.replace(url.toString())
     }
 

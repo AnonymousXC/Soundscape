@@ -12,11 +12,12 @@ async function Playlist({ params, searchParams } : { params: any, searchParams: 
 
     return (
         <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={['calc(100vh - 3.875rem - 8.2rem - 3rem)','calc(100vh - 6.25rem)','calc(100vh - 6.25rem)']} px={'1.25rem'} pt={'1rem'} flexDir={'column'} overflowY={'auto'} overflowX={'hidden'} pb={4} gap={2}>
-            <Text fontSize={'1.5rem'} fontWeight={'500'} my={4}>
+            <Text color={'primaryText'} fontWeight={'500'} fontSize={"1.2rem"} my={4}>
                 Playlist : {playlistData![0].details.name}
             </Text>
             {
                 songData.map((el : any, idx : number) => {
+                    console.log(el)
                     return <Song data={el} key={idx} />
                 })
             }
