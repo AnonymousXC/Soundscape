@@ -20,6 +20,8 @@ import Love from "@/assets/icons/Love";
 import Loop from "@/assets/icons/Loop";
 import Shuffle from "@/assets/icons/Shuffle";
 import Share from "@/assets/icons/Share";
+import addToFavourites from "@/database/addToFavourites";
+import { toast } from "react-toastify";
 
 
 function Player() {
@@ -208,8 +210,15 @@ function Player() {
                 }}>
                     <Loop isActive={loop} />
                 </Button>
-                <Button variant={'unstyled'} size={'sm'} onClick={() => {
+                <Button variant={'unstyled'} size={'sm'} onClick={async () => {
                     addToFavouriteLocal(id, setIsFavourite)
+                    const status = await addToFavourites(id)
+                    if(status!.status === 200)
+                        toast.success("Successfull added song to favourites")
+                    else if(status.status === 300)
+                        toast.warn("Successfully removed from favourites")
+                    else
+                        toast.error("Error occured while performing action")
                 }}>
                     <Love isActive={isFavourite} />
                 </Button>
