@@ -58,18 +58,7 @@ function ShareButton() {
     )
 }
 
-function AddToPlaylist({ id } : { id: string }) {
-
-    const [playlist, setPlaylist] = useState<Array<any>>()
-
-    useEffect(() => {
-        (async () => {
-            const data = await getPlaylists()
-            // @ts-expect-error
-            setPlaylist(data.data)
-            console.log(data)
-        })()
-    }, [])
+function AddToPlaylist({ id, playlist } : { id: string, playlist : any }) {
 
     return (
         <Menu>
@@ -89,7 +78,7 @@ function AddToPlaylist({ id } : { id: string }) {
                                             toast.success(`Added song to playlist ${el.details.name}`)
                                         else
                                             toast.error("Error occured in the server")
-                                    }}> {el.details.name} </MenuItem>
+                                    }} key={idx}> {el.details.name} </MenuItem>
                     })
                 }
             </MenuList>

@@ -240,7 +240,7 @@ function addToFavouriteLocal(id : string, setFavouriteButton: Dispatch<SetStateA
         }
     }
     else
-        localStorage.setItem('favourite', `[${id}]`)
+        localStorage.setItem('favourite', `["${id}"]`)
 }
 
 function updateNavigator(data : SongResponse) {
