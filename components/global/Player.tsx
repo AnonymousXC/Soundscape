@@ -22,6 +22,7 @@ import Shuffle from "@/assets/icons/Shuffle";
 import Share from "@/assets/icons/Share";
 import addToFavourites from "@/database/addToFavourites";
 import { toast } from "react-toastify";
+import getFavouriteSongs from "@/database/getFavouriteSongs";
 
 
 function Player() {
@@ -29,7 +30,7 @@ function Player() {
     const params = useSearchParams()
     const id = params.get('id') || ''
     const router = useRouter()
-    const [ data, setData ] = useState<SongResponse>()
+    const [ data, setData ] = useState<SongResponse | null | undefined>()
     const [ loaded, setLoaded ] = useState<boolean>(false)
     const [ isPlaying, setPlaying ] = useState<boolean>(false)
     const [ loop, setLoop ] = useState<boolean>(false)
@@ -64,14 +65,14 @@ function Player() {
             localStorage.setItem("loop", "false")
 
         // favourite handler
-        if(localStorage.getItem('favourite'))
-        {
-            const favArray : Array<string> = JSON.parse(localStorage.getItem('favourite') || '[]')
-            if(favArray.indexOf(id) != -1)
+        getFavouriteSongs()
+        .then((data : any) => {
+            const songs = data[0].songs
+            if(songs.indexOf(id) !== -1)
                 setIsFavourite(true)
             else
                 setIsFavourite(false)
-        }
+        })
 
         // recent played handler
         if(id)
@@ -81,6 +82,12 @@ function Player() {
             if(recentData.length > 11)
                 recentData.pop()
             localStorage.setItem('recents', JSON.stringify(recentData))
+        }
+
+        console.log(data)
+
+        return () => {
+            setData(null)
         }
 
     }, [id])
@@ -211,18 +218,24 @@ function Player() {
                     <Loop isActive={loop} />
                 </Button>
                 <Button variant={'unstyled'} size={'sm'} onClick={async () => {
-                    addToFavouriteLocal(id, setIsFavourite)
+                    // addToFavouriteLocal(id, setIsFavourite)
                     const status = await addToFavourites(id)
                     if(status!.status === 200)
+                    {
+                        setIsFavourite(true)
                         toast.success("Successfull added song to favourites")
+                    }
                     else if(status.status === 300)
+                    {
+                        setIsFavourite(false)
                         toast.warn("Successfully removed from favourites")
+                    }
                     else
                         toast.error("Error occured while performing action")
                 }}>
                     <Love isActive={isFavourite} />
                 </Button>
-                <Button variant={'unstyled'} size={'sm'} onClick={() => { shareSong(data) }}>
+                <Button variant={'unstyled'} size={'sm'} onClick={() => { shareSong(data || undefined) }}>
                     <Share />
                 </Button>
             </Flex>
