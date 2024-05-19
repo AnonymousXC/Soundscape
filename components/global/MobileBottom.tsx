@@ -1,5 +1,5 @@
 'use client'
-import { Button, Flex, Img } from "@chakra-ui/react";
+import { Avatar, Button, Flex, Img } from "@chakra-ui/react";
 import { usePathname, useRouter } from "next/navigation";
 
 
@@ -16,8 +16,12 @@ function BottomBar() {
     }
 
     return (
-        <Flex display={['flex', 'flex', 'none']} position={'fixed'} zIndex={1000} bottom={0} left={0} height={'3.875rem'} backgroundColor={'Background'} w={'100%'} boxShadow={'1px 3px 25px rgb(0 0 0 / 0.8)'} px={'2rem'} alignItems={'center'} justifyContent={'space-around'}>
+        <Flex display={['flex', 'flex', 'none']} position={'fixed'} zIndex={10000} bottom={0} left={0} height={'3.875rem'} backgroundColor={'Background'} w={'100%'} px={'2rem'} alignItems={'center'} justifyContent={'space-around'}>
             
+            <Button variant={'unstyled'} justifyContent={'center'} alignItems={'center'} display={'flex'} className={pathname.indexOf('/profile') != -1  ? 'sidebar-active-tab' : ''}
+            onClick={() => { handleRouteChange('/profile')}} >
+                <Avatar name="Hello World" size={'xs'} />
+            </Button>
             <Button variant={'unstyled'} justifyContent={'center'} alignItems={'center'} display={'flex'} className={pathname.indexOf('/dashboard') != -1  ? 'sidebar-active-tab' : ''}
             onClick={() => { handleRouteChange('/dashboard')}} >
                 <Img src="/icons/Dashboard.svg" />

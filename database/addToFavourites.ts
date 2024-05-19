@@ -1,4 +1,5 @@
 'use server'
+import { revalidatePath } from "next/cache";
 import { createClient } from "./supabase";
 
 
@@ -24,6 +25,7 @@ async function addToFavourites(songID : string) {
             status.status = 300
             return status;
         }
+    revalidatePath('/favorite')
     return status;
 }
 

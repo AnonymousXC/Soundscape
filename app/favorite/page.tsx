@@ -1,24 +1,26 @@
 'use client'
 import { SongResponse } from '@/interfaces/song.interface';
 import {
-    Flex, 
+    Flex,
     Text,
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react';
 import getSongDetailsMulti from '../server/getSongDetailsMulti.server';
 import Song from '@/components/global/SongBar';
 import Love from '@/assets/icons/Love';
+import getFavouriteSongs from '@/database/getFavouriteSongs';
+
 
 function Favorite() {
 
-    const [ songsData, setSongsData ] = useState<Array<SongResponse>>([])
+    const [songsData, setSongsData] = useState<Array<SongResponse>>([])
 
     useEffect(() => {
-        const getFavSongs = JSON.parse(localStorage.getItem('favourite') || '[]')
-        getSongDetailsMulti(getFavSongs)
-        .then((data : Array<SongResponse>) => {
-            setSongsData(data)
-        })
+        (async () => {
+            const getFavSongs = (await getFavouriteSongs())![0].songs
+            const songData = await getSongDetailsMulti(getFavSongs)
+            setSongsData(songData)
+        })()
     }, [])
 
     return (
