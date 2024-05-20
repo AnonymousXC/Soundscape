@@ -19,7 +19,7 @@ function PlaylistBox({ name, imageURL, author, songCount, playlistId }: Playlist
     const params = useSearchParams()
 
     return (
-        <Flex minW={240} minH={270} flexDir={'column'} position={'relative'} float={'left'} _hover={{ transform: 'scale(1.02)'}} transition={'transform 200ms'}>
+        <Flex minW={[240]} minH={[270]} flexDir={'column'} position={'relative'} float={'left'} _hover={{ transform: 'scale(1.02)'}} transition={'transform 200ms'}>
             <Img objectFit={'cover'} rounded={20} position={'absolute'} width={250} height={270} src={imageURL} />
             <Flex roundedBottom={20} zIndex={5} backgroundColor={'rgba(69,69,69,0.7)'} bottom={0} position={'absolute'} w={'100%'} py={'0.8rem'} px={'1rem'} justifyContent={'space-between'} maxH={'85px'}>
                 <Flex flexDirection={'column'}>

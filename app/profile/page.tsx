@@ -15,7 +15,7 @@ async function Profile() {
     const { data, error } = await supabase.auth.getUser()
 
     return (
-        <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={'calc(100vh - 6.25rem)'} px={'1.25rem'} pt={'3rem'} flexDir={'column'} overflowY={'auto'} pb={2}>
+        <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={['calc(100vh - 3.875rem - 8.2rem - 3.2rem)' ,'calc(100vh - 6.25rem)']} px={'1.25rem'} pt={['1rem', '3rem']} flexDir={'column'} overflowY={'auto'} pb={2}>
             {
                 data.user === null ? <SignUpPage /> :
 

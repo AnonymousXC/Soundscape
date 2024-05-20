@@ -83,8 +83,6 @@ function Player() {
             localStorage.setItem('recents', JSON.stringify(recentData))
         }
 
-        console.log(data)
-
         return () => {
             setData(null)
         }
@@ -216,13 +214,12 @@ function Player() {
                 </Button>
                 <Button variant={'unstyled'} size={'sm'} onClick={async () => {
                     // addToFavouriteLocal(id, setIsFavourite)
+                    setIsFavourite(!isFavourite)
                     const status = await addToFavourites(id)
                     if (status!.status === 200) {
-                        setIsFavourite(true)
                         toast.success("Successfull added song to favourites")
                     }
                     else if (status.status === 300) {
-                        setIsFavourite(false)
                         toast.warn("Successfully removed from favourites")
                     }
                     else
