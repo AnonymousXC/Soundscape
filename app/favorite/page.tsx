@@ -1,17 +1,33 @@
 import { SongResponse } from '@/interfaces/song.interface';
 import {
     Flex,
+    Heading,
     Text,
 } from '@chakra-ui/react'
 import getSongDetailsMulti from '../server/getSongDetailsMulti.server';
 import Song from '@/components/global/SongBar';
 import Love from '@/assets/icons/Love';
 import getFavouriteSongs from '@/database/getFavouriteSongs';
+import Link from 'next/link';
 
 
 async function Favorite() {
 
-    const getFavSongs = (await getFavouriteSongs())![0].songs
+    let getFavSongs = await getFavouriteSongs()
+    if(!getFavSongs)
+        return (
+            <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={'calc(100vh - 6.25rem)'} px={'1.25rem'} pt={'1rem'} flexDir={'column'} justifyContent={'center'} alignItems={'center'}>
+                <Heading display={'flex'} gap={3}>
+                    <Link href={'/login'}>
+                        <Heading className='gradient-text'>
+                            Sign in
+                        </Heading>
+                    </Link> to see your songs
+                </Heading>
+            </Flex>
+        )
+    else
+        getFavSongs = getFavSongs![0].songs
     const songsData = await getSongDetailsMulti(getFavSongs)
 
     return (

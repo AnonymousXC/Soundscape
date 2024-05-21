@@ -65,7 +65,7 @@ function Player() {
         // favourite handler
         getFavouriteSongs()
             .then((data: any) => {
-                if (data) { 
+                if (data) {
                     const songs = data[0].songs
                     if (songs.indexOf(id) !== -1)
                         setIsFavourite(true)
@@ -89,8 +89,40 @@ function Player() {
 
     }, [id])
 
+
+    useEffect(() => {
+        const audioCtx = new AudioContext()
+        if (!window.audioContext) {
+
+            const audioContext = audioCtx.createMediaElementSource((audio.current as HTMLMediaElement))
+            const gainNode = audioCtx.createGain()
+            const bassFilter = audioCtx.createBiquadFilter()
+            const trebleFilter = audioCtx.createBiquadFilter();
+
+            // bassFilter.type = "lowshelf";
+            // bassFilter.frequency.value = 200;
+            // bassFilter.gain.value = 0.001;
+
+            // trebleFilter.type = "highshelf";
+            // trebleFilter.frequency.value = 2000;
+            // trebleFilter.gain.value = 0.001;
+
+            gainNode.gain.value = 1
+
+            audioContext.connect(gainNode)
+            // audioContext.connect(bassFilter)
+            // audioContext.connect(trebleFilter)
+
+            gainNode.connect(audioCtx.destination)
+            // bassFilter.connect(audioCtx.destination)
+            // trebleFilter.connect(audioCtx.destination)
+
+            window.audioContext = audioContext
+        }
+    }, [])
+
     return (
-        <Flex display={['flex', 'flex', 'flex']} width={'100%'} height={['8.2rem', '8.2rem', '6.25rem']} position={['fixed', 'fixed', 'absolute']} backgroundColor={'background'} bottom={["3.875rem", "3.875rem", "0"]} left={0} zIndex={10000} justifyContent={'space-evenly'} boxShadow={['' , '' , '1px 3px 25px rgb(0 0 0 / 0.8)']} flexDirection={['column-reverse', 'column-reverse', 'row']} pt={[1, 1, 0]} gap={[1, 1, 0]} px={[4, 4, 0]}>
+        <Flex display={['flex', 'flex', 'flex']} width={'100%'} height={['8.2rem', '8.2rem', '6.25rem']} position={['fixed', 'fixed', 'absolute']} backgroundColor={'background'} bottom={["3.875rem", "3.875rem", "0"]} left={0} zIndex={10000} justifyContent={'space-evenly'} boxShadow={['', '', '1px 3px 25px rgb(0 0 0 / 0.8)']} flexDirection={['column-reverse', 'column-reverse', 'row']} pt={[1, 1, 0]} gap={[1, 1, 0]} px={[4, 4, 0]}>
             <Flex display={['none', 'none', 'flex']} className="song-details" width={'100%'} maxWidth={'15rem'} justifyContent={'space-around'} alignItems={'center'}>
                 <Skeleton isLoaded={loaded} rounded={'full'}>
                     <Flex width={'4.4rem'} height={"4.4rem"} rounded={'full'} className="border-image-gradient" justifyContent={'center'} alignItems={'center'} animation={'rotating 4s linear infinite'} style={{
@@ -129,7 +161,7 @@ function Player() {
                     <Img src={'icons/player/Play Next.svg'} height={'1rem'} width={'auto'} />
                 </Button>
             </Flex>
-            <audio src={data?.downloadUrl[4].link} ref={audio}
+            <audio src={data?.downloadUrl[4].link} ref={audio} crossOrigin="anonymous"
                 onPlay={() => {
                     setPlaying(true)
                     const url = new URL(window.location.href)

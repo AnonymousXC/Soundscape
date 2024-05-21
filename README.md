@@ -1,7 +1,7 @@
 <div align="center">
     <div>
-        <img src="http://ForTheBadge.com/images/badges/built-with-love.svg" alt="ForTheBadge built-with-love"><br>
-        <img src="http://ForTheBadge.com/images/badges/built-by-developers.svg" alt="ForTheBadge built-by-developers">
+        <img src="https://ForTheBadge.com/images/badges/built-with-love.svg" alt="ForTheBadge built-with-love"><br>
+        <img src="https://ForTheBadge.com/images/badges/built-by-developers.svg" alt="ForTheBadge built-by-developers">
         <br> <br>
         <img alt="Lines of code" src="https://img.shields.io/tokei/lines/github/AnonymousXC/Soundscape">
         <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/AnonymousXC/Soundscape">
@@ -37,3 +37,9 @@
 # Soundscape
 
 It is a project build to listen songs. Feed up of spotify's ads, I made this.😉
+
+## Versions
+
+Version 1 : Version can be found [here](https://soundscape-anonymousxc.vercel.app/)
+
+Version 2 : Full redesign of the app can be found [here](https://soundscape-psi.vercel.app/)

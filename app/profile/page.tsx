@@ -3,10 +3,10 @@ import { createClient } from '@/database/supabase';
 import {
     Flex,
 } from '@chakra-ui/react'
-import SignUpPage from './SignUp';
 import * as UserProfile from './Profile';
 import RecentlyPlayed from './RecentlyPlayed';
 import Playlist from './Playlist';
+import { redirect } from 'next/navigation';
 
 
 async function Profile() {
@@ -14,18 +14,16 @@ async function Profile() {
     const supabase = createClient()
     const { data, error } = await supabase.auth.getUser()
 
+    if(data.user === null)
+        redirect('/auth')
+
     return (
-        <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={['calc(100vh - 3.875rem - 8.2rem - 3.2rem)' ,'calc(100vh - 6.25rem)']} px={'1.25rem'} pt={['1rem', '3rem']} flexDir={'column'} overflowY={'auto'} pb={2}>
-            {
-                data.user === null ? <SignUpPage /> :
-
-                    <Flex flexDirection={'column'} gap={6}>
-                        <UserProfile.default />
-                        <Playlist />
-                        <RecentlyPlayed />
-                    </Flex>
-            }
-
+        <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={['calc(100vh - 3.875rem - 8.2rem - 3.2rem)', 'calc(100vh - 6.25rem)']} px={'1.25rem'} pt={['1rem', '3rem']} flexDir={'column'} overflowY={'auto'} pb={2}>
+            <Flex flexDirection={'column'} gap={6}>
+                <UserProfile.default />
+                <Playlist />
+                <RecentlyPlayed />
+            </Flex>
         </Flex>
     )
 }
