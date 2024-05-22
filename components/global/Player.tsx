@@ -15,7 +15,7 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import { Dispatch, SetStateAction, createRef, useEffect, useState } from "react";
 import getSongDetails from "@/app/server/getSongDetails.server";
-import { SongResponse } from "@/interfaces/song.interface";
+import { SongResponse } from "@/interfaces/song";
 import Love from "@/assets/icons/Love";
 import Loop from "@/assets/icons/Loop";
 import Shuffle from "@/assets/icons/Shuffle";

@@ -1,6 +1,6 @@
-import type { DownloadLink } from './image.interface'
-import type { AlbumRequest, AlbumResponse } from './album.interface'
-import type { SongRequest, SongResponse } from './song.interface'
+import type { DownloadLink } from './image'
+import type { AlbumRequest, AlbumResponse } from './album'
+import type { SongRequest, SongResponse } from './song'
 
 export interface ArtistSearchRequest {
   total: number

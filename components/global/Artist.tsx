@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import getArtistDetails from "@/app/server/getArtistDetails.server";
 import { useEffect, useState } from "react";
-import { ArtistResponse } from "@/interfaces/artist.interface";
+import { ArtistResponse } from "@/interfaces/artist";
 
 interface Props {
     id: string,

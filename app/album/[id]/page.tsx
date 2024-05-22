@@ -1,8 +1,8 @@
 'use client'
 import getAlbum from "@/app/server/getAlbum.server";
 import Song from "@/components/global/SongBar";
-import { AlbumResponse } from "@/interfaces/album.interface";
-import { SongResponse } from "@/interfaces/song.interface";
+import { AlbumResponse } from "@/interfaces/album";
+import { SongResponse } from "@/interfaces/song";
 import { Image } from "@chakra-ui/next-js";
 import { Flex, Text } from "@chakra-ui/react";
 import { useParams } from "next/navigation";

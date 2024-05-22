@@ -1,6 +1,6 @@
 'use client'
 import Song from "@/components/global/SongBar";
-import { SongResponse } from "@/interfaces/song.interface";
+import { SongResponse } from "@/interfaces/song";
 import {
     Flex,
     Text,

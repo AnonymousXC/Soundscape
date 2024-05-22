@@ -7,7 +7,7 @@ import { Image } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import getTrending from '../server/getTrending.server';
 import Song from '@/components/global/SongBar';
-import { SongResponse } from '@/interfaces/song.interface';
+import { SongResponse } from '@/interfaces/song';
 import { useRouter } from 'next/navigation';
 
 function TopMusic() {

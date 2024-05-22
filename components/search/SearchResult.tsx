@@ -3,7 +3,7 @@ import { Flex } from "@chakra-ui/react";
 import Song from "../global/SongBar";
 import { useEffect, useState } from "react";
 import search from "@/app/server/search.server";
-import { SongResponse } from "@/interfaces/song.interface";
+import { SongResponse } from "@/interfaces/song";
 
 interface Props {
     query: string

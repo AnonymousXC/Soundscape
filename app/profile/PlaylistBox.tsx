@@ -1,5 +1,5 @@
 'use client'
-import PlaylistDetails from "@/@types/PlaylistDetail.type";
+import PlaylistDetails from "@/@types/PlaylistDetail";
 import { startLoading } from "@/components/global/TopLoadingBar";
 import { 
     Button,

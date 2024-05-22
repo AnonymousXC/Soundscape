@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import getSongDetails from "@/app/server/getSongDetails.server";
-import { SongResponse } from "@/interfaces/song.interface";
+import { SongResponse } from "@/interfaces/song";
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface Props {

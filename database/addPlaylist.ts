@@ -1,5 +1,5 @@
 'use server'
-import PlaylistDetails from "@/@types/PlaylistDetail.type";
+import PlaylistDetails from "@/@types/PlaylistDetail";
 import { createClient } from "./supabase";
 import { revalidatePath } from "next/cache";
 

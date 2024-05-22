@@ -1,4 +1,4 @@
-import type { Endpoint } from './endpoint.interface'
+import type { Endpoint } from './endpoint'
 
 export interface Config {
   env: string

@@ -1,7 +1,7 @@
-import type { SongResponse } from './song.interface'
-import type { DownloadLink } from './image.interface'
-import type { Artist } from './artist.interface'
-import type { AlbumRequest, AlbumResponse } from './album.interface'
+import type { SongResponse } from './song'
+import type { DownloadLink } from './image'
+import type { Artist } from './artist'
+import type { AlbumRequest, AlbumResponse } from './album'
 
 export interface ModulesRequest {
   radio: {

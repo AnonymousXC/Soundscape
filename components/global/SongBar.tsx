@@ -1,5 +1,5 @@
 'use client'
-import { SongResponse } from '@/interfaces/song.interface';
+import { SongResponse } from '@/interfaces/song';
 import { Image } from '@chakra-ui/next-js';
 import {
     Button,

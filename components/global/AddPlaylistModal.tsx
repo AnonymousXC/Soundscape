@@ -47,7 +47,7 @@ function AddPlaylistModal({ isOpen, onOpen, onClose }: Props) {
                 <ModalCloseButton />
                 <ModalBody>
                     <Flex gap={4} flexDirection={['column', 'column', 'row']}>
-                            <Img w={'210px'} height={'210px'} src={imageURL} backgroundSize={'cover'} rounded={8} />
+                            <Img w={'210px'} height={'210px'} src={imageURL} backgroundSize={'cover'} rounded={8} display={['none', 'none', 'block']} />
                         <Flex flex={'1'} flexDir={'column'} gap={4}>
                             <Input size={'md'} placeholder="Enter playlist name" onChange={(e) => setPlaylistName(e.currentTarget.value)} />
                             <Input size={'md'} placeholder="Enter author name" value={username} readOnly />
