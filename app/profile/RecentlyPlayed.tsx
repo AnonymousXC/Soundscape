@@ -15,6 +15,7 @@ function RecentlyPlayed() {
 
     useEffect(() => {
         const data = JSON.parse(localStorage.getItem('recents') || '[]')
+        if(data.length > 0)
         getSongDetailsMulti(data)
         .then((data) => {
             if(!songsData)

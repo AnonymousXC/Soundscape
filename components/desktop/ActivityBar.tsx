@@ -21,13 +21,15 @@ function ActivityBar() {
     const [user, setUser] = useState<UserResponse | null>(null)
 
     useEffect(() => {
-        getFavouriteSongs()
-            .then((data) => {
-                setRecents(data![0].songs || [])
-            })
         getSession()
             .then((data: UserResponse) => {
+                if(user?.data.user != null)
                 setUser(data)
+            })
+        getFavouriteSongs()
+            .then((data) => {
+                if(data)
+                    setRecents(data![0].songs || [])
             })
     }, [])
 
