@@ -27,7 +27,7 @@ async function SongPage({ params, searchParams }: any) {
                         <Text> Release Date : {data.releaseDate} </Text>
                         <Text> Play Count : {data.playCount} </Text>
                     </Flex>
-                    <Flex mt={5} alignItems={'center'} gap={5}>
+                    <Flex mt={5} alignItems={'center'} gap={5} justifyContent={'center'}>
                         <PlayButton searchParams={searchParams} id={id} />
                         <FavouriteButton />
                         <ShareButton />

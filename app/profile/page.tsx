@@ -7,15 +7,13 @@ import RecentlyPlayed from './RecentlyPlayed';
 import Playlist from './Playlist';
 import { redirect } from 'next/navigation';
 
-
 async function Profile() {
 
     const supabase = createClient()
     const { data, error } = await supabase.auth.getUser()
 
     if (data.user === null) {
-        const params = new URLSearchParams().toString()
-        redirect('/auth' + params)
+        redirect('/auth')
     }
 
     return (

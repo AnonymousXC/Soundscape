@@ -42,7 +42,7 @@ function Sidebar() {
                     <Flex flexDirection={'column'} alignItems={'center'} mt={'1.875rem'} gap={'1rem'}>
                         <Button variant={'sidebar'} fontSize={'1rem'} leftIcon={<Img src={'/icons/User.svg'} alt='logo' width={'20px'} height={'auto'}/>} onClick={() => {
                             handleRouteChange('/profile')
-                            }} className={pathname.indexOf('/profile') != -1 || pathname === '/' ? 'sidebar-active-tab' : ''}>
+                            }} className={pathname.indexOf('/profile') != -1 || pathname === '/' || pathname === '/auth' ? 'sidebar-active-tab' : ''}>
                             Profile
                         </Button>
                         <Button variant={'sidebar'} fontSize={'1rem'} leftIcon={<Img src={'/icons/Dashboard.svg'} alt='logo' width={'20px'}  height={'auto'}/>} onClick={() => {

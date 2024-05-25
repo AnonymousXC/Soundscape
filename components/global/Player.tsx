@@ -90,7 +90,7 @@ function Player() {
     }, [id])
 
 
-    useEffect(() => {
+    /** useEffect(() => {
         const audioCtx = new AudioContext()
         if (!window.audioContext) {
 
@@ -119,7 +119,7 @@ function Player() {
 
             window.audioContext = audioContext
         }
-    }, [])
+    }, []) */
 
     return (
         <Flex display={['flex', 'flex', 'flex']} width={'100%'} height={['8.2rem', '8.2rem', '6.25rem']} position={['fixed', 'fixed', 'absolute']} backgroundColor={'background'} bottom={["3.875rem", "3.875rem", "0"]} left={0} zIndex={10000} justifyContent={'space-evenly'} boxShadow={['', '', '1px 3px 25px rgb(0 0 0 / 0.8)']} flexDirection={['column-reverse', 'column-reverse', 'row']} pt={[1, 1, 0]} gap={[1, 1, 0]} px={[4, 4, 0]}>

@@ -72,7 +72,6 @@ function ActivityBar() {
                         <Flex flexDirection={'column'} gap={'0.75rem'} mt={'1.25rem'}>
                             {
                                 recents.map((el: string, idx: number) => {
-                                    console.log(el)
                                     return <RecentlyPlayedSong id={el} visible={isVisible} key={idx} />
                                 })
                             }
