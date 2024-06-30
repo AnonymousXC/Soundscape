@@ -2,7 +2,7 @@
 import { redirect } from "next/navigation"
 import { createClient } from "./supabase"
 
-async function signUpFunc(email: string, password: string, username: string) {
+async function signUpFunc(email: string, password: string, username: string, id : string) {
 
     const supabase = createClient()
 
@@ -17,7 +17,10 @@ async function signUpFunc(email: string, password: string, username: string) {
     })
 
     console.log(AUTH.data, AUTH.error)
-    redirect('/profile')
+    if(id)
+        redirect('/profile?id=' + id)
+    else
+        redirect('/profile')
     return JSON.stringify(AUTH || undefined);
 }
 

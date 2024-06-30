@@ -248,7 +248,8 @@ function Player() {
                     // addToFavouriteLocal(id, setIsFavourite)
                     setIsFavourite(!isFavourite)
                     const status = await addToFavourites(id)
-                    if (status!.status === 200) {
+                    console.log(status)
+                    if (status!.status === 200 || (status.status === 201 && status.statusText === "Created")) {
                         toast.success("Successfull added song to favourites")
                     }
                     else if (status.status === 300) {

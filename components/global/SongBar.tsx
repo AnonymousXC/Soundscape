@@ -5,10 +5,11 @@ import {
     Button,
     Flex,
     Text,
-    Box
+    Box,
+    Skeleton
 } from '@chakra-ui/react'
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { startLoading } from './TopLoadingBar';
 
 interface Props {
@@ -24,10 +25,11 @@ function Song(props: Props) {
     let paused: number | null = parseInt(useSearchParams().get('paused') || '0')
     let id = useSearchParams().get('id')
     let playing = data?.id === id && paused === 0
+    const [loaded, setLoaded] = useState(false)
 
     useEffect(() => {
 
-        
+
         return () => {
             data = null
             paused = null
@@ -36,7 +38,7 @@ function Song(props: Props) {
     }, [])
 
 
-    const handlePlay = (e : any) => {
+    const handlePlay = (e: any) => {
         e.stopPropagation()
         const url = new URL(location.href)
 
@@ -56,10 +58,10 @@ function Song(props: Props) {
         router.replace(url.toString())
     }
 
-    
-    const handleRouteChange = (path : string) => {
+
+    const handleRouteChange = (path: string) => {
         const url = new URL(window.location.href)
-        if(url.toString().includes(id || '') && url.toString().includes('song'))
+        if (url.toString().includes(id || '') && url.toString().includes('song'))
             return
         startLoading()
         router.push(path + '?' + url.searchParams.toString())
@@ -70,12 +72,15 @@ function Song(props: Props) {
             onClick={() => { handleRouteChange('/song/' + props.data?.id) }}
             _hover={{ transform: 'scale(1.02)' }} rounded={6} className='song-bar'>
             <Flex gap={'1rem'} alignItems={'center'} maxWidth={'25rem'} width={'100%'}>
-                <Flex height={'3.5rem'} width={'3.5rem'} justifyContent={'center'} alignItems={'center'} rounded={'full'} background={'linear-gradient(to right, #B5179E , #7209B7)'}
-                    animation={'rotating 4s linear infinite'} style={{
-                        animationPlayState: data?.id === id && paused === 0 ? 'running' : 'paused'
-                    }}>
-                    <Image alt='Song picture' src={data?.image[2].link || ''} loader={() => data?.image[2].link + "?w=3.4rem&h=auto" || ''} height={54} width={54} minWidth={'3.4rem'} h={'auto'} rounded={'full'} />
-                </Flex>
+                <Skeleton isLoaded={loaded} rounded={'full'} height={'3.5rem'} width={'3.5rem'} >
+                    <Flex height={'3.5rem'} width={'3.5rem'} justifyContent={'center'} alignItems={'center'} rounded={'full'} background={'linear-gradient(to right, #B5179E , #7209B7)'}
+                        animation={'rotating 4s linear infinite'} style={{
+                            animationPlayState: data?.id === id && paused === 0 ? 'running' : 'paused'
+                        }}>
+
+                        <Image alt='Song picture' src={data?.image[2].link || ''} loader={() => data?.image[2].link + "?w=3.4rem&h=auto" || ''} height={54} width={54} minWidth={'3.4rem'} h={'auto'} rounded={'full'} onLoadingComplete={() => setLoaded(true)} />
+                    </Flex>
+                </Skeleton>
                 <Text className='song-bar' noOfLines={2} background={data?.id == id ? 'linear-gradient(to right, #B5179E , #7209B7)' : '#B8B8B8'} textColor={'transparent'} backgroundClip={'text'}>{data?.name + ' - ' + (typeof data?.primaryArtists == 'string' ? data?.primaryArtists : data?.primaryArtists[0].name)}</Text>
             </Flex>
             <Text className='song-bar' display={['none', 'none', 'block']} background={data?.id == id ? 'linear-gradient(to right, #B5179E , #7209B7)' : '#B8B8B8'} textColor={'transparent'} backgroundClip={'text'}>{calculateTime(parseInt(data?.duration || '0'))}</Text>

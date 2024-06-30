@@ -2,11 +2,13 @@
 import { redirect } from "next/navigation"
 import { createClient } from "./supabase"
 
-async function Logout() {
+async function Logout(id : string) {
     const supabase = createClient()
     const status = await supabase.auth.signOut()
-    console.log(status)
-    redirect('/auth')
+    if(id)
+        redirect('/auth?id=' + id)
+    else
+        redirect('/auth')
 }
 
 export default Logout;

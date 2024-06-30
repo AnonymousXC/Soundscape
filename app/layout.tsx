@@ -12,6 +12,7 @@ import TopLoadingBar from '@/components/global/TopLoadingBar'
 import BottomBar from '@/components/global/MobileBottom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/ReactToastify.css'
+import { Flex } from '@chakra-ui/react'
  
 export const metadata: Metadata = {
   title: 'Soundscape',
@@ -35,7 +36,11 @@ export default function DesktopLLayout({ children, }: { children: React.ReactNod
         <CKProviders>
           <TopLoadingBar />
           <Sidebar />
-          {children}
+          <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={['calc(100vh - 3.875rem - 8.2rem - 3.2rem)', 'calc(100vh - 6.25rem)']} flexDir={'column'} overflowY={'auto'}>
+            <Suspense>
+              {children}
+            </Suspense>
+          </Flex>
           <Suspense fallback={<ActivityBarFallback />}>
             <ActivityBar />
           </Suspense>

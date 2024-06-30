@@ -8,7 +8,9 @@ import {
     Button
 } from '@chakra-ui/react'
 import { AuthResponse } from '@supabase/supabase-js';
+import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 function SignUpPage() {
 
@@ -20,6 +22,7 @@ function SignUpPage() {
     const [errorMessage, setErrorMessage] = useState<string>("")
     const [creationStatus, setCreationStatus] = useState(false)
     const [isLogin, setIsLogin] = useState(false)
+    const id = useSearchParams().get('id')
 
     return (
         <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={['calc(100vh - 3.875rem - 8.2rem - 3.2rem)', 'calc(100vh - 6.25rem)']} px={'1.25rem'} pt={['1rem', '3rem']} flexDir={'column'} overflowY={'auto'} pb={2}>
@@ -39,8 +42,9 @@ function SignUpPage() {
                         <Button variant={'sidebar'} className={creationStatus ? 'auth-success-gradient' : 'sidebar-active-tab'} justifyContent={'center'} isLoading={loading} w={'100%'}
                             onClick={() => {
                                 setLoading(true)
-                                if (isLogin === false)
-                                    signUpFunc(email, password, username)
+                                if (isLogin === false) {
+                                    toast.info('Processing...')
+                                    signUpFunc(email, password, username, id || '')
                                         .then((AUTH: string) => {
                                             const data: AuthResponse = JSON.parse(AUTH || '{}')
                                             if (data.error != null) {
@@ -52,19 +56,12 @@ function SignUpPage() {
                                             }
                                             setLoading(false)
                                         })
-                                else
-                                    loginFunc(email, password, username)
-                                        .then((AUTH: string) => {
-                                            const data: AuthResponse = JSON.parse(AUTH || '{}')
-                                            if (data.error != null) {
-                                                setErrorMessage('Invalid Credentials')
-                                                setError(true)
-                                            }
-                                            else {
-                                                setCreationStatus(true)
-                                            }
-                                            setLoading(false)
-                                        })
+                                }
+                                    
+                                else {
+                                    toast.info("Proccessing...")
+                                    loginFunc(email, password, username, id || '')
+                                }
                             }}>
                             {creationStatus == true ? isLogin == true ? 'Logged in' : 'Account Created Successfully' : error === false ? isLogin ? 'Login' : 'Create Account' : errorMessage}
                         </Button>

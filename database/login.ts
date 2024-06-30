@@ -2,7 +2,7 @@
 import { redirect } from "next/navigation"
 import { createClient } from "./supabase"
 
-async function loginFunc(email: string, password: string, username: string) {
+async function loginFunc(email: string, password: string, username: string, id : string) {
 
     const supabase = createClient()
 
@@ -11,9 +11,10 @@ async function loginFunc(email: string, password: string, username: string) {
         password: password,
     })
 
-    console.log(AUTH.data, AUTH.error)
-    redirect('/profile')
-    return JSON.stringify(AUTH || undefined);
+    if(id)
+        redirect('/profile?id=' + id)
+    else
+        redirect('/profile')
 }
 
 export default loginFunc;
