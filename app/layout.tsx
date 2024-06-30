@@ -36,7 +36,7 @@ export default function DesktopLLayout({ children, }: { children: React.ReactNod
         <CKProviders>
           <TopLoadingBar />
           <Sidebar />
-          <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={['calc(100vh - 3.875rem - 8.2rem - 3.2rem)', 'calc(100vh - 6.25rem)']} flexDir={'column'} overflowY={'auto'}>
+          <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={[`calc(100dvh - 3.875rem - 8.2rem)`, 'calc(100vh - 6.25rem)']} flexDir={'column'} overflowY={'auto'}>
             <Suspense>
               {children}
             </Suspense>

@@ -12,7 +12,7 @@ async function Playlist({ params, searchParams }: { params: any, searchParams: a
     const songData = await getSongDetailsMulti(songs)
 
     return (
-        <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={['calc(100vh - 3.875rem - 8.2rem - 3rem)', 'calc(100vh - 6.25rem)', 'calc(100vh - 6.25rem)']} px={'1.25rem'} pt={'1rem'} flexDir={'column'} overflowY={'auto'} overflowX={'hidden'} pb={4} gap={2}>
+        <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={'100%'} px={'1.25rem'} pt={'1rem'} flexDir={'column'} overflowY={'auto'} overflowX={'hidden'} pb={4} gap={2}>
             <Text color={'primaryText'} fontWeight={'500'} fontSize={"1.2rem"} my={4}>
                 Playlist : {playlistData![0].details.name}
             </Text>

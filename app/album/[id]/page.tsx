@@ -28,7 +28,7 @@ function Album() {
     }, [id])
 
     return (
-        <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={['calc(100vh - 3.875rem - 8.2rem - 3rem)', 'calc(100vh - 6.25rem)', 'calc(100vh - 6.25rem)']} px={'1.25rem'} pt={'1rem'} flexDir={'column'} overflowY={'auto'} overflowX={'hidden'} pb={4}>
+        <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={'100%'} px={'1.25rem'} pt={'1rem'} flexDir={'column'} overflowY={'auto'} overflowX={'hidden'} pb={4}>
             <Flex gap={8} alignItems={'center'} flexDirection={['column', 'column', 'row']}>
                 <Skeleton isLoaded={loaded} rounded={20} w={['150px', '150px', '250px']} h={['150px', '150px', '250px']}>
                     <Image src={data?.image[2].link + ""} loader={() => data?.image[2].link + "?w=auto&h=auto"} minW={['150px', '150px', '250px']} minH={['150px', '150px', '250px']} width={250} height={250} alt="playlist icons" rounded={20} priority onLoadingComplete={() => setLoaded(true)} />

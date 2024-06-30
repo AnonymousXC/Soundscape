@@ -16,7 +16,7 @@ async function SongPage({ params, searchParams }: any) {
     const PlaylistNames = await (await getPlaylists()).data
 
     return (
-        <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={['calc(100vh - 3.875rem - 8.2rem - 3rem)', 'calc(100vh - 6.25rem)', 'calc(100vh - 6.25rem)']} px={'1.25rem'} pt={'1rem'} flexDir={'column'} overflowY={'auto'} overflowX={'hidden'} pb={4} gap={8}>
+        <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={'100%'} px={'1.25rem'} pt={'1rem'} flexDir={'column'} overflowY={'auto'} overflowX={'hidden'} pb={4} gap={8}>
             <Flex gap={5} alignItems={'center'} flexDirection={['column', 'column', 'column']}>
                 <Img src={data.image[2].link} alt="cover image" width={[270, 270, 300]} height={[270, 270, 300]} rounded={8} />
                 <Flex flexDirection={'column'} gap={4}>
