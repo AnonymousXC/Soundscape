@@ -2,12 +2,11 @@
 import Love from "@/assets/icons/Love"
 import Share from "@/assets/icons/Share"
 import addToPlaylist from "@/database/addToPlaylist"
-import getPlaylists from "@/database/getUserPlaylists"
-import { AddIcon } from "@chakra-ui/icons"
+import { AddIcon, DownloadIcon } from "@chakra-ui/icons"
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react"
 import Image from "next/image"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 
 function PlayButton({ searchParams, id }: any) {
@@ -58,7 +57,7 @@ function ShareButton() {
     )
 }
 
-function AddToPlaylist({ id, playlist } : { id: string, playlist : any }) {
+function AddToPlaylist({ id, playlist }: { id: string, playlist: any }) {
 
     return (
         <Menu>
@@ -69,16 +68,16 @@ function AddToPlaylist({ id, playlist } : { id: string, playlist : any }) {
                 <MenuItem>Select a playlist</MenuItem>
                 {
                     playlist?.map((el: any, idx: number) => {
-                        return <MenuItem value={el.playlist_id} 
-                                    onClick={async () => { 
-                                        const status = await addToPlaylist(el.playlist_id, id) 
-                                        if(status.statusText === 'Already exists')
-                                            toast.warn(`Song already exists in ${el.details.name}`)
-                                        else if(status.status === 204)
-                                            toast.success(`Added song to playlist ${el.details.name}`)
-                                        else
-                                            toast.error("Error occured in the server")
-                                    }} key={idx}> {el.details.name} </MenuItem>
+                        return <MenuItem value={el.playlist_id}
+                            onClick={async () => {
+                                const status = await addToPlaylist(el.playlist_id, id)
+                                if (status.statusText === 'Already exists')
+                                    toast.warn(`Song already exists in ${el.details.name}`)
+                                else if (status.status === 204)
+                                    toast.success(`Added song to playlist ${el.details.name}`)
+                                else
+                                    toast.error("Error occured in the server")
+                            }} key={idx}> {el.details.name} </MenuItem>
                     })
                 }
             </MenuList>
@@ -86,4 +85,17 @@ function AddToPlaylist({ id, playlist } : { id: string, playlist : any }) {
     )
 }
 
-export { PlayButton, FavouriteButton, ShareButton, AddToPlaylist }
+function DownloadButton({link} : { link : string}) {
+    return (
+        <Link href={link} target="_blank" style={{
+            width: '30px',
+            height: '40px',
+            display: 'flex',
+            alignItems: 'center'
+        }}>
+            <DownloadIcon color={'#7A7A7A'} boxSize={'19px'} />
+        </Link>
+    )
+}
+
+export { PlayButton, FavouriteButton, ShareButton, AddToPlaylist, DownloadButton }

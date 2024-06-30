@@ -4,7 +4,7 @@ import {
     Img,
     Text,
 } from "@chakra-ui/react";
-import { AddToPlaylist, FavouriteButton, PlayButton, ShareButton } from "../Buttons";
+import { AddToPlaylist, DownloadButton, FavouriteButton, PlayButton, ShareButton } from "../Buttons";
 import getPlaylists from "@/database/getUserPlaylists";
 
 
@@ -30,6 +30,7 @@ async function SongPage({ params, searchParams }: any) {
                     <Flex mt={5} alignItems={'center'} gap={5} justifyContent={'center'}>
                         <PlayButton searchParams={searchParams} id={id} />
                         <FavouriteButton />
+                        <DownloadButton link={data.downloadUrl[4].link} />
                         <ShareButton />
                         <AddToPlaylist id={id} playlist={PlaylistNames} />
                     </Flex>
