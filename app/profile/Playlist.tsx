@@ -1,12 +1,22 @@
+'use client'
 import { Flex, Text } from "@chakra-ui/react";
 import AddPlaylistComp from "./AddPlaylistComp";
 import getPlaylists from "@/database/getUserPlaylists";
 import PlaylistBox from "./PlaylistBox";
+import { useEffect, useState } from "react";
 
 
-async function Playlist() {
+function Playlist() {
 
-    let playlists = await getPlaylists()
+    const [playlists, setPlaylists] = useState<any>(undefined)
+
+    useEffect(() => {
+        (async () => {
+            let playlist = await getPlaylists()
+            setPlaylists(playlist)
+        })()
+
+    }, [])
 
     return (
         <Flex flexDir={'column'}>
@@ -15,7 +25,7 @@ async function Playlist() {
             </Text>
             <Flex gap={4} overflowX={'auto'} className="hide-scroll-bar" py={3}>
                 {
-                    playlists.data &&
+                    playlists?.data &&
                     playlists.data.map((el: any, idx: number) => {
                         return <PlaylistBox
                             access={el.access}
@@ -28,7 +38,16 @@ async function Playlist() {
                             key={idx} />
                     })
                 }
-                <AddPlaylistComp />
+                {
+                    playlists === undefined &&
+                    <Flex gap={4} overflowX={'auto'} justifyContent={'center'} alignItems={'center'} className="hide-scroll-bar" py={3} w={'100%'} height={270}>
+                        <Text>fetching playlists...</Text>
+                    </Flex>
+                }
+                {
+                    playlists?.data &&
+                    <AddPlaylistComp />
+                }
             </Flex>
         </Flex>
     )

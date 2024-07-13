@@ -41,22 +41,23 @@ function Player() {
 
     useEffect(() => {
         // get song
-        getSongDetails(id)
-            .then((val: any) => {
-                if (val.status == 'SUCCESS') {
-                    if (window.ReactNativeWebView) {
-                        window.ReactNativeWebView.postMessage(JSON.stringify({
-                            eventType: 'newSong',
-                            ...val.data[0]
-                        }))
+        if (id !== undefined)
+            getSongDetails(id)
+                .then((val: any) => {
+                    if (val.status == 'SUCCESS') {
+                        if (window.ReactNativeWebView) {
+                            window.ReactNativeWebView.postMessage(JSON.stringify({
+                                eventType: 'newSong',
+                                ...val.data[0]
+                            }))
+                        }
+                        setData(val.data[0])
+                        updateNavigator(val.data[0])
                     }
-                    setData(val.data[0])
-                    updateNavigator(val.data[0])
-                }
-                setLoaded(true)
-                if (!id)
-                    setLoaded(false)
-            })
+                    setLoaded(true)
+                    if (!id)
+                        setLoaded(false)
+                })
 
         // loop handler
         if (localStorage.getItem("loop")) {
@@ -96,17 +97,27 @@ function Player() {
     }, [id])
 
     useEffect(() => {
-        if (!window.ReactNativeWebView) return 
-            setPlayerEnabled(false)
-            window.togglePlay = () => {
-                const url = new URL(window.location.toString())
-                if(url.searchParams.has('paused')) {
-                    url.searchParams.delete('paused')
-                }
-                else
-                    url.searchParams.append('paused', "1")
+        if (!window.ReactNativeWebView) return
+        setPlayerEnabled(false)
+        window.pauseSongRN = function () {
+            const url = new URL(window.location.toString())
+            if (url.searchParams.has('paused')) {
+                return
+            }
+            else {
+                url.searchParams.append('paused', "1")
                 router.replace(url.toString())
             }
+        }
+        window.playSongRN = function () {
+            const url = new URL(window.location.toString())
+            if (url.searchParams.has('paused')) {
+                url.searchParams.delete('paused')
+            }
+            else
+                return
+            router.replace(url.toString())
+        }
     }, [])
 
     if (playerEnabled === true)

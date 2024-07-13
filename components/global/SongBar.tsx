@@ -43,6 +43,16 @@ function Song(props: Props) {
         const url = new URL(location.href)
 
         if (url.searchParams.get('id') == data?.id) {
+            if(window.ReactNativeWebView) {
+                window.ReactNativeWebView.postMessage(JSON.stringify({
+                    eventType: "togglePlay"
+                }))
+                if(url.searchParams.get('paused'))
+                    window.playSongRN()
+                else
+                    window.pauseSongRN()
+                return;
+            }
             const audio = document.querySelector('audio')
             if (audio?.paused == true)
                 audio?.play()
