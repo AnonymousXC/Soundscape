@@ -6,13 +6,14 @@ import { AddIcon, DownloadIcon } from "@chakra-ui/icons"
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { toast } from "react-toastify"
 
-function PlayButton({ searchParams, id }: any) {
+function PlayButton({ id }: any) {
 
     const router = useRouter()
-    const playing = searchParams.id === id && searchParams.paused !== '1'
+    const searchParams = useSearchParams()
+    const playing = searchParams.get('id') === id && searchParams.get('paused') !== '1'
 
     const handlePlay = (e: any) => {
         e.stopPropagation()
