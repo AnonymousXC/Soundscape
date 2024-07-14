@@ -141,10 +141,10 @@ function Player() {
                 {/* Control buttons */}
                 <Flex maxWidth={['100%', '100%', '270px']} w={'100%'} justifyContent={'space-between'} alignItems={'center'} ml={[0, 0, '30px']}>
                     <Button variant={'unstyled'} textAlign={'center'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
-                        <Img src={'icons/player/Play Previous.svg'} height={'1rem'} width={'auto'} />
+                        <Img src={'/icons/player/Play Previous.svg'} height={'1rem'} width={'auto'} />
                     </Button>
                     <Button variant={'unstyled'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
-                        <Img src={'icons/player/Backward.svg'} height={'1.18rem'} width={'auto'} />
+                        <Img src={'/icons/player/Backward.svg'} height={'1.18rem'} width={'auto'} />
                     </Button>
                     <Button variant={'unstyled'} width={'40px'} height={'40px'} rounded={'full'} backgroundImage={'var(--var-main-dark-gradient)'} display={'flex'} justifyContent={'center'} alignItems={'center'} onClick={() => {
                         if (audio.current?.paused === true)
@@ -155,10 +155,10 @@ function Player() {
                         <Img src={isPlaying ? '/icons/player/Pause.svg' : '/icons/player/Play.svg'} height={'1rem'} width={'auto'} />
                     </Button>
                     <Button variant={'unstyled'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
-                        <Img src={'icons/player/Forward.svg'} height={'1.18rem'} width={'auto'} />
+                        <Img src={'/icons/player/Forward.svg'} height={'1.18rem'} width={'auto'} />
                     </Button>
                     <Button variant={'unstyled'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
-                        <Img src={'icons/player/Play Next.svg'} height={'1rem'} width={'auto'} />
+                        <Img src={'/icons/player/Play Next.svg'} height={'1rem'} width={'auto'} />
                     </Button>
                 </Flex>
                 <audio suppressHydrationWarning src={data?.downloadUrl[4].link} ref={audio} crossOrigin="anonymous"

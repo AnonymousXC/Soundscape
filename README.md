@@ -3,7 +3,7 @@
         <img src="https://ForTheBadge.com/images/badges/built-with-love.svg" alt="ForTheBadge built-with-love"><br>
         <img src="https://ForTheBadge.com/images/badges/built-by-developers.svg" alt="ForTheBadge built-by-developers">
         <br> <br>
-        <img alt="Lines of code" src="https://img.shields.io/tokei/lines/github/AnonymousXC/Soundscape">
+        <img alt="Static Badge" src="https://img.shields.io/badge/total%20lines-10321-10321">
         <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/AnonymousXC/Soundscape">
         <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/AnonymousXC/Soundscape">
         <img alt="GitHub branch checks state" src="https://img.shields.io/github/checks-status/AnonymousXC/Soundscape/main">
@@ -22,9 +22,9 @@
         <br>
         <img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&amp;logo=javascript&amp;logoColor=%23F7DF1E" alt="JavaScript">
         <img src="https://img.shields.io/badge/chakra-%234ED1C5.svg?style=for-the-badge&amp;logo=chakraui&amp;logoColor=white" alt="Chakra">
-        <img src="https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&amp;logo=firebase" alt="Firebase">
+        <img src="https://img.shields.io/badge/Supabase-181818?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase">
         <br> <br>
-        <img src="https://img.shields.io/badge/Firefox-FF7139?style=for-the-badge&amp;logo=Firefox-Browser&amp;logoColor=white" alt="Firefox">
+        <img src="https://img.shields.io/badge/Brave-FF1B2D?style=for-the-badge&logo=Brave&logoColor=white" alt="Brave">
         <img src="https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&amp;logo=figma&amp;logoColor=white" alt="Figma">
         <img src="https://img.shields.io/badge/Spotify-1ED760?style=for-the-badge&amp;logo=spotify&amp;logoColor=white" alt="Spotify">
         <br>

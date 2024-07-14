@@ -1,22 +1,15 @@
-'use client'
+'use server'
 import { Flex, Text } from "@chakra-ui/react";
 import AddPlaylistComp from "./AddPlaylistComp";
 import getPlaylists from "@/database/getUserPlaylists";
 import PlaylistBox from "./PlaylistBox";
-import { useEffect, useState } from "react";
+import { cache } from "react";
 
 
-function Playlist() {
+async function Playlist() {
 
-    const [playlists, setPlaylists] = useState<any>(undefined)
-
-    useEffect(() => {
-        (async () => {
-            let playlist = await getPlaylists()
-            setPlaylists(playlist)
-        })()
-
-    }, [])
+    const cachePlaylist = cache(getPlaylists)
+    const playlists = await cachePlaylist()
 
     return (
         <Flex flexDir={'column'}>
