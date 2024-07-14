@@ -4,11 +4,14 @@ import {
     Text,
 } from '@chakra-ui/react';
 import { Image } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { cache, useEffect, useState } from 'react';
 import getTrending from '../server/getTrending.server';
 import Song from '@/components/global/SongBar';
 import { SongResponse } from '@/interfaces/song';
 import { useRouter } from 'next/navigation';
+
+
+const topSongsCache = cache(getTrending)
 
 function TopMusic() {
 
@@ -23,7 +26,7 @@ function TopMusic() {
     useEffect(() => {
 
         (async () => {
-            const data = await getTrending()
+            const data = await topSongsCache()
             setTrendingSongs(data.data.trending.songs)
         })()
 

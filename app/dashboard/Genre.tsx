@@ -6,8 +6,9 @@ import {
 } from "@chakra-ui/react";
 import GenreBox from "./GenreBox";
 import getTrending from "../server/getTrending.server";
-import { useEffect, useState } from "react";
+import { cache, useEffect, useState } from "react";
 
+const getTrendingCache = cache(getTrending)
 
 function Genre() {
 
@@ -15,7 +16,7 @@ function Genre() {
 
     useEffect(() => {
 
-        getTrending()
+        getTrendingCache()
         .then((data) => {
             setAlbums(data.data.trending.albums)
         })
