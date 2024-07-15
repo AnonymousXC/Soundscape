@@ -95,7 +95,7 @@ function Song(props: Props) {
             </Flex>
             <Text className='song-bar' display={['none', 'none', 'block']} background={data?.id == id ? 'linear-gradient(to right, #B5179E , #7209B7)' : '#B8B8B8'} textColor={'transparent'} backgroundClip={'text'}>{calculateTime(parseInt(data?.duration || '0'))}</Text>
             <Box></Box>
-            <Button className='song-bar' variant={'unstyled'} alignItems={'center'} display={'flex'} onClick={handlePlay} zIndex={10000}>
+            <Button className='song-bar' variant={'unstyled'} alignItems={'center'} display={'flex'} onClick={handlePlay} zIndex={1000}>
                 <Image loader={() => playing == false ? '/icons/player/Play.svg' : '/icons/player/Pause.svg?'} src={playing == false ? '/icons/player/Play.svg' : '/icons/player/Pause.svg '} width={20} height={20} h={'1.25rem'} w={'auto'} alt='play-pause-btn' />
             </Button>
         </Flex>

@@ -23,6 +23,7 @@ import Share from "@/assets/icons/Share";
 import addToFavourites from "@/database/addToFavourites";
 import { toast } from "react-toastify";
 import getFavouriteSongs from "@/database/getFavouriteSongs";
+import { startLoading } from "./TopLoadingBar";
 
 
 function Player() {
@@ -120,6 +121,15 @@ function Player() {
         }
     }, [])
 
+    const handleRouteChange = (path: string) => {
+        const url = new URL(window.location.href)
+        if(url.toString().includes(`song/${data?.id}`))
+            return
+        startLoading()
+        router.push(path + '?' + url.searchParams.toString())
+    }
+
+
     if (playerEnabled === true)
         return (
             <Flex display={['flex', 'flex', 'flex']} width={'100%'} height={['8.2rem', '8.2rem', '6.25rem']} position={['fixed', 'fixed', 'absolute']} backgroundColor={'background'} bottom={["3.875rem", "3.875rem", "0"]} left={0} zIndex={10000} justifyContent={'space-evenly'} boxShadow={['', '', '1px 3px 25px rgb(0 0 0 / 0.8)']} flexDirection={['column-reverse', 'column-reverse', 'row']} pt={[1, 1, 0]} gap={[1, 1, 0]} px={[4, 4, 0]}>
@@ -133,7 +143,7 @@ function Player() {
                     </Skeleton>
                     <Flex flexDirection={'column'} maxW={'7.5rem'} width={'100%'}>
                         <SkeletonText isLoaded={loaded} height={'3rem'}>
-                            <Text color={'primaryTextRe'} fontSize={'1.2rem'} fontWeight={500} maxHeight={'1.875rem'} overflow={'hidden'} textOverflow={'ellipsis'} whiteSpace={'nowrap'} width={'100%'}>{data?.name}</Text>
+                            <Text color={'primaryTextRe'} fontSize={'1.2rem'} fontWeight={500} maxHeight={'1.875rem'} overflow={'hidden'} textOverflow={'ellipsis'} whiteSpace={'nowrap'} width={'100%'} onClick={() => { handleRouteChange(`/song/${id}`) }} cursor={'pointer'}>{data?.name}</Text>
                             <Text color={'primaryText'} fontWeight={400} fontSize={'0.75rem'} maxHeight={'1.125rem'} overflow={'hidden'} textOverflow={'ellipsis'} whiteSpace={'nowrap'}>{typeof data?.primaryArtists == 'string' ? data?.primaryArtists : data?.primaryArtists[0].name}</Text>
                         </SkeletonText>
                     </Flex>

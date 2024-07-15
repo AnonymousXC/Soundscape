@@ -1,5 +1,5 @@
 'use client'
-import { Flex } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import Song from "../global/SongBar";
 import { useEffect, useState } from "react";
 import search from "@/app/server/search.server";
@@ -25,6 +25,10 @@ function SearchResult(props : Props) {
 
     return (
         <Flex width={'100%'} mt={'1.5rem'} height={'100%'} overflowY={'auto'} flexDirection={'column'} gap={'0.4rem'} overflowX={'hidden'} className='hide-scroll-bar'>
+            {
+                songs.length <= 0 &&
+                <Text alignSelf={'center'}>Fetching songs...</Text>
+            }
             {
                 songs.map((val, idx) => {
                     return <Song data={val} key={idx} />

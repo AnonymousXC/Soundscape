@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import getSongDetails from "@/app/server/getSongDetails.server";
 import { SongResponse } from "@/interfaces/song";
 import { useRouter, useSearchParams } from "next/navigation";
+import { startLoading } from "../global/TopLoadingBar";
 
 interface Props {
     id: string,
@@ -44,6 +45,15 @@ function RecentlyPlayedSong(props : Props) {
             router.replace(location.protocol + '//' + location.host + location.pathname + `?id=${props.id}`)
     }
 
+    const handleRouteChange = (path: string) => {
+        const url = new URL(window.location.href)
+        if(url.toString().includes(`song/${data?.id}`))
+            return
+        startLoading()
+        router.push(path + '?' + url.searchParams.toString())
+    }
+
+
     useEffect(() => {
         getSongDetails(props.id)
         .then((val) => {
@@ -73,14 +83,16 @@ function RecentlyPlayedSong(props : Props) {
 
     return (
         <Skeleton isLoaded={loading}>
-            <Flex backgroundColor={'rgba(35,35,35,0.3)'} width={'100%'} justifyContent={'space-around'} alignItems={'center'} py={'0.375rem'} px={'0.75rem'} display={props.visible ?'flex' : 'none'}>
+            <Flex backgroundColor={'rgba(35,35,35,0.3)'} width={'100%'} justifyContent={'space-around'} alignItems={'center'} py={'0.375rem'} px={'0.75rem'} display={props.visible ?'flex' : 'none'} cursor={'pointer'} onClick={() => {
+                handleRouteChange(`/song/${props.id}`)
+            }}>
                     <Flex className="border-image-gradient" rounded={'full'} width={'2.938rem'} height={'2.938rem'} justifyContent={'center'} alignItems={'center'}>
                         <Img src={data?.image[0].link} width={'2.813rem'} height={'2.813rem'} rounded={'full'} />
                     </Flex>
                     <Flex flexDirection={'column'} width={'100%'} maxWidth={'6.25rem'}>
-                        <Text fontWeight={500} color={'primaryTextRe'} fontSize={'1rem'}>{data?.name}</Text>
+                        <Text fontWeight={500} color={'primaryTextRe'} fontSize={'1rem'} noOfLines={2}>{data?.name}</Text>
                     </Flex>
-                    <Button variant={'unstyled'} width={'1.25rem'} display={'flex'} justifyContent={'flex-end'} onClick={handlePlay}>
+                    <Button variant={'unstyled'} width={'1.25rem'} display={'flex'} justifyContent={'flex-end'} onClick={handlePlay} zIndex={1000}>
                         {
                             currentSongID === props.id && isPaused == false ? 
                             <Img src={'/icons/player/Pause.svg'} width={'auto'} height={'1.25rem'} /> : <Img src={'/icons/Play Button.svg'} width={'auto'} height={'1.25rem'} />
