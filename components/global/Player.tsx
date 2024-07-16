@@ -13,7 +13,7 @@ import {
     Stack,
 } from "@chakra-ui/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Dispatch, SetStateAction, createRef, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, SyntheticEvent, createRef, useEffect, useState } from "react";
 import getSongDetails from "@/app/server/getSongDetails.server";
 import { SongResponse } from "@/interfaces/song";
 import Love from "@/assets/icons/Love";
@@ -24,6 +24,8 @@ import addToFavourites from "@/database/addToFavourites";
 import { toast } from "react-toastify";
 import getFavouriteSongs from "@/database/getFavouriteSongs";
 import { startLoading } from "./TopLoadingBar";
+import getSongSuggestions from "@/app/server/getSongSuggestion";
+import KeyBinding from "./Keybinding";
 
 
 function Player() {
@@ -38,7 +40,9 @@ function Player() {
     const [isFavourite, setIsFavourite] = useState<boolean>(false)
     const audio = createRef<HTMLAudioElement>()
     var [currentTime, setCurrentTime] = useState<number>(0)
+    const [volume, setVolume] = useState(audio.current?.volume || 1)
     const [playerEnabled, setPlayerEnabled] = useState(true)
+    const [nextSuggestedSong, setNextSuggestedSong] = useState<string[]>([])
 
     useEffect(() => {
         // get song
@@ -69,6 +73,13 @@ function Player() {
         }
         else
             localStorage.setItem("loop", "false")
+
+        // Suggestion handler
+        if (nextSuggestedSong?.indexOf(id) === -1 || nextSuggestedSong.length <= 0 || nextSuggestedSong.indexOf(id) === nextSuggestedSong.length - 1)
+            getSongSuggestions(id)
+                .then((data: string[]) => {
+                    setNextSuggestedSong(data)
+                })
 
         // favourite handler
         getFavouriteSongs()
@@ -123,12 +134,44 @@ function Player() {
 
     const handleRouteChange = (path: string) => {
         const url = new URL(window.location.href)
-        if(url.toString().includes(`song/${data?.id}`))
+        if (url.toString().includes(`song/${data?.id}`))
             return
         startLoading()
         router.push(path + '?' + url.searchParams.toString())
     }
 
+    const handleSongEnd = () => {
+
+        if (!nextSuggestedSong) return
+
+        const url = new URL(location.href)
+
+        if (url.searchParams.has('id'))
+            url.searchParams.set('id', nextSuggestedSong[nextSuggestedSong.indexOf(id) + 1] || '')
+        else
+            url.searchParams.append('id', nextSuggestedSong[nextSuggestedSong.indexOf(id) + 1] || '')
+        router.replace(url.toString())
+    }
+
+    const playPrevious = () => {
+        let prevID = ""
+        if (nextSuggestedSong.indexOf(id) >= 1) {
+
+            prevID = nextSuggestedSong[nextSuggestedSong.indexOf(id) - 1]
+            const url = new URL(location.href)
+
+            if (url.searchParams.has('id'))
+                url.searchParams.set('id', prevID)
+            else
+                url.searchParams.append('id', prevID)
+
+            router.replace(url.toString())
+
+        }
+        else
+            if (audio.current)
+                audio.current.currentTime = 0
+    }
 
     if (playerEnabled === true)
         return (
@@ -150,10 +193,14 @@ function Player() {
                 </Flex>
                 {/* Control buttons */}
                 <Flex maxWidth={['100%', '100%', '270px']} w={'100%'} justifyContent={'space-between'} alignItems={'center'} ml={[0, 0, '30px']}>
-                    <Button variant={'unstyled'} textAlign={'center'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+                    <Button variant={'unstyled'} textAlign={'center'} display={'flex'} justifyContent={'center'} alignItems={'center'}
+                        onClick={() => {
+                            if (audio.current)
+                                audio.current.currentTime -= 5
+                        }}>
                         <Img src={'/icons/player/Play Previous.svg'} height={'1rem'} width={'auto'} />
                     </Button>
-                    <Button variant={'unstyled'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+                    <Button variant={'unstyled'} display={'flex'} justifyContent={'center'} alignItems={'center'} onClick={playPrevious}>
                         <Img src={'/icons/player/Backward.svg'} height={'1.18rem'} width={'auto'} />
                     </Button>
                     <Button variant={'unstyled'} width={'40px'} height={'40px'} rounded={'full'} backgroundImage={'var(--var-main-dark-gradient)'} display={'flex'} justifyContent={'center'} alignItems={'center'} onClick={() => {
@@ -164,14 +211,26 @@ function Player() {
                     }}>
                         <Img src={isPlaying ? '/icons/player/Pause.svg' : '/icons/player/Play.svg'} height={'1rem'} width={'auto'} />
                     </Button>
-                    <Button variant={'unstyled'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+                    <Button variant={'unstyled'} display={'flex'} justifyContent={'center'} alignItems={'center'}
+                        onClick={() => {
+                            if (audio.current)
+                                audio.current.currentTime = audio.current.duration
+                        }}>
                         <Img src={'/icons/player/Forward.svg'} height={'1.18rem'} width={'auto'} />
                     </Button>
-                    <Button variant={'unstyled'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+                    <Button variant={'unstyled'} display={'flex'} justifyContent={'center'} alignItems={'center'}
+                        onClick={() => {
+                            if (audio.current)
+                                audio.current.currentTime += 5
+                        }}>
                         <Img src={'/icons/player/Play Next.svg'} height={'1rem'} width={'auto'} />
                     </Button>
                 </Flex>
                 <audio suppressHydrationWarning src={data?.downloadUrl[4].link} ref={audio} crossOrigin="anonymous"
+                    onVolumeChange={(_event: SyntheticEvent<HTMLAudioElement>) => { 
+                        // @ts-expect-error
+                        setVolume(_event.target.volume)
+                    }}
                     onPlay={() => {
                         setPlaying(true)
                         const url = new URL(window.location.href)
@@ -190,6 +249,7 @@ function Player() {
                         }
                     }}
                     autoPlay={true}
+                    onEnded={handleSongEnd}
                     onTimeUpdate={(e) => {
                         setCurrentTime(Math.floor(audio.current?.currentTime || 0))
                     }}
@@ -219,10 +279,10 @@ function Player() {
                         <Img src={'/icons/player/Volume.svg'} height={'auto'} width={'24px'} />
                     </Button>
                     <Slider defaultValue={100} max={100} min={1}
-                        onChangeEnd={(e) => {
+                        onChange={(e) => {
                             if (audio.current?.volume)
                                 audio.current.volume = e / 100
-                        }}>
+                        }} value={volume * 100}>
                         <SliderTrack backgroundColor={'#464646'}>
                             <SliderFilledTrack background={'linear-gradient(to right, #B5179E , #7209B7)'} />
                         </SliderTrack>
@@ -256,10 +316,8 @@ function Player() {
                         <Loop isActive={loop} />
                     </Button>
                     <Button variant={'unstyled'} size={'sm'} onClick={async () => {
-                        // addToFavouriteLocal(id, setIsFavourite)
                         setIsFavourite(!isFavourite)
                         const status = await addToFavourites(id)
-                        console.log(status)
                         if (status!.status === 200 || (status.status === 201 && status.statusText === "Created")) {
                             toast.success("Successfull added song to favourites")
                         }
@@ -275,6 +333,7 @@ function Player() {
                         <Share />
                     </Button>
                 </Flex>
+                <KeyBinding audio={audio} />
             </Flex>
         )
     return (

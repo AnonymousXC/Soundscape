@@ -5,10 +5,10 @@ import getPlaylists from "@/database/getUserPlaylists";
 import PlaylistBox from "./PlaylistBox";
 import { cache } from "react";
 
+const cachePlaylist = cache(getPlaylists)
 
 async function Playlist() {
 
-    const cachePlaylist = cache(getPlaylists)
     const playlists = await cachePlaylist()
 
     return (
