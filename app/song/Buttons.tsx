@@ -50,9 +50,15 @@ function FavouriteButton() {
     )
 }
 
-function ShareButton() {
+function ShareButton({ id } : { id : string }) {
     return (
-        <Button variant={'unstyled'}>
+        <Button variant={'unstyled'} onClick={() => {
+            const origin = location.origin
+            navigator.share({
+                url: `${origin}/song/${id}`,
+                title: `Share songs`
+            })
+        }}>
             <Share />
         </Button>
     )

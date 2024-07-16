@@ -216,7 +216,7 @@ function Player() {
                 </Stack>
                 <Flex alignItems={'center'} pl={'20px'} maxWidth={'8rem'} width={'100%'} gap={'0.1rem'} display={['none', 'none', "flex"]}>
                     <Button variant={'unstyled'} size={'sm'}>
-                        <Img src={'icons/player/Volume.svg'} height={'auto'} width={'24px'} />
+                        <Img src={'/icons/player/Volume.svg'} height={'auto'} width={'24px'} />
                     </Button>
                     <Slider defaultValue={100} max={100} min={1}
                         onChangeEnd={(e) => {

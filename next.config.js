@@ -12,6 +12,15 @@ const nextConfig = {
         fetches: {
             fullUrl: true,
         }
+    },
+    async redirects() {
+        return [
+            {
+                source: '/',
+                destination: '/profile',
+                permanent: true
+            }
+        ]
     }
 }
 

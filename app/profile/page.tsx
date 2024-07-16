@@ -5,28 +5,30 @@ import {
 } from '@chakra-ui/react'
 import RecentlyPlayed from './RecentlyPlayed';
 import Playlist from './Playlist';
-import { redirect } from 'next/navigation';
+import SignUpPage from '../auth/page';
 
-async function Profile({ searchParams }: { searchParams?: { [key: string]: string | string[] | undefined } }) {
+async function Profile() {
 
     const supabase = createClient()
     const { data, error } = await supabase.auth.getUser()
 
-    if (data.user === null) {
-        if (searchParams?.id)
-            redirect('/auth?id=' + searchParams.id)
-        else
-            redirect('/auth')
-    }
-    else
-        return (
-            <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={'100%'} px={'1.25rem'} pt={['1rem', '3rem']} flexDir={'column'} overflowY={'auto'} pb={2}>
-                <Flex flexDirection={'column'} gap={6}>
-                    <Playlist />
-                    <RecentlyPlayed />
-                </Flex>
+    return (
+        <Flex position={'relative'} top={0} left={0} width={'100%'} maxW={'100%'} background={'background'} height={'100%'} px={'1.25rem'} pt={['1rem', '3rem']} flexDir={'column'} overflowY={'auto'} pb={2}>
+            <Flex flexDirection={'column'} gap={6}>
+                {
+                    data.user !== null &&
+                    <>
+                        <Playlist />
+                        <RecentlyPlayed />
+                    </>
+                }
+                {
+                    data.user === null &&
+                    <SignUpPage />
+                }
             </Flex>
-        )
+        </Flex>
+    )
 }
 
 

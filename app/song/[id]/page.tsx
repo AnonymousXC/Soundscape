@@ -36,7 +36,7 @@ async function SongPage({ params, searchParams }: any) {
                         <PlayButton id={id} />
                         <FavouriteButton />
                         <DownloadButton link={data?.downloadUrl[4].link} />
-                        <ShareButton />
+                        <ShareButton id={id} />
                         <AddToPlaylist id={id} playlist={PlaylistNames} />
                     </Flex>
                 </Flex>
