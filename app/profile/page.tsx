@@ -1,4 +1,3 @@
-'use server'
 import { createClient } from '@/database/supabase';
 import {
     Flex,
@@ -6,6 +5,8 @@ import {
 import RecentlyPlayed from './RecentlyPlayed';
 import Playlist from './Playlist';
 import SignUpPage from '../auth/page';
+import dynamic from 'next/dynamic';
+import Loading from '../loading';
 
 async function Profile() {
 
@@ -32,4 +33,7 @@ async function Profile() {
 }
 
 
-export default Profile;
+export default dynamic(() => Promise.resolve(Profile), {
+    ssr: false,
+    loading: () => { return (<Loading />) }
+});

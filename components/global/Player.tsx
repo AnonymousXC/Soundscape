@@ -13,7 +13,7 @@ import {
     Stack,
 } from "@chakra-ui/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Dispatch, SetStateAction, SyntheticEvent, createRef, useEffect, useState } from "react";
+import { SyntheticEvent, createRef, useEffect, useState } from "react";
 import getSongDetails from "@/app/server/getSongDetails.server";
 import { SongResponse } from "@/interfaces/song";
 import Love from "@/assets/icons/Love";
@@ -44,6 +44,7 @@ function Player() {
     const [volume, setVolume] = useState(audio.current?.volume || 1)
     const [playerEnabled, setPlayerEnabled] = useState(true)
     const [nextSuggestedSong, setNextSuggestedSong] = useState<string[]>([])
+    const [favArray, setFavArr] = useState<string[]>([])
 
     useEffect(() => {
 
@@ -96,17 +97,12 @@ function Player() {
 
         }
 
-        // favourite handler
-        getFavouriteSongs()
-            .then((data: any) => {
-                if (data) {
-                    const songs = data[0].songs
-                    if (songs.indexOf(id) !== -1)
-                        setIsFavourite(true)
-                    else
-                        setIsFavourite(false)
-                }
-            })
+        if(findSong(favArray, id) !== -1)
+            setIsFavourite(true)
+        else
+            setIsFavourite(false)
+
+        addToRecents(id)
 
         return () => {
             setData(null)
@@ -115,12 +111,21 @@ function Player() {
     }, [id])
 
     useEffect(() => {
+        // favourite handler
+        (async () => {
+            const data = await getFavouriteSongs()
+            setFavArr(data![0].songs)
+            console.log(favArray)
+        })()
+    }, [])
+
+    useEffect(() => {
         if (!window.ReactNativeWebView) return
         setPlayerEnabled(false)
-        window.changeSong = function (internalID : string) {
+        window.changeSong = function (internalID: string) {
             const url = new URL(location.href)
 
-            if(url.searchParams.get('id') === internalID)
+            if (url.searchParams.get('id') === internalID)
                 return;
 
             if (url.searchParams.has('id'))
@@ -165,7 +170,7 @@ function Player() {
                     return
                 }
             })
-    } 
+    }
 
     const handleRouteChange = (path: string) => {
         const url = new URL(window.location.href)
@@ -359,6 +364,8 @@ function Player() {
                         }
                         else
                             toast.error("Error occured while performing action")
+                        const favSongs = await getFavouriteSongs()
+                        setFavArr(favSongs![0].songs)
                     }}>
                         <Love isActive={isFavourite} />
                     </Button>
@@ -412,6 +419,31 @@ function shareSong(data: SongResponse | undefined) {
         text: 'Listen to song.',
         title: data?.name,
     })
+}
+
+function addToRecents(id: string) {
+    const recents: string[] = JSON.parse(localStorage.getItem("recents") || '[]')
+    if (recents.indexOf(id) != -1)
+        return;
+    if (recents.length > 10)
+        recents.shift()
+    recents.push(id)
+    localStorage.setItem("recents", JSON.stringify(recents))
+}
+
+function findSong(arr : string[], item: string) {
+    let min = 0, max = arr.length - 1, mid = Math.floor((max + min) / 2);
+    while(min <= max) {
+        mid = Math.floor((min + max) / 2)
+        let res = item.localeCompare(arr[mid])
+        if(res === 0)
+            return mid;
+        else if(res > 0)
+            min = mid + 1
+        else
+            max = mid - 1
+    }
+    return -1
 }
 
 export default Player;

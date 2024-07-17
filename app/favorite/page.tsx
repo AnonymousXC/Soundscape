@@ -10,6 +10,8 @@ import Love from '@/assets/icons/Love';
 import getFavouriteSongs from '@/database/getFavouriteSongs';
 import Link from 'next/link';
 import { Suspense, cache } from 'react';
+import dynamic from 'next/dynamic';
+import Loading from '../loading';
 
 const getFavCache = cache(getFavouriteSongs)
 
@@ -68,4 +70,7 @@ async function Favorite() {
     }
 }
 
-export default Favorite;
+export default dynamic(() => Promise.resolve(Favorite), {
+    ssr: false,
+    loading: () => { return (<Loading />)}
+});
