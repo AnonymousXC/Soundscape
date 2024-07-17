@@ -11,10 +11,7 @@ async function loginFunc(email: string, password: string, username: string, id :
         password: password,
     })
 
-    if(id)
-        redirect('/profile?id=' + id)
-    else
-        redirect('/profile')
+    return JSON.stringify(AUTH);
 }
 
 export default loginFunc;

@@ -15,13 +15,16 @@ async function addToFavourites(songID: string) {
         return status;
     }
     else {
-        let newSongs = favArr[0].songs
+        let newSongs : string[] = favArr[0].songs
         let removed = false
-        if (newSongs.indexOf(songID) === -1)
+        if (newSongs.indexOf(songID) === -1) {
             newSongs.push(songID)
+            newSongs = newSongs.sort()
+        }
         else {
             removed = true
             newSongs.splice(newSongs.indexOf(songID), 1)
+            newSongs = newSongs.sort()
         }
         const status = await supabase.from('favourites').upsert({
             'user_uuid': userID,

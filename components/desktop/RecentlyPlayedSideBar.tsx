@@ -6,7 +6,7 @@ import {
     Img,
     Skeleton,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { MouseEventHandler, SyntheticEvent, useEffect, useState } from "react";
 import getSongDetails from "@/app/server/getSongDetails.server";
 import { SongResponse } from "@/interfaces/song";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -32,7 +32,8 @@ function RecentlyPlayedSong(props : Props) {
     else
         isPaused = false
 
-    const handlePlay = () => {
+    const handlePlay = (e : SyntheticEvent) => {
+        e.stopPropagation()
         if(currentSongID == props.id)
         {
             if(document.querySelector('audio')?.paused === true)

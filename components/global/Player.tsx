@@ -45,7 +45,9 @@ function Player() {
     const [nextSuggestedSong, setNextSuggestedSong] = useState<string[]>([])
 
     useEffect(() => {
+        
         // get song
+        setLoaded(false)
         if (id !== undefined)
             getSongDetails(id)
                 .then((val: any) => {
@@ -92,15 +94,6 @@ function Player() {
                         setIsFavourite(false)
                 }
             })
-
-        // recent played handler
-        if (id) {
-            let recentData: Array<string> = JSON.parse(localStorage.getItem('recents') || '[]')
-            recentData = [id, ...recentData]
-            if (recentData.length > 11)
-                recentData.pop()
-            localStorage.setItem('recents', JSON.stringify(recentData))
-        }
 
         return () => {
             setData(null)
@@ -257,8 +250,7 @@ function Player() {
 
                 {/* Control slider */}
                 <Stack width={'100%'} maxWidth={['100%', '100%', '27rem']} ml={[0, 0, '1.8rem']} justifyContent={'center'} gap={'2px'}>
-                    <Skeleton isLoaded={loaded} height={'12px'} display={'flex'}>
-                        <Slider max={parseInt(data?.duration || '0')} value={currentTime} defaultValue={0} focusThumbOnChange={false}
+                        <Slider max={parseInt(data?.duration || '100')} value={currentTime} defaultValue={0} min={0} focusThumbOnChange={false}
                             onChange={(e) => {
                                 if (audio.current?.currentTime)
                                     audio.current.currentTime = e
@@ -268,7 +260,6 @@ function Player() {
                             </SliderTrack>
                             <SliderThumb background={'linear-gradient(to right, #B5179E , #7209B7)'} width={'12px'} height={'12px'} boxShadow={'none !important'} />
                         </Slider>
-                    </Skeleton>
                     <Flex justifyContent={'space-between'}>
                         <Text fontSize={'0.625rem'} color={'primaryText'}>{calculateTime(parseInt(data?.duration ?? '0'))}</Text>
                         <Text fontSize={'0.625rem'} color={'primaryText'}>{calculateTime(currentTime || 0)}</Text>
@@ -342,24 +333,6 @@ function Player() {
     )
 }
 
-function addToFavouriteLocal(id: string, setFavouriteButton: Dispatch<SetStateAction<boolean>>) {
-    if (localStorage.getItem('favourite')) {
-        let favArray: Array<string> = JSON.parse(localStorage.getItem('favourite') || '[]')
-        if (favArray.indexOf(id) != -1) {
-            favArray.splice(favArray.indexOf(id), 1)
-            localStorage.setItem('favourite', JSON.stringify(favArray))
-            setFavouriteButton(false)
-        }
-        else {
-            favArray.push(id)
-            favArray.sort()
-            localStorage.setItem('favourite', JSON.stringify(favArray))
-            setFavouriteButton(true)
-        }
-    }
-    else
-        localStorage.setItem('favourite', `["${id}"]`)
-}
 
 function updateNavigator(data: SongResponse) {
     if ('mediaSession' in navigator)

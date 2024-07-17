@@ -15,12 +15,7 @@ async function signUpFunc(email: string, password: string, username: string, id 
             }
         }
     })
-
-    console.log(AUTH.data, AUTH.error)
-    if(id)
-        redirect('/profile?id=' + id)
-    else
-        redirect('/profile')
+    
     return JSON.stringify(AUTH || undefined);
 }
 

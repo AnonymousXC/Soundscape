@@ -7,7 +7,7 @@ import {
     Input,
     Button
 } from '@chakra-ui/react'
-import { AuthResponse } from '@supabase/supabase-js';
+import { AuthResponse, AuthTokenResponsePassword } from '@supabase/supabase-js';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -18,9 +18,6 @@ function SignUpPage() {
     const [password, setPassword] = useState<string>("")
     const [username, setUsername] = useState<string>("")
     const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(false)
-    const [errorMessage, setErrorMessage] = useState<string>("")
-    const [creationStatus, setCreationStatus] = useState(false)
     const [isLogin, setIsLogin] = useState(false)
     const id = useSearchParams().get('id')
 
@@ -33,38 +30,47 @@ function SignUpPage() {
                 </Text>
                 <Flex flex={1} justifyContent={'center'} alignItems={'center'} flexDir={'column'}>
                     <Flex gap={'1rem'} flexDir={'column'} w={'100%'} maxW={'25rem'}>
-                        {
-                            isLogin ? "" :
-                                <Input placeholder='Enter username' onChange={(e) => setUsername(e.currentTarget.value)} />
-                        }
-                        <Input placeholder='Enter Email' onChange={(e) => setEmail(e.currentTarget.value)} />
-                        <Input placeholder='Enter Password' type='password' onChange={(e) => setPassword(e.currentTarget.value)} />
-                        <Button variant={'sidebar'} className={creationStatus ? 'auth-success-gradient' : 'sidebar-active-tab'} justifyContent={'center'} isLoading={loading} w={'100%'}
-                            onClick={() => {
-                                setLoading(true)
-                                if (isLogin === false) {
-                                    toast.info('Processing...')
-                                    signUpFunc(email, password, username, id || '')
-                                        .then((AUTH: string) => {
-                                            const data: AuthResponse = JSON.parse(AUTH || '{}')
-                                            if (data.error != null) {
-                                                setErrorMessage(data.error.code || '')
-                                                setError(true)
-                                            }
-                                            else {
-                                                setCreationStatus(true)
-                                            }
-                                            setLoading(false)
-                                        })
-                                }
-                                    
-                                else {
-                                    toast.info("Proccessing...")
-                                    loginFunc(email, password, username, id || '')
-                                }
-                            }}>
-                            {creationStatus == true ? isLogin == true ? 'Logged in' : 'Account Created Successfully' : error === false ? isLogin ? 'Login' : 'Create Account' : errorMessage}
-                        </Button>
+                        <form>
+                            {
+                                isLogin ? "" :
+                                    <Input placeholder='Enter username' onChange={(e) => setUsername(e.currentTarget.value)} />
+                            }
+                            <Input placeholder='Enter Email' onChange={(e) => setEmail(e.currentTarget.value)} type='email' />
+                            <Input placeholder='Enter Password' type='password' onChange={(e) => setPassword(e.currentTarget.value)} />
+                            <Button variant={'sidebar'} type='submit' className={'sidebar-active-tab'} justifyContent={'center'} isLoading={loading} w={'100%'}
+                            onSubmit={() => {return false}}
+                                onClick={async () => {
+                                    setLoading(true)
+                                    if (isLogin === false) {
+                                        toast.info('Creating account...')
+                                        signUpFunc(email, password, username, id || '')
+                                            .then((AUTH: string) => {
+                                                const data: AuthResponse = JSON.parse(AUTH || '{}')
+                                                if (data.error != null) {
+                                                    toast.error(data.error.code)
+                                                }
+                                                else {
+                                                    toast.success("Account created successfully.")
+                                                }
+                                                setLoading(false)
+                                            })
+                                    }
+
+                                    else {
+                                        toast.info("Logging in...")
+                                        const loginStat = await loginFunc(email, password, username, id || '')
+                                        const loginStatJSON = JSON.parse(loginStat) as AuthTokenResponsePassword;
+                                        if(loginStatJSON.error) {
+                                            toast.error("Either the password or email is incorrect.")
+                                        }
+                                        else if(loginStatJSON.data.user)
+                                            toast.success("Logged in successfully")
+                                        setLoading(false)
+                                    }
+                                }}>
+                                Submit
+                            </Button>
+                        </form>
                     </Flex>
                     <Button onClick={() => { setIsLogin(!isLogin) }} variant={'unstyled'} fontSize={'0.8rem'} fontWeight={"400"} className='gradient-text' textAlign={'end'} w={'100%'} maxW={'25rem'} >
                         {isLogin ? 'Sign Up' : 'Login'}

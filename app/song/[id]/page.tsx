@@ -25,10 +25,10 @@ async function SongPage({ params, searchParams }: any) {
             <Flex gap={5} alignItems={'center'} flexDirection={['column', 'column', 'column']}>
                 <Img src={data?.image[2].link} alt="cover image" width={[270, 270, 300]} height={[270, 270, 300]} rounded={8} />
                 <Flex flexDirection={'column'} gap={4}>
-                    <Text fontSize={'1.5rem'} fontWeight={'600'}> {data?.name} </Text>
+                    <Text fontSize={'1.5rem'} fontWeight={'600'} dangerouslySetInnerHTML={{ __html : data?.name}} />
                     <Flex flexDirection={'column'} gap={2} flex={1}>
                         <Text> Artist : {data?.primaryArtists} </Text>
-                        <Text> Album : {data?.album.name} </Text>
+                        <Text> Album : <span dangerouslySetInnerHTML={{ __html: data?.album.name}}></span></Text>
                         <Text> Release Date : {data?.releaseDate} </Text>
                         <Text> Play Count : {data?.playCount} </Text>
                     </Flex>

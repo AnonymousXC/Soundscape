@@ -6,9 +6,9 @@ async function Logout(id : string) {
     const supabase = createClient()
     const status = await supabase.auth.signOut()
     if(id)
-        redirect('/auth?id=' + id)
+        redirect('/profile?id=' + id)
     else
-        redirect('/auth')
+        redirect('/profile')
 }
 
 export default Logout;
