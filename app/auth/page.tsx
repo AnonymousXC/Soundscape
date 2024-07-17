@@ -29,49 +29,47 @@ function SignUpPage() {
                     Sign Up / Log in
                 </Text>
                 <Flex flex={1} justifyContent={'center'} alignItems={'center'} flexDir={'column'}>
-                    <Flex gap={'1rem'} flexDir={'column'} w={'100%'} maxW={'25rem'}>
-                        <form>
-                            {
-                                isLogin ? "" :
-                                    <Input placeholder='Enter username' onChange={(e) => setUsername(e.currentTarget.value)} />
-                            }
-                            <Input placeholder='Enter Email' onChange={(e) => setEmail(e.currentTarget.value)} type='email' />
-                            <Input placeholder='Enter Password' type='password' onChange={(e) => setPassword(e.currentTarget.value)} />
-                            <Button variant={'sidebar'} type='submit' className={'sidebar-active-tab'} justifyContent={'center'} isLoading={loading} w={'100%'}
-                            onSubmit={() => {return false}}
-                                onClick={async () => {
-                                    setLoading(true)
-                                    if (isLogin === false) {
-                                        toast.info('Creating account...')
-                                        signUpFunc(email, password, username, id || '')
-                                            .then((AUTH: string) => {
-                                                const data: AuthResponse = JSON.parse(AUTH || '{}')
-                                                if (data.error != null) {
-                                                    toast.error(data.error.code)
-                                                }
-                                                else {
-                                                    toast.success("Account created successfully.")
-                                                }
-                                                setLoading(false)
-                                            })
-                                    }
+                    <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '25rem', width: '100%' }}>
+                        {
+                            isLogin ? "" :
+                                <Input placeholder='Enter username' onChange={(e) => setUsername(e.currentTarget.value)} />
+                        }
+                        <Input placeholder='Enter Email' onChange={(e) => setEmail(e.currentTarget.value)} type='email' />
+                        <Input placeholder='Enter Password' type='password' onChange={(e) => setPassword(e.currentTarget.value)} />
+                        <Button variant={'sidebar'} type='submit' className={'sidebar-active-tab'} justifyContent={'center'} isLoading={loading} w={'100%'}
+                            onSubmit={() => { return false }}
+                            onClick={async () => {
+                                setLoading(true)
+                                if (isLogin === false) {
+                                    toast.info('Creating account...')
+                                    signUpFunc(email, password, username, id || '')
+                                        .then((AUTH: string) => {
+                                            const data: AuthResponse = JSON.parse(AUTH || '{}')
+                                            if (data.error != null) {
+                                                toast.error(data.error.code)
+                                            }
+                                            else {
+                                                toast.success("Account created successfully.")
+                                            }
+                                            setLoading(false)
+                                        })
+                                }
 
-                                    else {
-                                        toast.info("Logging in...")
-                                        const loginStat = await loginFunc(email, password, username, id || '')
-                                        const loginStatJSON = JSON.parse(loginStat) as AuthTokenResponsePassword;
-                                        if(loginStatJSON.error) {
-                                            toast.error("Either the password or email is incorrect.")
-                                        }
-                                        else if(loginStatJSON.data.user)
-                                            toast.success("Logged in successfully")
-                                        setLoading(false)
+                                else {
+                                    toast.info("Logging in...")
+                                    const loginStat = await loginFunc(email, password, username, id || '')
+                                    const loginStatJSON = JSON.parse(loginStat) as AuthTokenResponsePassword;
+                                    if (loginStatJSON.error) {
+                                        toast.error("Either the password or email is incorrect.")
                                     }
-                                }}>
-                                Submit
-                            </Button>
-                        </form>
-                    </Flex>
+                                    else if (loginStatJSON.data.user)
+                                        toast.success("Logged in successfully")
+                                    setLoading(false)
+                                }
+                            }}>
+                            Submit
+                        </Button>
+                    </form>
                     <Button onClick={() => { setIsLogin(!isLogin) }} variant={'unstyled'} fontSize={'0.8rem'} fontWeight={"400"} className='gradient-text' textAlign={'end'} w={'100%'} maxW={'25rem'} >
                         {isLogin ? 'Sign Up' : 'Login'}
                     </Button>

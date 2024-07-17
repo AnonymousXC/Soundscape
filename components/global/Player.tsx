@@ -26,6 +26,7 @@ import getFavouriteSongs from "@/database/getFavouriteSongs";
 import { startLoading } from "./TopLoadingBar";
 import getSongSuggestions from "@/app/server/getSongSuggestion";
 import KeyBinding from "./Keybinding";
+import getSongDetailsMulti from "@/app/server/getSongDetailsMulti.server";
 
 
 function Player() {
@@ -45,7 +46,7 @@ function Player() {
     const [nextSuggestedSong, setNextSuggestedSong] = useState<string[]>([])
 
     useEffect(() => {
-        
+
         // get song
         setLoaded(false)
         if (id !== undefined)
@@ -77,11 +78,23 @@ function Player() {
             localStorage.setItem("loop", "false")
 
         // Suggestion handler
-        if (nextSuggestedSong?.indexOf(id) === -1 || nextSuggestedSong.length <= 0 || nextSuggestedSong.indexOf(id) === nextSuggestedSong.length - 1)
+        if (nextSuggestedSong?.indexOf(id) === -1 || nextSuggestedSong.length <= 0 || nextSuggestedSong.indexOf(id) === nextSuggestedSong.length - 1) {
             getSongSuggestions(id)
                 .then((data: string[]) => {
+                    if (window.ReactNativeWebView) {
+                        getSongDetailsMulti(data)
+                            .then((data: any) => {
+                                window.ReactNativeWebView.postMessage(JSON.stringify({
+                                    eventType: "songSuggestion",
+                                    ...data
+                                }))
+                            })
+                        return
+                    }
                     setNextSuggestedSong(data)
                 })
+
+        }
 
         // favourite handler
         getFavouriteSongs()
@@ -104,6 +117,19 @@ function Player() {
     useEffect(() => {
         if (!window.ReactNativeWebView) return
         setPlayerEnabled(false)
+        window.changeSong = function (internalID : string) {
+            const url = new URL(location.href)
+
+            if(url.searchParams.get('id') === internalID)
+                return;
+
+            if (url.searchParams.has('id'))
+                url.searchParams.set('id', internalID || '')
+            else
+                url.searchParams.append('id', internalID || '')
+            router.replace(url.toString())
+        }
+        window.getSuggestion = getSuggestion
         window.pauseSongRN = function () {
             const url = new URL(window.location.toString())
             if (url.searchParams.has('paused')) {
@@ -124,6 +150,22 @@ function Player() {
             router.replace(url.toString())
         }
     }, [])
+
+    const getSuggestion = () => {
+        getSongSuggestions(id)
+            .then((data: string[]) => {
+                if (window.ReactNativeWebView) {
+                    getSongDetailsMulti(data)
+                        .then((data: any) => {
+                            window.ReactNativeWebView.postMessage(JSON.stringify({
+                                eventType: "songSuggestion",
+                                ...data
+                            }))
+                        })
+                    return
+                }
+            })
+    } 
 
     const handleRouteChange = (path: string) => {
         const url = new URL(window.location.href)
@@ -220,7 +262,7 @@ function Player() {
                     </Button>
                 </Flex>
                 <audio suppressHydrationWarning src={data?.downloadUrl[4].link} ref={audio} crossOrigin="anonymous"
-                    onVolumeChange={(_event: SyntheticEvent<HTMLAudioElement>) => { 
+                    onVolumeChange={(_event: SyntheticEvent<HTMLAudioElement>) => {
                         // @ts-expect-error
                         setVolume(_event.target.volume)
                     }}
@@ -250,16 +292,16 @@ function Player() {
 
                 {/* Control slider */}
                 <Stack width={'100%'} maxWidth={['100%', '100%', '27rem']} ml={[0, 0, '1.8rem']} justifyContent={'center'} gap={'2px'}>
-                        <Slider max={parseInt(data?.duration || '100')} value={currentTime} defaultValue={0} min={0} focusThumbOnChange={false}
-                            onChange={(e) => {
-                                if (audio.current?.currentTime)
-                                    audio.current.currentTime = e
-                            }}>
-                            <SliderTrack backgroundColor={'#464646'}>
-                                <SliderFilledTrack background={'linear-gradient(to right, #B5179E , #7209B7)'} />
-                            </SliderTrack>
-                            <SliderThumb background={'linear-gradient(to right, #B5179E , #7209B7)'} width={'12px'} height={'12px'} boxShadow={'none !important'} />
-                        </Slider>
+                    <Slider max={parseInt(data?.duration || '100')} value={currentTime} defaultValue={0} min={0} focusThumbOnChange={false}
+                        onChange={(e) => {
+                            if (audio.current?.currentTime)
+                                audio.current.currentTime = e
+                        }}>
+                        <SliderTrack backgroundColor={'#464646'}>
+                            <SliderFilledTrack background={'linear-gradient(to right, #B5179E , #7209B7)'} />
+                        </SliderTrack>
+                        <SliderThumb background={'linear-gradient(to right, #B5179E , #7209B7)'} width={'12px'} height={'12px'} boxShadow={'none !important'} />
+                    </Slider>
                     <Flex justifyContent={'space-between'}>
                         <Text fontSize={'0.625rem'} color={'primaryText'}>{calculateTime(parseInt(data?.duration ?? '0'))}</Text>
                         <Text fontSize={'0.625rem'} color={'primaryText'}>{calculateTime(currentTime || 0)}</Text>

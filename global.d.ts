@@ -6,5 +6,7 @@ declare global {
     ReactNativeWebView?: any;
     pauseSongRN?: any,
     playSongRN?: any,
+    getSuggestion?: any,
+    changeSong?: any,
   }
 }
