@@ -19,12 +19,12 @@ async function addToFavourites(songID: string) {
         let removed = false
         if (newSongs.indexOf(songID) === -1) {
             newSongs.push(songID)
-            newSongs = newSongs.sort()
+            newSongs = newSongs.sort((a : string, b : string) => (a.localeCompare(b)))
         }
         else {
             removed = true
             newSongs.splice(newSongs.indexOf(songID), 1)
-            newSongs = newSongs.sort()
+            newSongs = newSongs.sort((a : string, b : string) => (a.localeCompare(b)))
         }
         const status = await supabase.from('favourites').upsert({
             'user_uuid': userID,

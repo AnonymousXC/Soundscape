@@ -115,7 +115,6 @@ function Player() {
         (async () => {
             const data = await getFavouriteSongs()
             setFavArr(data![0].songs)
-            console.log(favArray)
         })()
     }, [])
 

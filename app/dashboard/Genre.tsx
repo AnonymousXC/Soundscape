@@ -1,5 +1,5 @@
 import { Image } from "@chakra-ui/next-js";
-import { 
+import {
     Box,
     Flex,
     Text
@@ -12,14 +12,14 @@ const getTrendingCache = cache(getTrending)
 
 function Genre() {
 
-    const [ albums, setAlbums ] = useState<Array<any>>([])
+    const [albums, setAlbums] = useState<Array<any>>([])
 
     useEffect(() => {
 
         getTrendingCache()
-        .then((data) => {
-            setAlbums(data.data.trending.albums)
-        })
+            .then((data) => {
+                setAlbums(data.data.trending.albums)
+            })
 
     }, [])
 
@@ -31,11 +31,17 @@ function Genre() {
                     Discover Genre
                 </Text>
             </Flex>
-            <Flex gap={4} overflowX={'auto'} className="hide-scroll-bar" py={3}>
+            <Flex gap={4} overflowX={'auto'} className="hide-scroll-bar" py={3} minH={270}>
                 {
-                    albums.map((element : any, idx : number) => {
-                        return ( <GenreBox props={element} key={idx} />)
+                    albums.map((element: any, idx: number) => {
+                        return (<GenreBox props={element} key={idx} />)
                     })
+                }
+                {
+                    albums.length === 0 &&
+                    <Flex justifyContent={'center'} alignItems={'center'} height={'100%'} width={"100%"}>
+                        Getting data from server...
+                    </Flex>
                 }
             </Flex>
         </Flex>

@@ -59,6 +59,12 @@ function TopMusic() {
                         return (<Song data={val} key={idx} />)
                     })
                 }
+                {
+                    trendingSongs?.length === 0 &&
+                    <Flex justifyContent={'center'} alignItems={'center'} height={'100%'} width={"100%"}>
+                        Getting data from server...
+                    </Flex>
+                }
             </Flex>
         </Flex>
     )
