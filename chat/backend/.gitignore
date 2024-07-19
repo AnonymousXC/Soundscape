@@ -1,0 +1,17 @@
+
+node_modules/
+
+*.js
+src/*.js
+
+.env
+
+*.js
+
+*.mp3
+
+.env
+
+*.wav
+
+artizence-transladtion-9ef0605231e7.json
