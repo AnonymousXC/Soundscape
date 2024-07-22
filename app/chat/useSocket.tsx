@@ -7,10 +7,11 @@ function useSocket() {
     const [socket, setSocket] = useState<Socket>()
 
     useEffect(() => {
-        const soc = io(process.env.NEXT_PUBLIC_CHAT_BACKEND_URL || '', { transports : ['websocket'] })
+        const soc = io(process.env.NEXT_PUBLIC_CHAT_BACKEND_URL || '')
         soc.connect()
-        setSocket(soc)
-        console.log(soc)
+        soc.on('connect', () => {
+            setSocket(soc)
+        })
     }, [])
 
     return socket;
