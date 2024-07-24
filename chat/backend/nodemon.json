@@ -1,8 +1,0 @@
-
-{
-    "ignore": [".git", "node_modules", "dist", "build"],
-    "watch": ["./src", "./"], 
-    "exec": "npx tsc && npm start",
-    "ext": "ts"
-}
-    

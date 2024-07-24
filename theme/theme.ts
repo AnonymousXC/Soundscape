@@ -13,28 +13,28 @@ const theme = extendTheme({
         colors: {
             background: {
                 default: "#eeeeee",
-                _dark: "#111111"
+                _dark: "#111111",
             },
             primaryText: {
-                default: '#474747',
-                _dark: '#B8B8B8'
+                default: "#474747",
+                _dark: "#B8B8B8",
             },
             secondaryText: {
-                default: '#0e0e0e',
-                _dark: '#F1F1F1'
+                default: "#0e0e0e",
+                _dark: "#F1F1F1",
             },
             primaryTextRe: {
-                default: '#000',
-                _dark: '#fff'
-            }
-        }
+                default: "#000",
+                _dark: "#fff",
+            },
+        },
     },
     components: {
         Divider,
         Button,
         Input,
-        Link
-    }
-})
+        Link,
+    },
+});
 
-export default theme
+export default theme;

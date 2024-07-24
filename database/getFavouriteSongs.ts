@@ -1,12 +1,15 @@
-'use server'
+"use server";
 
 import { createClient } from "./supabase";
 
 async function getFavouriteSongs() {
-    const supabase = createClient()
-    const id = (await supabase.auth.getUser()).data.user?.id
-    const data = await supabase.from('favourites').select('*').eq('user_uuid', id)
-    return data.data
+    const supabase = createClient();
+    const id = (await supabase.auth.getUser()).data.user?.id;
+    const data = await supabase
+        .from("favourites")
+        .select("*")
+        .eq("user_uuid", id);
+    return data.data;
 }
 
 export default getFavouriteSongs;

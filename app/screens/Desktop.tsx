@@ -8,12 +8,9 @@ import Player from "@/components/global/Player";
 import BottomBar from "@/components/global/MobileBottom";
 import { useBreakpoint } from "@chakra-ui/react";
 
-
-
 function Desktop({ children }: { children: ReactNode }) {
-
-    const breakpoint = useBreakpoint({ ssr: false })
-    console.log(breakpoint)
+    const breakpoint = useBreakpoint({ ssr: false });
+    console.log(breakpoint);
 
     return (
         <>
@@ -29,8 +26,7 @@ function Desktop({ children }: { children: ReactNode }) {
                 <BottomBar />
             </CKProviders>
         </>
-    )
+    );
 }
-
 
 export default Desktop;

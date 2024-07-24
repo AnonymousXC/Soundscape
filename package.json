@@ -1,34 +1,35 @@
 {
-  "name": "soundscape",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@chakra-ui/icons": "^2.1.1",
-    "@chakra-ui/next-js": "^2.2.0",
-    "@chakra-ui/react": "^2.8.2",
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.0",
-    "@supabase/ssr": "^0.3.0",
-    "@supabase/supabase-js": "^2.42.7",
-    "framer-motion": "^11.0.24",
-    "next": "14.1.4",
-    "react": "^18",
-    "react-dom": "^18",
-    "react-toastify": "^10.0.5",
-    "socket.io-client": "^4.7.5"
-  },
-  "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.1.4",
-    "typescript": "^5"
-  }
+    "name": "soundscape",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint && npx prettier . --write"
+    },
+    "dependencies": {
+        "@chakra-ui/icons": "^2.1.1",
+        "@chakra-ui/next-js": "^2.2.0",
+        "@chakra-ui/react": "^2.8.2",
+        "@emotion/react": "^11.11.4",
+        "@emotion/styled": "^11.11.0",
+        "@supabase/ssr": "^0.3.0",
+        "@supabase/supabase-js": "^2.42.7",
+        "framer-motion": "^11.0.24",
+        "next": "14.1.4",
+        "react": "^18",
+        "react-dom": "^18",
+        "react-toastify": "^10.0.5",
+        "socket.io-client": "^4.7.5"
+    },
+    "devDependencies": {
+        "@types/node": "^20",
+        "@types/react": "^18",
+        "@types/react-dom": "^18",
+        "eslint": "^8",
+        "eslint-config-next": "14.1.4",
+        "prettier": "3.3.3",
+        "typescript": "^5"
+    }
 }

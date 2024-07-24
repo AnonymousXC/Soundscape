@@ -1,38 +1,27 @@
 import { createClient } from "@/database/supabase";
-import {
-    Avatar,
-    Flex,
-    Text,
-} from "@chakra-ui/react";
-
+import { Avatar, Flex, Text } from "@chakra-ui/react";
 
 async function Profile() {
-
-    const supabase = createClient()
-    const userdata = (await supabase.auth.getUser()).data.user
+    const supabase = createClient();
+    const userdata = (await supabase.auth.getUser()).data.user;
 
     return (
-        <Flex width={'full'} flexDir={'column'} gap={6}>
-            <Text color={'primaryText'} fontWeight={'500'} fontSize={"1.2rem"}>
+        <Flex width={"full"} flexDir={"column"} gap={6}>
+            <Text color={"primaryText"} fontWeight={"500"} fontSize={"1.2rem"}>
                 User Details
             </Text>
             <Flex gap={6}>
-                <Avatar name={userdata?.user_metadata.username} size={'2xl'} />
-                <Flex flex={1} flexDir={'column'} justifyContent={'center'}>
-                    <Text fontSize={'1.2rem'}>
+                <Avatar name={userdata?.user_metadata.username} size={"2xl"} />
+                <Flex flex={1} flexDir={"column"} justifyContent={"center"}>
+                    <Text fontSize={"1.2rem"}>
                         {userdata?.user_metadata.username}
                     </Text>
-                    <Text fontSize={'0.8rem'}>
-                        Time Listened
-                    </Text>
-                    <Text fontSize={'0.8rem'}>
-                        {userdata?.email}
-                    </Text>
+                    <Text fontSize={"0.8rem"}>Time Listened</Text>
+                    <Text fontSize={"0.8rem"}>{userdata?.email}</Text>
                 </Flex>
             </Flex>
         </Flex>
-
-    )
+    );
 }
 
 export default Profile;

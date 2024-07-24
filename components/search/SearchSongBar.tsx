@@ -2,8 +2,8 @@
 // import { SongResponse } from '@/interfaces/song.interface';
 // import {
 //     Button,
-//     Flex, 
-//     Img, 
+//     Flex,
+//     Img,
 //     Text,
 //     Box
 // } from '@chakra-ui/react'
@@ -29,7 +29,6 @@
 //             setPlaying(false)
 //     }, [paused, id, props])
 
-    
 //     useEffect(() => {
 //         if(parseInt(paused || '0') == 0 && data?.id == id)
 //             setPlaying(true)
@@ -37,10 +36,9 @@
 //             setPlaying(false)
 //     }, [])
 
-
 //     const handlePlay = () => {
 //         const url = new URL(location.href)
-        
+
 //         if(url.searchParams.get('id') == data?.id)
 //         {
 //             const audio = document.querySelector('audio')
@@ -50,7 +48,7 @@
 //                 audio?.pause()
 //             return
 //         }
-        
+
 //         if(url.searchParams.get('id'))
 //             url.searchParams.set('id', data?.id || '')
 //         else

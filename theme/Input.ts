@@ -1,12 +1,12 @@
-import { ComponentStyleConfig } from "@chakra-ui/react"
+import { ComponentStyleConfig } from "@chakra-ui/react";
 
-const Input : ComponentStyleConfig = {
+const Input: ComponentStyleConfig = {
     variants: {
-        'glob': {
-            bgColor: '#fff',
-            fontSize: '30px'
-        }
-    }
-}
+        glob: {
+            bgColor: "#fff",
+            fontSize: "30px",
+        },
+    },
+};
 
 export default Input;

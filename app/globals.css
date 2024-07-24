@@ -1,6 +1,6 @@
 *,
 html {
-    --var-main-dark-gradient: linear-gradient(to right, #B5179E, #7209B7);
+    --var-main-dark-gradient: linear-gradient(to right, #b5179e, #7209b7);
     font-size: 16px;
 }
 /* 
@@ -9,20 +9,20 @@ body > *:not(img) {
 } */
 
 .gradient-text {
-    background: linear-gradient(to right, #B5179E, #7209B7) !important;
+    background: linear-gradient(to right, #b5179e, #7209b7) !important;
     background-clip: text !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
 }
 
 .sidebar-active-tab {
-    background-image: linear-gradient(to right, #B5179E, #7209B7) !important;
+    background-image: linear-gradient(to right, #b5179e, #7209b7) !important;
     color: #fff !important;
     fill: white;
 }
 
 .border-image-gradient {
-    background-image: linear-gradient(to right, #B5179E, #7209B7);
+    background-image: linear-gradient(to right, #b5179e, #7209b7);
 }
 
 .hide-scroll-bar::-webkit-scrollbar {

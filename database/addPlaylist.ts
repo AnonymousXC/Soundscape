@@ -1,13 +1,17 @@
-'use server'
+"use server";
 import PlaylistDetails from "@/@types/PlaylistDetail";
 import { createClient } from "./supabase";
 import { revalidatePath } from "next/cache";
 
-
-
-async function addPlaylist( { name, author, folder, access, imageURL } : PlaylistDetails ) {
-    const supabase = createClient()
-    const status = await supabase.from('playlists').insert({
+async function addPlaylist({
+    name,
+    author,
+    folder,
+    access,
+    imageURL,
+}: PlaylistDetails) {
+    const supabase = createClient();
+    const status = await supabase.from("playlists").insert({
         details: {
             name,
             author,
@@ -15,12 +19,10 @@ async function addPlaylist( { name, author, folder, access, imageURL } : Playlis
             imageURL,
         },
         access: access,
-        songs: []
-    })
-    if(status.statusText === 'Created')
-        revalidatePath('/profile')
+        songs: [],
+    });
+    if (status.statusText === "Created") revalidatePath("/profile");
     return status;
 }
-
 
 export default addPlaylist;
