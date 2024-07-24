@@ -72,7 +72,6 @@ function Player() {
             else setLoop(false);
         } else localStorage.setItem("loop", "false");
 
-        console.log(nextSuggestedSong)
         // Suggestion handler
         if (
             nextSuggestedSong.indexOf(id) === -1 ||

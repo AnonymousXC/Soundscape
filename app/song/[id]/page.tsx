@@ -8,12 +8,15 @@ import {
     ShareButton,
 } from "../Buttons";
 import getPlaylists from "@/database/getUserPlaylists";
+import getLyric from "@/app/server/getLyrics";
 
 async function SongPage({ params, searchParams }: any) {
     const id = params.id;
     let data;
+    let songLyrics;
     if (id) {
         const dataDetails = await getSongDetails(id);
+        songLyrics = await getLyric(id);
         if (dataDetails.data !== null) data = dataDetails.data[0];
     }
 
@@ -65,7 +68,10 @@ async function SongPage({ params, searchParams }: any) {
                                 }}></span>
                         </Text>
                         <Text> Release Date : {data?.releaseDate} </Text>
-                        <Text> Play Count : {data?.playCount} </Text>
+                        <Text>
+                            {" "}
+                            Play Count : {data?.playCount.toLocaleString()}{" "}
+                        </Text>
                     </Flex>
                     <Flex
                         mt={5}
@@ -79,6 +85,23 @@ async function SongPage({ params, searchParams }: any) {
                         <AddToPlaylist id={id} playlist={PlaylistNames} />
                     </Flex>
                 </Flex>
+            </Flex>
+            <Flex px={8} flexDir={"column"} gap={8}>
+                <Text fontSize={"1.1rem"} fontWeight={"600"}>
+                    Lyrics
+                </Text>
+                <Text
+                    dangerouslySetInnerHTML={{
+                        __html: songLyrics?.data.lyrics + "",
+                    }}
+                />
+                <Text
+                    fontSize={"0.7rem"}
+                    alignSelf={"center"}
+                    textAlign={"center"}
+                    dangerouslySetInnerHTML={{
+                        __html: songLyrics?.data.copyright + "",
+                    }}></Text>
             </Flex>
         </Flex>
     );
