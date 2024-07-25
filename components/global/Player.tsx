@@ -668,11 +668,12 @@ function shareSong(data: SongResponse | undefined) {
 }
 
 function addToRecents(id: string) {
+    if (!id || id.length <= 1) return;
     const recents: string[] = JSON.parse(
         localStorage.getItem("recents") || "[]"
     );
     if (recents.indexOf(id) != -1) return;
-    if (recents.length > 10) recents.shift();
+    if (recents.length > 9) recents.shift();
     recents.push(id);
     localStorage.setItem("recents", JSON.stringify(recents));
 }

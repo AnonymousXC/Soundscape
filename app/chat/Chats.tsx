@@ -13,12 +13,17 @@ interface MessageData {
 
 function Chats({ socket }: Props) {
     const [messages, setMessages] = useState<Array<MessageData>>([]);
-    const scrollRef = createRef<HTMLDivElement>();
 
     useEffect(() => {
         socket?.on("global-receive-message", (data: MessageData) => {
             setMessages((val) => [...val, data]);
-            scrollRef.current?.scrollIntoView();
+            const chatOverflowBox = document.getElementById(
+                "chat-content"
+            ) as HTMLDivElement;
+            chatOverflowBox.scrollTo({
+                top: chatOverflowBox.scrollHeight + chatOverflowBox.scrollTop,
+                behavior: "smooth",
+            });
         });
 
         return () => {
@@ -28,23 +33,24 @@ function Chats({ socket }: Props) {
 
     return (
         <Flex
+            id={"chat-content"}
             flex={"1"}
             flexDir={"column"}
             px={8}
+            py={4}
             overflowY={"auto"}
-            gap={14}
-            py={4}>
+            overflowX={"hidden"}>
             {messages.map((value: MessageData, idx: number) => (
                 <ChatMessage data={value} key={idx} />
             ))}
-            <Box ref={scrollRef}></Box>
+            <Box></Box>
         </Flex>
     );
 }
 
 function ChatMessage({ data }: { data: MessageData }) {
     return (
-        <Flex gap={5} alignItems={"center"}>
+        <Flex gap={4} alignItems={"center"} my={5}>
             <Flex
                 className="sidebar-active-tab"
                 width={35}
@@ -58,7 +64,7 @@ function ChatMessage({ data }: { data: MessageData }) {
                     borderColor={".sidebar-active-tab"}
                 />
             </Flex>
-            <Flex flexDir={"column"} gap={2}>
+            <Flex flexDir={"column"} gap={1} maxW={"100%"}>
                 <Flex flex={1} gap={2} alignItems={"end"} height={"28px"}>
                     <Text fontSize={"1.1rem"} fontWeight={"500"}>
                         {data.username}
@@ -71,7 +77,7 @@ function ChatMessage({ data }: { data: MessageData }) {
                 <Box
                     backgroundColor={"#1D1D1D"}
                     w={"max-content"}
-                    maxW={["100%", "100%", "600px"]}
+                    maxW={"90%"}
                     px={5}
                     py={2}
                     fontSize={"0.9rem"}

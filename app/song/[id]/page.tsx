@@ -92,7 +92,8 @@ async function SongPage({ params, searchParams }: any) {
                 </Text>
                 <Text
                     dangerouslySetInnerHTML={{
-                        __html: songLyrics?.data.lyrics + "",
+                        // @ts-expect-error
+                        __html: songLyrics?.data?.lyrics || songLyrics.message,
                     }}
                 />
                 <Text
@@ -100,7 +101,7 @@ async function SongPage({ params, searchParams }: any) {
                     alignSelf={"center"}
                     textAlign={"center"}
                     dangerouslySetInnerHTML={{
-                        __html: songLyrics?.data.copyright + "",
+                        __html: songLyrics?.data?.copyright || "Not found",
                     }}></Text>
             </Flex>
         </Flex>

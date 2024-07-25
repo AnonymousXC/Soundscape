@@ -1,6 +1,6 @@
 "use server";
 
-type ReturnType = {
+type ReturnTypeSuccess = {
     success: boolean;
     data: {
         lyrics: string;
@@ -9,7 +9,7 @@ type ReturnType = {
     };
 };
 
-async function getLyric(id: string): Promise<ReturnType> {
+async function getLyric(id: string): Promise<ReturnTypeSuccess> {
     const rawData = await fetch(
         `${process.env.MUSIC_API_URL_V2}/api/songs/${id}/lyrics`,
         { cache: "force-cache" }
