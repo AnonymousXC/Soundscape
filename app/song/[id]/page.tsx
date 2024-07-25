@@ -92,9 +92,9 @@ async function SongPage({ params, searchParams }: any) {
                 </Text>
                 <Text
                     dangerouslySetInnerHTML={{
-                        // @ts-expect-error
                         __html:
                             songLyrics?.data?.lyrics ||
+                            // @ts-expect-error
                             `<p>${songLyrics.message}</p>`,
                     }}
                 />
