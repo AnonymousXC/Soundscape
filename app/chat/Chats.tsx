@@ -9,6 +9,7 @@ type Props = {
 interface MessageData {
     message: string;
     username: string;
+    id: string;
 }
 
 function Chats({ socket }: Props) {
@@ -41,16 +42,24 @@ function Chats({ socket }: Props) {
             overflowY={"auto"}
             overflowX={"hidden"}>
             {messages.map((value: MessageData, idx: number) => (
-                <ChatMessage data={value} key={idx} />
+                <ChatMessage
+                    data={value}
+                    key={idx}
+                    isSelf={socket?.id === value.id}
+                />
             ))}
             <Box></Box>
         </Flex>
     );
 }
 
-function ChatMessage({ data }: { data: MessageData }) {
+function ChatMessage({ data, isSelf }: { data: MessageData; isSelf: boolean }) {
     return (
-        <Flex gap={4} alignItems={"center"} my={5}>
+        <Flex
+            gap={4}
+            alignItems={"center"}
+            my={5}
+            flexDir={isSelf ? "row-reverse" : "row"}>
             <Flex
                 className="sidebar-active-tab"
                 width={35}
@@ -64,27 +73,47 @@ function ChatMessage({ data }: { data: MessageData }) {
                     borderColor={".sidebar-active-tab"}
                 />
             </Flex>
-            <Flex flexDir={"column"} gap={1} maxW={"100%"}>
+            <Flex
+                flexDir={"column"}
+                gap={1}
+                maxW={"100%"}
+                alignItems={isSelf ? "end" : "start"}>
                 <Flex flex={1} gap={2} alignItems={"end"} height={"28px"}>
-                    <Text fontSize={"1.1rem"} fontWeight={"500"}>
+                    <Text
+                        fontSize={"1.1rem"}
+                        fontWeight={"500"}
+                        cursor={isSelf ? "default" : "pointer"}
+                        _hover={
+                            !isSelf
+                                ? {
+                                      textDecoration: "underline",
+                                      textUnderlineOffset: 4,
+                                  }
+                                : {}
+                        }>
                         {data.username}
                     </Text>
-                    <Text fontSize={"10px"} pb={1} fontWeight={"300"}>
+                    <Text
+                        fontSize={"10px"}
+                        pb={1}
+                        fontWeight={"300"}
+                        display={isSelf ? "none" : "block"}>
                         Now at {(new Date().getHours() + "").padStart(2, "0")}.
                         {(new Date().getMinutes() + "").padStart(2, "0")}
                     </Text>
                 </Flex>
-                <Box
+                <Text
                     backgroundColor={"#1D1D1D"}
-                    w={"max-content"}
-                    maxW={"90%"}
+                    w={"min-content"}
+                    maxW={["90%", "90%", "500px"]}
                     px={5}
                     py={2}
                     fontSize={"0.9rem"}
                     roundedBottom={"0.5rem"}
-                    roundedTopEnd={"0.5rem"}>
+                    roundedTopStart={isSelf ? "0.5rem" : "0rem"}
+                    roundedTopEnd={isSelf ? "0rem" : "0.5rem"}>
                     {data.message}
-                </Box>
+                </Text>
             </Flex>
         </Flex>
     );

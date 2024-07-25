@@ -3,6 +3,7 @@ import Divider from "./Divider";
 import Button from "./Button";
 import Input from "./Input";
 import Link from "./Link";
+import { Accordion } from "./Accordion";
 
 const theme = extendTheme({
     config: {
@@ -34,6 +35,7 @@ const theme = extendTheme({
         Button,
         Input,
         Link,
+        Accordion,
     },
 });
 
