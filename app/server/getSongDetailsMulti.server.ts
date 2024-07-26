@@ -9,7 +9,6 @@ async function getSongDetailsMulti(ids: any) {
         { cache: "force-cache" }
     );
     const data = await fetchData.json();
-    console.log(data, idStr, ids);
     return data.data;
 }
 

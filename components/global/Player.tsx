@@ -44,6 +44,7 @@ function Player() {
     const [nextSuggestedSong, setNextSuggestedSong] = useState<string[]>([]);
     const [favArray, setFavArr] = useState<string[]>([]);
 
+    // song change useEffect hook
     useEffect(() => {
         // get song
         setLoaded(false);
@@ -104,14 +105,15 @@ function Player() {
         };
     }, [id]);
 
+    // favourite handler useEffect hook
     useEffect(() => {
-        // favourite handler
         (async () => {
             const data = await getFavouriteSongs();
             setFavArr(data![0].songs);
         })();
     }, []);
 
+    // react native useEffect hook
     useEffect(() => {
         if (!window.ReactNativeWebView) return;
         setPlayerEnabled(false);

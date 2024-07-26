@@ -11,11 +11,11 @@ const custom = definePartsStyle({
         borderColor: "gray.200",
         background: "gray.50",
         roundedBottom: "1rem",
+        fontWeight: "400",
 
-        // Let's also provide dark mode alternatives
         _dark: {
-            background: "#ededed",
-            color: "#000",
+            background: "#353535",
+            color: "#ededed",
         },
     },
     container: {
@@ -23,6 +23,8 @@ const custom = definePartsStyle({
         backgroundColor: "#202020",
         rounded: "1rem",
         my: 6,
+        color: "#fff",
+        fontWeight: "500",
     },
 });
 
