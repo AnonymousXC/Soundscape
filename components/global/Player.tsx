@@ -100,18 +100,16 @@ function Player() {
 
         addToRecents(id);
 
+        if (!favArray || favArray.length === 0)
+            (async () => {
+                const data = await getFavouriteSongs();
+                if (data && data.length > 0) setFavArr(data![0].songs);
+            })();
+
         return () => {
             setData(null);
         };
     }, [id]);
-
-    // favourite handler useEffect hook
-    useEffect(() => {
-        (async () => {
-            const data = await getFavouriteSongs();
-            setFavArr(data![0].songs);
-        })();
-    }, []);
 
     // react native useEffect hook
     useEffect(() => {
@@ -210,7 +208,7 @@ function Player() {
                 backgroundColor={"background"}
                 bottom={["3.875rem", "3.875rem", "0"]}
                 left={0}
-                zIndex={10000}
+                zIndex={1000}
                 justifyContent={"space-evenly"}
                 boxShadow={["", "", "1px 3px 25px rgb(0 0 0 / 0.8)"]}
                 flexDirection={["column-reverse", "column-reverse", "row"]}

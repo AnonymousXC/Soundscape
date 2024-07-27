@@ -164,7 +164,7 @@ function Song(props: Props) {
                 alignItems={"center"}
                 display={"flex"}
                 onClick={handlePlay}
-                zIndex={1000}>
+                zIndex={500}>
                 <Image
                     loader={() =>
                         playing == false

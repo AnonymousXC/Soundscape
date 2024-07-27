@@ -1,11 +1,10 @@
 "use client";
 import loginFunc from "@/database/login";
 import signUpFunc from "@/database/signUp";
-import { Flex, Text, Input, Button } from "@chakra-ui/react";
+import { Flex, Text, Input, Button, useToast } from "@chakra-ui/react";
 import { AuthResponse, AuthTokenResponsePassword } from "@supabase/supabase-js";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { toast } from "react-toastify";
 
 function SignUpPage() {
     const [email, setEmail] = useState<string>("");
@@ -14,6 +13,7 @@ function SignUpPage() {
     const [loading, setLoading] = useState(false);
     const [isLogin, setIsLogin] = useState(false);
     const id = useSearchParams().get("id");
+    const toast = useToast();
 
     return (
         <Flex
@@ -83,7 +83,6 @@ function SignUpPage() {
                             onClick={async () => {
                                 setLoading(true);
                                 if (isLogin === false) {
-                                    toast.info("Creating account...");
                                     signUpFunc(
                                         email,
                                         password,
@@ -94,16 +93,27 @@ function SignUpPage() {
                                             AUTH || "{}"
                                         );
                                         if (data.error != null) {
-                                            toast.error(data.error.code);
+                                            toast({
+                                                title: "Account creation failed.",
+                                                description:
+                                                    data.error.code || "",
+                                                duration: 4000,
+                                                isClosable: false,
+                                                status: "error",
+                                            });
                                         } else {
-                                            toast.success(
-                                                "Account created successfully."
-                                            );
+                                            toast({
+                                                title: "Successful",
+                                                description:
+                                                    "Account created successfully.",
+                                                duration: 4000,
+                                                isClosable: false,
+                                                status: "success",
+                                            });
                                         }
                                         setLoading(false);
                                     });
                                 } else {
-                                    toast.info("Logging in...");
                                     const loginStat = await loginFunc(
                                         email,
                                         password,
@@ -114,11 +124,23 @@ function SignUpPage() {
                                         loginStat
                                     ) as AuthTokenResponsePassword;
                                     if (loginStatJSON.error) {
-                                        toast.error(
-                                            "Either the password or email is incorrect."
-                                        );
+                                        toast({
+                                            title: "Login",
+                                            description:
+                                                "Error logging into account.",
+                                            duration: 4000,
+                                            isClosable: false,
+                                            status: "error",
+                                        });
                                     } else if (loginStatJSON.data.user)
-                                        toast.success("Logged in successfully");
+                                        toast({
+                                            title: "Login",
+                                            description:
+                                                "Logged in successfully.",
+                                            duration: 4000,
+                                            isClosable: false,
+                                            status: "success",
+                                        });
                                     setLoading(false);
                                 }
                             }}>

@@ -20,7 +20,7 @@ function ActivityBar() {
             setUser(data.data.user);
         });
         getFavouriteSongs().then((data) => {
-            if (data) setRecents(data![0].songs || []);
+            if (data && data.length !== 0) setRecents(data![0].songs || []);
         });
     }, [path]);
 
@@ -38,7 +38,7 @@ function ActivityBar() {
             top={0}
             left={0}
             boxShadow={"1px 3px 25px rgb(0 0 0 / 0.8)"}
-            zIndex={1000}
+            zIndex={500}
             transition={"all 200ms"}>
             <Button
                 position={"absolute"}

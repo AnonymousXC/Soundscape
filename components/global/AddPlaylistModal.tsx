@@ -13,9 +13,9 @@ import {
     ModalHeader,
     ModalOverlay,
     Select,
+    useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 
 type Props = {
     isOpen: any;
@@ -32,6 +32,7 @@ function AddPlaylistModal({ isOpen, onOpen, onClose }: Props) {
         "https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3"
     );
     const [loading, setLoading] = useState(false);
+    const toast = useToast();
 
     useEffect(() => {
         (async () => {
@@ -53,6 +54,7 @@ function AddPlaylistModal({ isOpen, onOpen, onClose }: Props) {
                 backdropFilter="auto"
                 backdropInvert="80%"
                 backdropBlur="2px"
+                zIndex={500}
             />
             <ModalContent bg={"Background"}>
                 <ModalHeader>Add a new Playlist</ModalHeader>
@@ -107,6 +109,17 @@ function AddPlaylistModal({ isOpen, onOpen, onClose }: Props) {
                 <ModalFooter gap={5}>
                     <Button
                         onClick={async () => {
+                            if (!playlistName) {
+                                toast({
+                                    title: "Playlist",
+                                    description: `Error creating playlist. Provide a name.`,
+                                    duration: 4000,
+                                    isClosable: false,
+                                    status: "error",
+                                });
+                                return;
+                            }
+
                             setLoading(true);
                             const status = await addPlaylist({
                                 name: playlistName,
@@ -116,13 +129,21 @@ function AddPlaylistModal({ isOpen, onOpen, onClose }: Props) {
                                 imageURL,
                             });
                             if (status!.statusText === "Created")
-                                toast.success(
-                                    `${playlistName} created successfully`
-                                );
+                                toast({
+                                    title: "Playlist",
+                                    description: `${playlistName} created successfully`,
+                                    duration: 4000,
+                                    isClosable: false,
+                                    status: "success",
+                                });
                             else
-                                toast.error(
-                                    `Error creating playlist ${playlistName}`
-                                );
+                                toast({
+                                    title: "Playlist",
+                                    description: `Error creating playlist ${playlistName}`,
+                                    duration: 4000,
+                                    isClosable: false,
+                                    status: "error",
+                                });
                             setLoading(false);
                         }}
                         className="sidebar-active-tab"

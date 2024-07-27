@@ -38,7 +38,7 @@ function Sidebar() {
             top={0}
             left={0}
             boxShadow={"1px 3px 25px rgb(0 0 0 / 0.8)"}
-            zIndex={1000}
+            zIndex={500}
             transition={"all 200ms"}>
             <Button
                 position={"absolute"}
