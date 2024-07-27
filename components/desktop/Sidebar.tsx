@@ -176,21 +176,21 @@ function Sidebar() {
                             fontSize={"1rem"}
                             leftIcon={
                                 <Img
-                                    src={"/icons/Friends.svg"}
+                                    src={"/icons/Phone Icon.svg"}
                                     alt="logo"
-                                    width={"20px"}
+                                    width={"18px"}
                                     height={"auto"}
                                 />
                             }
                             onClick={() => {
-                                handleRouteChange("/friend");
+                                handleRouteChange("/mobile-app");
                             }}
                             className={
-                                pathname === "/friend"
+                                pathname === "/mobile-app"
                                     ? "sidebar-active-tab"
                                     : ""
                             }>
-                            Friends
+                            Mobile App
                         </Button>
                     </Flex>
                 </Flex>

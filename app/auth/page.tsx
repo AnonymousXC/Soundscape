@@ -1,6 +1,7 @@
 "use client";
 import loginFunc from "@/database/login";
 import signUpFunc from "@/database/signUp";
+import usernameAlreadyExists from "@/database/usernameExists";
 import { Flex, Text, Input, Button, useToast } from "@chakra-ui/react";
 import { AuthResponse, AuthTokenResponsePassword } from "@supabase/supabase-js";
 import { useSearchParams } from "next/navigation";
@@ -83,6 +84,21 @@ function SignUpPage() {
                             onClick={async () => {
                                 setLoading(true);
                                 if (isLogin === false) {
+                                    const { exists } =
+                                        await usernameAlreadyExists(username);
+                                    if (exists === true) {
+                                        toast({
+                                            title: "Account creation failed.",
+                                            description:
+                                                "Username already exists.",
+                                            duration: 4000,
+                                            isClosable: false,
+                                            status: "error",
+                                        });
+                                        setLoading(false);
+                                        return;
+                                    }
+
                                     signUpFunc(
                                         email,
                                         password,

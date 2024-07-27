@@ -20,6 +20,7 @@ import Link from "next/link";
 import changeUsername from "@/database/changeUsername";
 import changePassword from "@/database/changePassword";
 import AddPlaylistComp from "../profile/AddPlaylistComp";
+import usernameAlreadyExists from "@/database/usernameExists";
 
 function Setting() {
     const songID = useSearchParams().get("id");
@@ -122,11 +123,26 @@ function Setting() {
                                 minW={"170px"}
                                 onClick={async () => {
                                     toast({
-                                        title: "Changing username",
+                                        title: "Change username",
                                         status: "loading",
                                         duration: 4000,
                                         isClosable: false,
                                     });
+                                    const { exists } =
+                                        await usernameAlreadyExists(
+                                            newUsername
+                                        );
+                                    if (exists === true) {
+                                        toast({
+                                            title: "Change username",
+                                            description:
+                                                "Username already exists.",
+                                            status: "error",
+                                            duration: 4000,
+                                            isClosable: false,
+                                        });
+                                        return;
+                                    }
                                     const message =
                                         await changeUsername(newUsername);
                                     toast({

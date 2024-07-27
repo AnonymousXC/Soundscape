@@ -15,7 +15,7 @@ function BottomBar() {
         <Flex
             display={["flex", "flex", "none"]}
             position={"fixed"}
-            zIndex={10000}
+            zIndex={1000}
             bottom={0}
             left={0}
             height={"3.875rem"}

@@ -1,5 +1,4 @@
 "use server";
-import { redirect } from "next/navigation";
 import { createClient } from "./supabase";
 
 async function signUpFunc(
@@ -19,6 +18,8 @@ async function signUpFunc(
             },
         },
     });
+
+    if (AUTH.error === null) await supabase.from("users").insert({ username });
 
     return JSON.stringify(AUTH || undefined);
 }
