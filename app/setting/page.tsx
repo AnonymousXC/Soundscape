@@ -106,8 +106,13 @@ function Setting() {
                             justifyContent={"center"}
                             alignItems={"center"}
                             gap={4}>
-                            <Text minW={"120px"}>New username</Text>
+                            <Text
+                                minW={"120px"}
+                                display={["none", "none", "block"]}>
+                                New username
+                            </Text>
                             <Input
+                                placeholder="Username"
                                 flex={"1"}
                                 borderBottom={"1px solid #fff"}
                                 boxShadow={"none !important"}
@@ -174,8 +179,13 @@ function Setting() {
                             justifyContent={"center"}
                             alignItems={"center"}
                             gap={4}>
-                            <Text minW={"120px"}>New email</Text>
+                            <Text
+                                minW={"120px"}
+                                display={["none", "none", "block"]}>
+                                New email
+                            </Text>
                             <Input
+                                placeholder="Email"
                                 flex={"1"}
                                 borderBottom={"1px solid #fff"}
                                 boxShadow={"none !important"}
@@ -201,8 +211,13 @@ function Setting() {
                             alignItems={"center"}
                             gap={4}
                             pb={4}>
-                            <Text minW={"120px"}>New password</Text>
+                            <Text
+                                minW={"120px"}
+                                display={["none", "none", "flex"]}>
+                                New password
+                            </Text>
                             <Input
+                                placeholder="Password"
                                 flex={"1"}
                                 borderBottom={"1px solid #fff"}
                                 boxShadow={"none !important"}

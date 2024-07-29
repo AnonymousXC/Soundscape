@@ -83,11 +83,11 @@ function BottomBar() {
                 justifyContent={"center"}
                 alignItems={"center"}
                 display={"flex"}
-                className={pathname === "/friend" ? "sidebar-active-tab" : ""}
+                className={pathname === "/setting" ? "sidebar-active-tab" : ""}
                 onClick={() => {
-                    handleRouteChange("/friend");
+                    handleRouteChange("/setting");
                 }}>
-                <Img src="/icons/Friends.svg" />
+                <Img src="/icons/Settings.svg" />
             </Button>
         </Flex>
     );
