@@ -83,8 +83,25 @@ function Player() {
             });
         }
 
-        if (findSong(favArray, id) !== -1) setIsFavourite(true);
-        else setIsFavourite(false);
+        if (findSong(favArray, id) !== -1) {
+            setIsFavourite(true);
+            if (window.ReactNativeWebView)
+                window.ReactNativeWebView.postMessage(
+                    JSON.stringify({
+                        isFavourite: true,
+                        eventType: "favourite-check",
+                    })
+                );
+        } else {
+            setIsFavourite(false);
+            if (window.ReactNativeWebView)
+                window.ReactNativeWebView.postMessage(
+                    JSON.stringify({
+                        isFavourite: false,
+                        eventType: "favourite-check",
+                    })
+                );
+        }
 
         addToRecents(id);
 
@@ -103,6 +120,9 @@ function Player() {
     useEffect(() => {
         if (!window.ReactNativeWebView) return;
         setPlayerEnabled(false);
+        window.openSongPage = (internalID: string) => {
+            handleRouteChange(`/song/${internalID}`);
+        };
         window.changeSong = function (internalID: string) {
             const url = new URL(location.href);
 
@@ -113,7 +133,7 @@ function Player() {
             else url.searchParams.append("id", internalID || "");
             router.replace(url.toString());
         };
-        window.addFavourite = addFavourite;
+        window.addFavourite = addFavouriteRN;
         window.pauseSongRN = function () {
             const url = new URL(window.location.toString());
             if (url.searchParams.has("paused")) {
@@ -175,23 +195,43 @@ function Player() {
         const status = await addToFavourites(id);
         if (
             status!.status === 200 ||
-            (status.status === 201 &&
-                status.statusText === "Created")
+            (status.status === 201 && status.statusText === "Created")
         ) {
-            toast.success(
-                "Successfull added song to favourites"
-            );
+            toast.success("Successfull added song to favourites");
         } else if (status.status === 300) {
-            toast.warn(
-                "Successfully removed from favourites"
-            );
-        } else
-            toast.error(
-                "Error occured while performing action"
-            );
+            toast.warn("Successfully removed from favourites");
+        } else toast.error("Error occured while performing action");
         const favSongs = await getFavouriteSongs();
         setFavArr(favSongs![0].songs);
-    }
+    };
+
+    const addFavouriteRN = async (internalID: string) => {
+        const status = await addToFavourites(internalID);
+        if (
+            status!.status === 200 ||
+            (status.status === 201 && status.statusText === "Created")
+        ) {
+            toast.success("Successfull added song to favourites");
+            if (window.ReactNativeWebView)
+                window.ReactNativeWebView.postMessage(
+                    JSON.stringify({
+                        isFavourite: true,
+                        eventType: "favourite-check",
+                    })
+                );
+        } else if (status.status === 300) {
+            toast.warn("Successfully removed from favourites");
+            if (window.ReactNativeWebView)
+                window.ReactNativeWebView.postMessage(
+                    JSON.stringify({
+                        isFavourite: false,
+                        eventType: "favourite-check",
+                    })
+                );
+        } else toast.error("Error occured while performing action");
+        const favSongs = await getFavouriteSongs();
+        setFavArr(favSongs![0].songs);
+    };
 
     if (playerEnabled === true)
         return (
@@ -567,7 +607,7 @@ function Player() {
                         variant={"unstyled"}
                         size={"sm"}
                         onClick={async () => {
-                           await addFavourite()
+                            await addFavourite();
                         }}>
                         <Love isActive={isFavourite} />
                     </Button>

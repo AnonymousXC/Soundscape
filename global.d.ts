@@ -8,5 +8,6 @@ declare global {
         playSongRN?: any;
         addFavourite?: any;
         changeSong?: any;
+        openSongPage: any;
     }
 }

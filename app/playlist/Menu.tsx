@@ -1,10 +1,11 @@
 "use client";
 import removeFromPlaylist from "@/database/removeFromPlaylist";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { Button, Menu, MenuButton } from "@chakra-ui/react";
-import { toast } from "react-toastify";
+import { Button, Menu, MenuButton, useToast } from "@chakra-ui/react";
 
 function MenuBTN({ id, playlist_id }: { id: string; playlist_id: string }) {
+    const toast = useToast();
+
     return (
         <Menu>
             <MenuButton
@@ -17,9 +18,21 @@ function MenuBTN({ id, playlist_id }: { id: string; playlist_id: string }) {
                     backgroundColor: "red",
                 }}
                 onClick={async () => {
-                    toast.info("Removing from playlist");
+                    toast({
+                        title: "Playlist",
+                        description: "Removing from playlist",
+                        duration: 4000,
+                        isClosable: false,
+                        status: "info",
+                    });
                     const status = await removeFromPlaylist(playlist_id, id);
-                    toast.success("Removed song successfully");
+                    toast({
+                        title: "Playlist",
+                        description: "Removed song successfully",
+                        duration: 4000,
+                        isClosable: false,
+                        status: "success",
+                    });
                 }}>
                 <DeleteIcon />
             </MenuButton>
