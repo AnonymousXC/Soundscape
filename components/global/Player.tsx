@@ -26,7 +26,6 @@ import getFavouriteSongs from "@/database/getFavouriteSongs";
 import { startLoading } from "./TopLoadingBar";
 import getSongSuggestions from "@/app/server/getSongSuggestion";
 import KeyBinding from "./Keybinding";
-import getSongDetailsMulti from "@/app/server/getSongDetailsMulti.server";
 
 function Player() {
     const params = useSearchParams();
@@ -80,17 +79,6 @@ function Player() {
             nextSuggestedSong.indexOf(id) === nextSuggestedSong.length - 1
         ) {
             getSongSuggestions(id).then((data: string[]) => {
-                if (window.ReactNativeWebView) {
-                    getSongDetailsMulti(data).then((data: any) => {
-                        window.ReactNativeWebView.postMessage(
-                            JSON.stringify({
-                                eventType: "songSuggestion",
-                                ...data,
-                            })
-                        );
-                    });
-                    return;
-                }
                 setNextSuggestedSong(data);
             });
         }
@@ -125,7 +113,7 @@ function Player() {
             else url.searchParams.append("id", internalID || "");
             router.replace(url.toString());
         };
-        window.getSuggestion = getSuggestion;
+        window.addFavourite = addFavourite;
         window.pauseSongRN = function () {
             const url = new URL(window.location.toString());
             if (url.searchParams.has("paused")) {
@@ -143,22 +131,6 @@ function Player() {
             router.replace(url.toString());
         };
     }, []);
-
-    const getSuggestion = () => {
-        getSongSuggestions(id).then((data: string[]) => {
-            if (window.ReactNativeWebView) {
-                getSongDetailsMulti(data).then((data: any) => {
-                    window.ReactNativeWebView.postMessage(
-                        JSON.stringify({
-                            eventType: "songSuggestion",
-                            ...data,
-                        })
-                    );
-                });
-                return;
-            }
-        });
-    };
 
     const handleRouteChange = (path: string) => {
         const url = new URL(window.location.href);
@@ -197,6 +169,29 @@ function Player() {
             router.replace(url.toString());
         } else if (audio.current) audio.current.currentTime = 0;
     };
+
+    const addFavourite = async () => {
+        setIsFavourite(!isFavourite);
+        const status = await addToFavourites(id);
+        if (
+            status!.status === 200 ||
+            (status.status === 201 &&
+                status.statusText === "Created")
+        ) {
+            toast.success(
+                "Successfull added song to favourites"
+            );
+        } else if (status.status === 300) {
+            toast.warn(
+                "Successfully removed from favourites"
+            );
+        } else
+            toast.error(
+                "Error occured while performing action"
+            );
+        const favSongs = await getFavouriteSongs();
+        setFavArr(favSongs![0].songs);
+    }
 
     if (playerEnabled === true)
         return (
@@ -572,26 +567,7 @@ function Player() {
                         variant={"unstyled"}
                         size={"sm"}
                         onClick={async () => {
-                            setIsFavourite(!isFavourite);
-                            const status = await addToFavourites(id);
-                            if (
-                                status!.status === 200 ||
-                                (status.status === 201 &&
-                                    status.statusText === "Created")
-                            ) {
-                                toast.success(
-                                    "Successfull added song to favourites"
-                                );
-                            } else if (status.status === 300) {
-                                toast.warn(
-                                    "Successfully removed from favourites"
-                                );
-                            } else
-                                toast.error(
-                                    "Error occured while performing action"
-                                );
-                            const favSongs = await getFavouriteSongs();
-                            setFavArr(favSongs![0].songs);
+                           await addFavourite()
                         }}>
                         <Love isActive={isFavourite} />
                     </Button>
