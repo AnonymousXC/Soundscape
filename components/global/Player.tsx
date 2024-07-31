@@ -45,9 +45,9 @@ function Player() {
 
     // song change useEffect hook
     useEffect(() => {
+        if (id === undefined || id === "" || !id) return;
         // get song
         setLoaded(false);
-        if (id !== undefined)
             getSongDetails(id).then((val: any) => {
                 if (val.status == "SUCCESS") {
                     if (window.ReactNativeWebView) {
