@@ -1,5 +1,12 @@
 "use client";
-import { Avatar, Button, Flex, Skeleton, Text } from "@chakra-ui/react";
+import {
+    Avatar,
+    Button,
+    Flex,
+    Heading,
+    Skeleton,
+    Text,
+} from "@chakra-ui/react";
 import { Img } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Artist from "../global/Artist";
@@ -14,6 +21,7 @@ function ActivityBar() {
     const [recents, setRecents] = useState<Array<string>>([]);
     const [user, setUser] = useState<User | null>(null);
     const path = usePathname();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         getSession().then((data: UserResponse) => {
@@ -21,6 +29,7 @@ function ActivityBar() {
         });
         getFavouriteSongs().then((data) => {
             if (data && data.length !== 0) setRecents(data![0].songs || []);
+            setLoading(false);
         });
     }, [path]);
 
@@ -54,42 +63,46 @@ function ActivityBar() {
                 _hover={{ opacity: 1 }}>
                 {isVisible ? "→" : "←"}
             </Button>
-            <Flex
-                justifyContent={"space-between"}
-                alignItems={"center"}
-                mb={"1.875rem"}>
-                <Flex gap={"0.625rem"}>
-                    <Avatar name={user?.user_metadata.username} />
-                    <Flex flexDirection={"column"}>
-                        <Text
-                            color={"primaryTextRe"}
-                            fontSize={"1.188rem"}
-                            fontWeight={500}>
-                            {" "}
-                            {user?.user_metadata.username || "Anonymous"}{" "}
-                        </Text>
-                        <Text color={"primaryText"} fontSize={"0.75rem"}>
-                            {" "}
-                            {user?.email || "sign in"}{" "}
-                        </Text>
+            {user !== null && loading === false && (
+                <Flex
+                    justifyContent={"space-between"}
+                    alignItems={"center"}
+                    mb={"1.875rem"}>
+                    <Flex gap={"0.625rem"}>
+                        <Avatar name={user?.user_metadata.username} />
+                        <Flex flexDirection={"column"}>
+                            <Text
+                                color={"primaryTextRe"}
+                                fontSize={"1.188rem"}
+                                fontWeight={500}>
+                                {" "}
+                                {user?.user_metadata.username ||
+                                    "Anonymous"}{" "}
+                            </Text>
+                            <Text color={"primaryText"} fontSize={"0.75rem"}>
+                                {" "}
+                                {user?.email || "sign in"}{" "}
+                            </Text>
+                        </Flex>
                     </Flex>
+                    <Button
+                        variant={"unstyled"}
+                        justifyContent={"flex-end"}
+                        display={"flex"}>
+                        <Img
+                            src="/icons/Notification.svg"
+                            width={"25px"}
+                            height={"auto"}
+                        />
+                    </Button>
                 </Flex>
-                <Button
-                    variant={"unstyled"}
-                    justifyContent={"flex-end"}
-                    display={"flex"}>
-                    <Img
-                        src="/icons/Notification.svg"
-                        width={"25px"}
-                        height={"auto"}
-                    />
-                </Button>
-            </Flex>
+            )}
             <Flex
                 flexDirection={"column"}
                 overflow={"auto"}
-                className="hide-scroll-bar">
-                <Flex flexDirection={"column"}>
+                className="hide-scroll-bar"
+                flex={"1"}>
+                {/* <Flex flexDirection={"column"}>
                     <Text
                         color={"primaryText"}
                         fontSize={"1.188rem"}
@@ -106,12 +119,9 @@ function ActivityBar() {
                         <Artist id={"1274170"} visible={isVisible} />
                         <Artist id={"615155"} visible={isVisible} />
                     </Flex>
-                </Flex>
-                {recents.length > 0 && (
-                    <Flex
-                        flexDirection={"column"}
-                        mt={"1.875rem"}
-                        pb={"2.5rem"}>
+                </Flex> */}
+                {recents.length > 0 && loading === false && (
+                    <Flex flexDirection={"column"} pb={"2.5rem"}>
                         <Text
                             color={"primaryText"}
                             fontSize={"1.188rem"}
@@ -132,6 +142,40 @@ function ActivityBar() {
                                 );
                             })}
                         </Flex>
+                    </Flex>
+                )}
+                {user === null && loading === false && (
+                    <Flex
+                        flex={"1"}
+                        justifyContent={"center"}
+                        alignItems={"center"}>
+                        <Text
+                            userSelect={"none"}
+                            fontWeight={"600"}
+                            fontSize={"1.2rem"}>
+                            <span
+                                className="gradient-text"
+                                style={{
+                                    fontWeight: "600",
+                                    fontSize: "1.2rem",
+                                }}>
+                                Sign in
+                            </span>{" "}
+                            to view content
+                        </Text>
+                    </Flex>
+                )}
+                {loading === true && (
+                    <Flex
+                        flex={"1"}
+                        justifyContent={"center"}
+                        alignItems={"center"}>
+                        <Heading
+                            size={"md"}
+                            className="gradient-text"
+                            userSelect={"none"}>
+                            Loading...
+                        </Heading>
                     </Flex>
                 )}
             </Flex>

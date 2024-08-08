@@ -48,22 +48,22 @@ function Player() {
         if (id === undefined || id === "" || !id) return;
         // get song
         setLoaded(false);
-            getSongDetails(id).then((val: any) => {
-                if (val.status == "SUCCESS") {
-                    if (window.ReactNativeWebView) {
-                        window.ReactNativeWebView.postMessage(
-                            JSON.stringify({
-                                eventType: "newSong",
-                                ...val.data[0],
-                            })
-                        );
-                    }
-                    setData(val.data[0]);
-                    updateNavigator(val.data[0]);
+        getSongDetails(id).then((val: any) => {
+            if (val.status == "SUCCESS") {
+                if (window.ReactNativeWebView) {
+                    window.ReactNativeWebView.postMessage(
+                        JSON.stringify({
+                            eventType: "newSong",
+                            ...val.data[0],
+                        })
+                    );
                 }
-                setLoaded(true);
-                if (!id) setLoaded(false);
-            });
+                setData(val.data[0]);
+                updateNavigator(val.data[0]);
+            }
+            setLoaded(true);
+            if (!id) setLoaded(false);
+        });
 
         // loop handler
         if (localStorage.getItem("loop")) {
@@ -105,16 +105,18 @@ function Player() {
 
         addToRecents(id);
 
+        return () => {
+            setData(null);
+        };
+    }, [id]);
+
+    useEffect(() => {
         if (!favArray || favArray.length === 0)
             (async () => {
                 const data = await getFavouriteSongs();
                 if (data && data.length > 0) setFavArr(data![0].songs);
             })();
-
-        return () => {
-            setData(null);
-        };
-    }, [id]);
+    }, []);
 
     // react native useEffect hook
     useEffect(() => {
@@ -296,9 +298,10 @@ function Player() {
                                 onClick={() => {
                                     handleRouteChange(`/song/${id}`);
                                 }}
-                                cursor={"pointer"}>
-                                {data?.name}
-                            </Text>
+                                dangerouslySetInnerHTML={{
+                                    __html: data?.name + "",
+                                }}
+                                cursor={"pointer"}></Text>
                             <Text
                                 color={"primaryText"}
                                 fontWeight={400}
