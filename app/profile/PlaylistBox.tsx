@@ -1,6 +1,5 @@
 "use client";
 import PlaylistDetails from "@/@types/PlaylistDetail";
-import { startLoading } from "@/components/global/TopLoadingBar";
 import { Button, Flex, Img, Text, Tooltip } from "@chakra-ui/react";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -68,7 +67,6 @@ function PlaylistBox({
                 <Button
                     variant={"unstyled"}
                     onClick={() => {
-                        startLoading();
                         router.replace(
                             "/playlist/" + playlistId + "?" + params.toString()
                         );

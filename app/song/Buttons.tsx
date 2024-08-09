@@ -3,11 +3,17 @@ import Love from "@/assets/icons/Love";
 import Share from "@/assets/icons/Share";
 import addToPlaylist from "@/database/addToPlaylist";
 import { AddIcon, DownloadIcon } from "@chakra-ui/icons";
-import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import {
+    Button,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
+    useToast,
+} from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { toast } from "react-toastify";
 
 function PlayButton({ id }: any) {
     const router = useRouter();
@@ -77,6 +83,8 @@ function ShareButton({ id }: { id: string }) {
 }
 
 function AddToPlaylist({ id, playlist }: { id: string; playlist: any }) {
+    const toast = useToast();
+
     return (
         <Menu>
             <MenuButton as={Button} variant={"unstyled"}>
@@ -94,14 +102,30 @@ function AddToPlaylist({ id, playlist }: { id: string; playlist: any }) {
                                     id
                                 );
                                 if (status.statusText === "Already exists")
-                                    toast.warn(
-                                        `Song already exists in ${el.details.name}`
-                                    );
+                                    toast({
+                                        title: "Playlist",
+                                        description: `Song already exists in ${el.details.name}`,
+                                        status: "info",
+                                        duration: 4000,
+                                        isClosable: false,
+                                    });
                                 else if (status.status === 204)
-                                    toast.success(
-                                        `Added song to playlist ${el.details.name}`
-                                    );
-                                else toast.error("Error occured in the server");
+                                    toast({
+                                        title: "Playlist",
+                                        description: `Added song to playlist ${el.details.name}`,
+                                        status: "success",
+                                        duration: 4000,
+                                        isClosable: false,
+                                    });
+                                else
+                                    toast({
+                                        title: "Playlist",
+                                        description:
+                                            "Error occured in the server",
+                                        status: "error",
+                                        duration: 4000,
+                                        isClosable: false,
+                                    });
                             }}
                             key={idx}>
                             {" "}

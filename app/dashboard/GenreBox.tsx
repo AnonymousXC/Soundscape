@@ -1,4 +1,3 @@
-import { startLoading } from "@/components/global/TopLoadingBar";
 import { Button, Flex, Img, Text, Tooltip } from "@chakra-ui/react";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -52,7 +51,6 @@ function GenreBox({ props }: any) {
                 <Button
                     variant={"unstyled"}
                     onClick={() => {
-                        startLoading();
                         router.replace(
                             "/album/" + props.id + "?" + params.toString()
                         );

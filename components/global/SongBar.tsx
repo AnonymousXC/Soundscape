@@ -4,7 +4,6 @@ import { Image } from "@chakra-ui/next-js";
 import { Button, Flex, Text, Box, Skeleton } from "@chakra-ui/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { startLoading } from "./TopLoadingBar";
 
 interface Props {
     data?: SongResponse | null;
@@ -63,7 +62,6 @@ function Song(props: Props) {
             url.toString().includes("song")
         )
             return;
-        startLoading();
         router.push(path + "?" + url.searchParams.toString());
     };
 

@@ -10,7 +10,6 @@ import {
 import { Img } from "@chakra-ui/react";
 import { useRouter, usePathname } from "next/navigation";
 import { useState } from "react";
-import { startLoading } from "../global/TopLoadingBar";
 
 function Sidebar() {
     const router = useRouter();
@@ -20,7 +19,6 @@ function Sidebar() {
     const handleRouteChange = (path: string) => {
         const url = new URL(window.location.href);
         if (url.toString().includes(path)) return;
-        startLoading();
         router.push(path + "?" + url.searchParams.toString());
     };
 

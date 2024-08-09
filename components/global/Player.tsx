@@ -11,6 +11,7 @@ import {
     SliderFilledTrack,
     SliderThumb,
     Stack,
+    useToast,
 } from "@chakra-ui/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { SyntheticEvent, createRef, useEffect, useState } from "react";
@@ -21,9 +22,7 @@ import Loop from "@/assets/icons/Loop";
 import Shuffle from "@/assets/icons/Shuffle";
 import Share from "@/assets/icons/Share";
 import addToFavourites from "@/database/addToFavourites";
-import { toast } from "react-toastify";
 import getFavouriteSongs from "@/database/getFavouriteSongs";
-import { startLoading } from "./TopLoadingBar";
 import getSongSuggestions from "@/app/server/getSongSuggestion";
 import KeyBinding from "./Keybinding";
 
@@ -42,6 +41,7 @@ function Player() {
     const [playerEnabled, setPlayerEnabled] = useState(true);
     const [nextSuggestedSong, setNextSuggestedSong] = useState<string[]>([]);
     const [favArray, setFavArr] = useState<string[]>([]);
+    const toast = useToast();
 
     // song change useEffect hook
     useEffect(() => {
@@ -157,7 +157,6 @@ function Player() {
     const handleRouteChange = (path: string) => {
         const url = new URL(window.location.href);
         if (url.toString().includes(`song/${data?.id}`)) return;
-        startLoading();
         router.push(path + "?" + url.searchParams.toString());
     };
 
@@ -199,10 +198,29 @@ function Player() {
             status!.status === 200 ||
             (status.status === 201 && status.statusText === "Created")
         ) {
-            toast.success("Successfull added song to favourites");
+            toast({
+                title: "Favourite",
+                description: "Successfull added song to favourites",
+                duration: 4000,
+                isClosable: false,
+                status: "success",
+            });
         } else if (status.status === 300) {
-            toast.warn("Successfully removed from favourites");
-        } else toast.error("Error occured while performing action");
+            toast({
+                title: "Favourite",
+                description: "Successfully removed from favourites",
+                duration: 4000,
+                isClosable: false,
+                status: "error",
+            });
+        } else
+            toast({
+                title: "Favourite",
+                description: "Error occured while performing action",
+                duration: 4000,
+                isClosable: false,
+                status: "error",
+            });
         const favSongs = await getFavouriteSongs();
         setFavArr(favSongs![0].songs);
     };
@@ -213,7 +231,13 @@ function Player() {
             status!.status === 200 ||
             (status.status === 201 && status.statusText === "Created")
         ) {
-            toast.success("Successfull added song to favourites");
+            toast({
+                title: "Favourite",
+                description: "Successfull added song to favourites",
+                duration: 4000,
+                isClosable: false,
+                status: "success",
+            });
             if (window.ReactNativeWebView)
                 window.ReactNativeWebView.postMessage(
                     JSON.stringify({
@@ -222,7 +246,13 @@ function Player() {
                     })
                 );
         } else if (status.status === 300) {
-            toast.warn("Successfully removed from favourites");
+            toast({
+                title: "Favourite",
+                description: "Successfully removed from favourites",
+                duration: 4000,
+                isClosable: false,
+                status: "info",
+            });
             if (window.ReactNativeWebView)
                 window.ReactNativeWebView.postMessage(
                     JSON.stringify({
@@ -230,7 +260,14 @@ function Player() {
                         eventType: "favourite-check",
                     })
                 );
-        } else toast.error("Error occured while performing action");
+        } else
+            toast({
+                title: "Favourite",
+                description: "Error occured while performing action",
+                duration: 4000,
+                isClosable: false,
+                status: "error",
+            });
         const favSongs = await getFavouriteSongs();
         setFavArr(favSongs![0].songs);
     };

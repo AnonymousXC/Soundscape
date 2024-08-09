@@ -8,10 +8,7 @@ import Player from "@/components/global/Player";
 import PlayerFallback from "@/components/fallbacks/PlayerFallback";
 import ActivityBarFallback from "@/components/fallbacks/SidebarFallback";
 import { Suspense } from "react";
-import TopLoadingBar from "@/components/global/TopLoadingBar";
 import BottomBar from "@/components/global/MobileBottom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/ReactToastify.css";
 import { Flex } from "@chakra-ui/react";
 
 export const metadata: Metadata = {
@@ -40,7 +37,6 @@ export default function DesktopLLayout({
                     height: "100vh",
                 }}>
                 <CKProviders>
-                    <TopLoadingBar />
                     <Sidebar />
                     <Flex
                         position={"relative"}
@@ -64,7 +60,6 @@ export default function DesktopLLayout({
                         <Player />
                     </Suspense>
                     <BottomBar />
-                    <ToastContainer newestOnTop={true} />
                 </CKProviders>
             </body>
         </html>

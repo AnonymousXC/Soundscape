@@ -1,5 +1,8 @@
-"use client";
+/**
+ * Currently not required
+ */
 
+"use client";
 import { Progress } from "@chakra-ui/react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -15,7 +18,7 @@ function TopLoadingBar() {
     }, [pathname]);
 
     startLoading = () => {
-        if (isLoading == false) setIsLoading(true);
+        // if (isLoading == false) setIsLoading(true);
     };
 
     return (
@@ -34,5 +37,5 @@ function TopLoadingBar() {
     );
 }
 
-export default TopLoadingBar;
-export { startLoading };
+// export default TopLoadingBar;
+// export { startLoading };

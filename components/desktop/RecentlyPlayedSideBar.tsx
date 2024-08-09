@@ -1,10 +1,9 @@
 "use client";
 import { Flex, Text, Button, Img, Skeleton } from "@chakra-ui/react";
-import { MouseEventHandler, SyntheticEvent, useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import getSongDetails from "@/app/server/getSongDetails.server";
 import { SongResponse } from "@/interfaces/song";
 import { useRouter, useSearchParams } from "next/navigation";
-import { startLoading } from "../global/TopLoadingBar";
 
 interface Props {
     id: string;
@@ -43,7 +42,6 @@ function RecentlyPlayedSong(props: Props) {
     const handleRouteChange = (path: string) => {
         const url = new URL(window.location.href);
         if (url.toString().includes(`song/${data?.id}`)) return;
-        startLoading();
         router.push(path + "?" + url.searchParams.toString());
     };
 
