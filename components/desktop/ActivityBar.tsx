@@ -14,14 +14,15 @@ import RecentlyPlayedSong from "./RecentlyPlayedSideBar";
 import getSession from "@/database/session";
 import { User, UserResponse } from "@supabase/supabase-js";
 import getFavouriteSongs from "@/database/getFavouriteSongs";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 function ActivityBar() {
     const [isVisible, setVisibility] = useState<boolean>(true);
     const [recents, setRecents] = useState<Array<string>>([]);
     const [user, setUser] = useState<User | null>(null);
-    const path = usePathname();
     const [loading, setLoading] = useState(true);
+    const path = usePathname();
+    const router = useRouter();
 
     useEffect(() => {
         getSession().then((data: UserResponse) => {
@@ -32,6 +33,11 @@ function ActivityBar() {
             setLoading(false);
         });
     }, [path]);
+
+    const handleRouteChange = (path: string) => {
+        const url = new URL(window.location.href);
+        router.push(path + "?" + url.searchParams.toString());
+    };
 
     return (
         <Flex
@@ -133,14 +139,27 @@ function ActivityBar() {
                             gap={"0.75rem"}
                             mt={"1.25rem"}>
                             {recents.map((el: string, idx: number) => {
-                                return (
-                                    <RecentlyPlayedSong
-                                        id={el}
-                                        visible={isVisible}
-                                        key={idx}
-                                    />
-                                );
+                                if (idx < 11)
+                                    return (
+                                        <RecentlyPlayedSong
+                                            id={el}
+                                            visible={isVisible}
+                                            key={idx}
+                                        />
+                                    );
                             })}
+                            <Button
+                                variant={"unstyled"}
+                                fontSize={"0.8rem"}
+                                fontWeight={"400"}
+                                className="gradient-text"
+                                alignSelf={"end"}
+                                width={"min-content"}
+                                onClick={() => {
+                                    handleRouteChange("/favorite");
+                                }}>
+                                See more &gt;&gt;
+                            </Button>
                         </Flex>
                     </Flex>
                 )}

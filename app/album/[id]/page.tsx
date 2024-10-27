@@ -18,6 +18,7 @@ function Album() {
         getAlbum(id).then((data: AlbumResponse) => {
             setData(data);
             sessionStorage.setItem("current-playlist", JSON.stringify(data));
+            document.title = `Soundscape : ${data.name}`;
         });
         return () => {
             data = null;

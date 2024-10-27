@@ -14,7 +14,7 @@ function RecentlyPlayed() {
             getSongDetailsMulti(data).then((data) => {
                 if (!songsData) setSongsData(data);
             });
-    }, []);
+    }, [songsData]);
 
     return (
         <Flex width={"full"} flexDir={"column"} gap={6}>
